@@ -1,0 +1,31 @@
+/*
+    Basic Styling to get started (feel free to erase and add as needed)
+*/
+
+nav a {
+  margin-left: 10px;
+}
+nav {
+  border-bottom: 1px solid gray;
+  padding: 5px;
+}
+.landing,
+.Home {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 40px;
+}
+
+.AuthForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-size: 24px;
+}
+
+.AuthForm input {
+  width: 250px;
+  margin: 5px 10px;
+}
