@@ -20,10 +20,7 @@ function Routes(props) {
           <AuthForm type='register' {...props} setUser={setUser} />
         )}
       />
-      <Route
-        path='/home'
-        render={() => <Home {...props} user={user} setUser={setUser} />}
-      />
+      <Route path='/home' component={Home} />
 
       <Route path='/' component={Landing} />
     </Switch>
