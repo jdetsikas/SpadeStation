@@ -1,21 +1,24 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
-const { createUser } = require('./')
-const client = require('./client')
+const { createUser } = require('./');
+const client = require('./client');
 
 async function dropTables() {
-  console.log('Dropping All Tables...')
+  console.log('Dropping All Tables...');
   // drop all tables, in the correct order
 
   //  Add more tables as you need them
   try {
     await client.query(`
+    DROP TABLE IF EXISTS order_games;
+    DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS games;
     DROP TABLE IF EXISTS users;
   `)
   } catch (error) {
-    throw error
-  }
-}
-
+    throw error;
+  };
+};
+ 
 async function createTables() {
   try {
     console.log('Starting to build tables...')
@@ -28,7 +31,31 @@ async function createTables() {
         username VARCHAR(255) UNIQUE NOT NULL, 
         password VARCHAR(255) NOT NULL
       );
-    `)
+
+      CREATE TABLE games(
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        price INTEGER NOT NULL,
+        console VARCHAR(255) NOT NULL,
+        year INTEGER NOT NULL
+      );
+
+      CREATE TABLE orders(
+        id SERIAL PRIMARY KEY,
+        buyerId INTEGER REFERENCES users(id),
+        payment VARCHAR(255),
+        shippingLoc TEXT,
+        orderStatus VARCHAR(255)
+      );
+
+      CREATE TABLE order_games(
+        id SERIAL PRIMARY KEY,
+        orderId INTEGER REFERENCES orders(id),
+        gameId INTEGER REFERENCES games(id),
+        amount INTEGER NOT NULL
+      );
+    `);
 
     // Add tables as you need them (A good place to start is Products and Orders
     // You may also need an extra table that links products and orders together (HINT* Many-To-Many)
