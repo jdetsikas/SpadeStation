@@ -1,16 +1,16 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
 const { createUser } = require('./');
+const { createGame } = require('./')
 const client = require('./client');
 
 async function dropTables() {
   console.log('Dropping All Tables...');
-  // drop all tables, in the correct order
 
-  //  Add more tables as you need them
   try {
     await client.query(`
     DROP TABLE IF EXISTS order_games;
     DROP TABLE IF EXISTS orders;
+    DROP TYPE IF EXISTS status;
     DROP TABLE IF EXISTS games;
     DROP TABLE IF EXISTS users;
   `)
@@ -22,9 +22,7 @@ async function dropTables() {
 async function createTables() {
   try {
     console.log('Starting to build tables...')
-    // create all tables, in the correct order
-
-    // User's Table
+    
     await client.query(`
       CREATE TABLE users(
         id  SERIAL PRIMARY KEY, 
@@ -36,30 +34,30 @@ async function createTables() {
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT NOT NULL,
-        price INTEGER NOT NULL,
+        price DECIMAL(2) NOT NULL,
         console VARCHAR(255) NOT NULL,
-        year INTEGER NOT NULL
+        year INTEGER NOT NULL,
+        image TEXT
       );
+      
+      CREATE TYPE status AS ENUM ('processing', 'shipped', 'delivered', 'canceled');
 
       CREATE TABLE orders(
         id SERIAL PRIMARY KEY,
         buyerId INTEGER REFERENCES users(id),
         payment VARCHAR(255),
         shippingLoc TEXT,
-        orderStatus VARCHAR(255)
+        orderStatus status
       );
 
       CREATE TABLE order_games(
         id SERIAL PRIMARY KEY,
         orderId INTEGER REFERENCES orders(id),
         gameId INTEGER REFERENCES games(id),
-        amount INTEGER NOT NULL
+        quantity INTEGER NOT NULL,
+        purchCost DECIMAL(2) NOT NULL
       );
     `);
-
-
-    // Add tables as you need them (A good place to start is Products and Orders
-    // You may also need an extra table that links products and orders together (HINT* Many-To-Many)
 
     console.log('Finished building tables!')
   } catch (error) {
