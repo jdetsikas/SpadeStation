@@ -42,5 +42,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grace-shopper-spades/spades_shopper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/grace-shopper-spades/spades_shopper/issues"
+  },
+  "homepage": "https://github.com/grace-shopper-spades/spades_shopper#readme"
 }
