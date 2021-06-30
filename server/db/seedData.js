@@ -124,6 +124,85 @@ async function createInitialGames() {
   }
 }
 
+async function createInitialOrders() {
+  try {
+    console.log('starting to create orders...');
+
+    const ordersToCreate = [
+      {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'processing'},
+      {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'Shipped'},
+      {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'canceled'},
+      {buyerId: 2, payment: 'Check is its way', shippingLoc: 'Chicago, IL', orderStatus: 'delivered'},
+    ]
+    const orders = await Promise.all(ordersToCreate.map(order => createOrder(order)));
+    console.log('Orders Created: ', orders)
+    console.log('Finished creating orders.')
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createInitialOrderGames() {
+  try {
+    console.log('starting to create order_games...');
+    const [firstOrder, secondOrder, thirdOrder, fourthOrder] = await getOrdersWithoutGames();
+    const [game1, game2, game3, game4, game5, game6, game7] = await getAllGames();
+
+    const orderGamesToCreate = [
+      {
+        orderId: firstOrder.id,
+        gameId: game1.id,
+        quantity: 2,
+      },
+      {
+        orderId: firstOrder.id,
+        gameId: game2.id,
+        quantity: 1,
+      },
+      {
+        orderId: secondOrder.id,
+        gameId: game3.id,
+        quantity: 3,
+      },
+      {
+        orderId: secondOrder.id,
+        gameId: game4.id,
+        quantity: 1,
+      },
+      {
+        orderId: thirdOrder.id,
+        gameId: game5.id,
+        quantity: 2,
+      },
+      {
+        orderId: thirdOrder.id,
+        gameId: game6.id,
+        quantity: 1, 
+      },
+      {
+        orderId: thirdOrder.id,
+        gameId: game7.id,
+        quantity: 1,
+      },
+      {
+        orderId: fourthOrder.id,
+        gameId: game6.id,
+        quantity: 1, 
+      },
+      {
+        orderId: fourthOrder.id,
+        gameId: game7.id,
+        quantity: 2, 
+      },
+    ]
+    const orderGames = await Promise.all(orderGamesToCreate.map(addGameToOrder));
+    console.log('order_games created: ', orderGames)
+    console.log('Finished creating order_games!')
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function rebuildDB() {
   try {
     client.connect()
@@ -131,6 +210,8 @@ async function rebuildDB() {
     await createTables()
     await createInitialUsers()
     await createInitialGames()
+    await createInitialOrders()
+    await createInitialOrderGames()
 
     // create other data
   } catch (error) {
