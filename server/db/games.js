@@ -23,7 +23,7 @@ async function createGame(fields) {
             VALUES (${values})
             RETURNING *
         `, Object.values(fields));
-
+        
         return game;
     } catch (error) {
         throw error;
