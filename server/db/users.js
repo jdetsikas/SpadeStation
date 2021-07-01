@@ -1,10 +1,19 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 const client = require('./client')
 const bcrypt = require('bcrypt')
 const SALT_COUNT = 10
 
-// database functions
+/*
+////////////////
+// Functions //
+//////////////
+*/
 
-// user functions
 async function createUser({ username, password }) {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
   try {
@@ -86,6 +95,13 @@ async function getUserByUsername(userName) {
     console.error(error)
   }
 }
+
+/*
+//////////////
+// Exports //
+////////////
+*/
+
 module.exports = {
   createUser,
   getUser,
