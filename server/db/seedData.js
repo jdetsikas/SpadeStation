@@ -2,7 +2,7 @@
 const client = require('./client');
 const { 
   // user functions
-  createUser, 
+  createUser, updateUser, deleteUser,
   // Game functions
   createGame, getAllGames,
   // Order functions

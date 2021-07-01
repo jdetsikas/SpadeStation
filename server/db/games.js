@@ -23,7 +23,7 @@ async function createGame(fields) {
             VALUES (${values})
             RETURNING *
         `, Object.values(fields));
-
+        
         return game;
     } catch (error) {
         throw error;
@@ -55,6 +55,50 @@ async function getGameById(id) {
     };
 };
 
+async function updateGame(id, fields){
+
+
+    try{
+      const setString = createSetString(fields)
+  
+      if (setString.length === 0){
+        return
+      }
+  
+      const { rows: [game] } = await client.query(
+        `UPDATE games
+        SET ${setString}
+        WHERE id = ${id}
+        RETURNING *;
+        `
+        , Object.values(fields))
+  
+        return game
+  
+  
+    }catch (error){
+      console.error(error)
+    }
+  }
+  
+  async function deleteGame(id){
+  
+    try{
+  
+      const {rows: [deletedGame]} = await client.query(`
+        DELETE FROM games
+        WHERE id = ${id}
+        RETURNING *;
+      `)
+  
+      return deletedGame
+  
+    }catch(error){
+      console.error(error)
+    }
+  }
+
+
 /*
 //////////////
 // Exports //
@@ -64,5 +108,7 @@ async function getGameById(id) {
 module.exports = {
     createGame,
     getAllGames,
-    getGameById
+    getGameById,
+    updateGame,
+    deleteGame
 };
