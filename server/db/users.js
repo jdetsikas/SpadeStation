@@ -8,7 +8,11 @@ const client = require('./client')
 const bcrypt = require('bcrypt')
 const SALT_COUNT = 10
 
-const {createInsertString, createValueString, createSetString} = require('./utils')
+const {
+  createInsertString,
+  createValueString,
+  createSetString
+} = require('./utils')
 
 /*
 ////////////////
@@ -16,7 +20,10 @@ const {createInsertString, createValueString, createSetString} = require('./util
 //////////////
 */
 
-async function createUser({ username, password }) {
+async function createUser({
+  username,
+  password
+}) {
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
   try {
     const {
@@ -34,7 +41,10 @@ async function createUser({ username, password }) {
     throw error
   }
 }
-async function getUser({ username, password }) {
+async function getUser({
+  username,
+  password
+}) {
   if (!username || !password) {
     return
   }
@@ -78,7 +88,9 @@ async function getUserById(userId) {
 async function getUserByUsername(userName) {
   // first get the user
   try {
-    const { rows } = await client.query(
+    const {
+      rows
+    } = await client.query(
       `
       SELECT *
       FROM users
@@ -98,37 +110,40 @@ async function getUserByUsername(userName) {
   }
 }
 
-async function updateUser(id, fields){
+async function updateUser(id, fields) {
 
 
-  try{
+  try {
     const setString = createSetString(fields)
 
-    if (setString.length === 0){
+    if (setString.length === 0) {
       return
     }
 
-    const { rows: [user] } = await client.query(
+    const {
+      rows: [user]
+    } = await client.query(
       `UPDATE users
       SET ${setString}
       WHERE id = ${id}
       RETURNING *;
-      `
-      , Object.values(fields))
+      `, Object.values(fields))
 
-      return user
+    return user
 
 
-  }catch (error){
+  } catch (error) {
     console.error(error)
   }
 }
 
-async function deleteUser(id){
+async function deleteUser(id) {
 
-  try{
+  try {
 
-    const {rows: [deletedUser]} = await client.query(`
+    const {
+      rows: [deletedUser]
+    } = await client.query(`
       DELETE FROM users
       WHERE id = ${id}
       RETURNING *;
@@ -136,7 +151,7 @@ async function deleteUser(id){
 
     return deletedUser
 
-  }catch(error){
+  } catch (error) {
     console.error(error)
   }
 }
