@@ -10,13 +10,13 @@ function createInsertString(fields) {
 // Returns a string like ($1, $2, $3, $4...)
 function createValueString(fields) {
     const valueString = Object.values(fields).map(
-      (_, index) => `$${index + 1}`
+        (_, index) => `$${index + 1}`
     ).join(', ');
 
     return valueString;
 };
 
-function createSetString(fields){
+function createSetString(fields) {
     const setString = Object.keys(fields).map(
         (key, index) => `"${key}" = $${index + 1}`
     ).join(', ')

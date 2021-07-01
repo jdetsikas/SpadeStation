@@ -4,7 +4,9 @@ const server = express()
 const morgan = require('morgan')
 const path = require('path')
 const apiRouter = require('./api')
-const { client } = require('./db')
+const {
+  client
+} = require('./db')
 const PORT = 4000 // server port
 
 // connect the database client
