@@ -2,13 +2,13 @@
 const client = require('./client');
 const { 
   // user functions
-  createUser, 
+  createUser, getUser, getAllUsers, getUserById, getUserByUsername, deleteUser, updateUser, 
   // Game functions
-  createGame, getAllGames,
+  createGame, getAllGames, getGameById, updateGame, deleteGame,
   // Order functions
-  createOrder, getOrdersWithoutGames,
+  createOrder, getOrdersWithoutGames, updateOrder, deleteOrder,
   // Game Order functions
-  addGameToOrder
+  addGameToOrder, getAllOrderGames, updateOrderGame, removeOrderGame
 } = require('./');
 
 async function dropTables() {
@@ -213,41 +213,85 @@ async function testDB() {
   try {
       console.log("Starting to test database...");
 
-      // console.log("Calling getAllUsers");
-      // const users = await getAllUsers();
-      // console.log("Result:", users);
+
+
+      console.log("------Testing Users Functions-------")
+
+      console.log("Calling getAllUsers");
+      const users = await getAllUsers();
+      console.log("Result:", users);
 
       console.log("Calling updateUser on users[0]");
       const updateUserResult = await updateUser(users[0].id, {
-          name: "Newname Sogood",
-          location: "Lesterville, KY"
+          username: "Madiq Sozmall"
       });
       console.log("Result:", updateUserResult);
 
-      // console.log("Calling getAllPosts");
-      // const posts = await getAllPosts();
-      // console.log("Result:", posts);
+      // console.log("Deleteing user[1]");
+      // const deletedUser = await deleteUser(users[1].id)
+      // console.log("We deleted:", deletedUser)
 
-      // console.log("Calling updatePost on posts[0]");
-      // const updatePostResult = await updatePost(posts[0].id, {
-      //     title: "New Title",
-      //     content: "Updated Content"
-      // });
-      // console.log("Result:", updatePostResult);
+      console.log("Calling getAllUsers with changes");
+      const newUsers = await getAllUsers();
+      console.log("Result:", newUsers);
 
-      // console.log("Calling getUserById with 1");
-      // const albert = await getUserById(1);
-      // console.log("Result:", albert);
 
-      // console.log("Calling updatePost on posts[1], only updating tags");
-      // const updatePostTagsResult = await updatePost(posts[1].id, {
-      //     tags: ["#youcandoanything", "#redfish", "#bluefish"]
-      // });
-      // console.log("Result:", updatePostTagsResult);
 
-      // console.log("Calling getPostsByTagName with #happy");
-      // const postsWithHappy = await getPostsByTagName("#happy");
-      // console.log("Result:", postsWithHappy);
+      console.log("------Testing Games Functions-------")
+
+      console.log("Calling getAllGames");
+      const games = await getAllGames();
+      console.log("Result:", games);
+
+      console.log("Calling updateGames on games[0]");
+      const updateGameResult = await updateGame(games[0].id, {
+          title: "I love Ms. Pac-man",
+          description: "It's like Pac-man but with tits"
+      });
+      console.log("Result:", updateGameResult);
+
+      console.log("Calling getAllGames with changes");
+      const newGames = await getAllGames();
+      console.log("Result:", newGames);
+
+      
+
+      console.log("------Testing Order Functions-------")
+
+      console.log("Calling getOrdersWithoutGames");
+      const orders = await getOrdersWithoutGames();
+      console.log("Result:", orders);
+
+      console.log("Calling updateOrder on orders[0]");
+      const updateOrderResult = await updateOrder(orders[0].id, {
+          orderStatus: "DELIVERED"
+      });
+      console.log("Result:", updateOrderResult);
+
+      console.log("Calling getOrders... with changes");
+      const newOrders = await getOrdersWithoutGames();
+      console.log("Result:", newOrders);
+
+
+
+      console.log("------Testing Order Game Functions-------")
+
+      console.log("Calling getAllOrderGames");
+      const orderGames = await getAllOrderGames();
+      console.log("Result:", orderGames);
+
+      console.log("Calling updateOrderGame on orderGame[0]");
+      const updateOrderGameResult = await updateOrderGame(orderGames[0].id, {
+          quantity: "100"
+      });
+      console.log("Result:", updateOrderGameResult);
+
+      console.log("Calling getAllOrderGames with changes");
+      const newOrderGames = await getAllOrderGames();
+      console.log("Result:", newOrderGames);
+
+      console.log("Calling removeGameFromOrder on orderGame[1]");
+      // code goes here
 
       console.log("Finished database tests!");
   } catch (error) {
@@ -265,6 +309,7 @@ async function rebuildDB() {
     await createInitialGames()
     await createInitialOrders()
     await createInitialOrderGames()
+    await testDB()
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error

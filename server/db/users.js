@@ -8,6 +8,9 @@ const client = require('./client')
 const bcrypt = require('bcrypt')
 const SALT_COUNT = 10
 
+const { deleteOrder } = require('./orders');
+const { removeOrderGame } = require('./order_games');
+
 const {
   createInsertString,
   createValueString,
@@ -41,6 +44,19 @@ async function createUser({
     throw error
   }
 }
+
+async function getAllUsers() {
+  try {
+    const { rows: users } = await client.query(`
+      SELECT * FROM users
+    `)
+
+    return users
+  } catch (error) {
+    throw error
+  }
+}
+
 async function getUser({
   username,
   password
@@ -111,8 +127,6 @@ async function getUserByUsername(userName) {
 }
 
 async function updateUser(id, fields) {
-
-
   try {
     const setString = createSetString(fields)
 
@@ -120,18 +134,14 @@ async function updateUser(id, fields) {
       return
     }
 
-    const {
-      rows: [user]
-    } = await client.query(
-      `UPDATE users
+    const { rows: [user] } = await client.query(`
+      UPDATE users
       SET ${setString}
-      WHERE id = ${id}
+      WHERE id=${id}
       RETURNING *;
-      `, Object.values(fields))
+    `, Object.values(fields))
 
     return user
-
-
   } catch (error) {
     throw error
   }
@@ -141,16 +151,13 @@ async function deleteUser(id) {
 
   try {
 
-    const {
-      rows: [deletedUser]
-    } = await client.query(`
+    const { rows: [deletedUser] } = await client.query(`
       DELETE FROM users
-      WHERE id = ${id}
+      WHERE id=${id}
       RETURNING *;
     `)
 
     return deletedUser
-
   } catch (error) {
     throw error
   }
@@ -164,6 +171,7 @@ async function deleteUser(id) {
 
 module.exports = {
   createUser,
+  getAllUsers,
   getUser,
   getUserById,
   getUserByUsername,
