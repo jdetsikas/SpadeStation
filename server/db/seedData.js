@@ -2,7 +2,7 @@
 const client = require('./client');
 const { 
   // user functions
-  createUser, updateUser, deleteUser,
+  createUser, 
   // Game functions
   createGame, getAllGames,
   // Order functions
@@ -10,8 +10,10 @@ const {
   // Game Order functions
   addGameToOrder
 } = require('./');
+
 async function dropTables() {
   console.log('Dropping All Tables...');
+
   try {
     await client.query(`
     DROP TABLE IF EXISTS order_games;
@@ -24,15 +26,18 @@ async function dropTables() {
     throw error;
   };
 };
+ 
 async function createTables() {
   try {
     console.log('Starting to build tables...')
+    
     await client.query(`
       CREATE TABLE users(
         "id"  SERIAL PRIMARY KEY, 
         "username" VARCHAR(255) UNIQUE NOT NULL, 
         "password" VARCHAR(255) NOT NULL
       );
+
       CREATE TABLE games(
         "id" SERIAL PRIMARY KEY,
         "title" VARCHAR(255) NOT NULL,
@@ -42,7 +47,9 @@ async function createTables() {
         "year" INTEGER NOT NULL,
         "image" TEXT
       );
+      
       CREATE TYPE status AS ENUM ('PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
+
       CREATE TABLE orders(
         "id" SERIAL PRIMARY KEY,
         "buyerId" INTEGER REFERENCES users(id),
@@ -50,6 +57,7 @@ async function createTables() {
         "shippingLoc" TEXT,
         "orderStatus" status
       );
+
       CREATE TABLE order_games(
         "id" SERIAL PRIMARY KEY,
         "orderId" INTEGER REFERENCES orders(id),
@@ -58,15 +66,18 @@ async function createTables() {
         "purchCost" DECIMAL(2) NOT NULL
       );
     `);
+
     console.log('Finished building tables!')
   } catch (error) {
     console.error('Error building tables!')
     throw error
   }
 }
+
 /* 
 ADD DATA BELOW AS NEEDED. This is default seed data, and will help you start testing
 */
+
 async function createInitialUsers() {
   console.log('Starting to create users...')
   try {
@@ -76,6 +87,7 @@ async function createInitialUsers() {
       { username: 'glamgal', password: 'glamgal123' },
     ]
     const users = await Promise.all(usersToCreate.map(createUser))
+
     console.log('Users created:')
     console.log(users)
     console.log('Finished creating users!')
@@ -84,9 +96,11 @@ async function createInitialUsers() {
     throw error
   }
 }
+
 async function createInitialGames() {
   try {
     console.log('Starting to create games...');
+
     const gamesToCreate = [
       { title: 'Pac-Man', description: 'Move the wheel of cheese around and eat them ghosts!', console: 'Atari 2600', price: 99, year: 1982, image: '' },
       { title: 'Space Invaders', description: 'Pew pew!', console: 'Atari 2600', price: 89, year: 1980, image: '' },
@@ -105,17 +119,21 @@ async function createInitialGames() {
       { title: 'Mortal Kombat II', description: 'Defeat your oppponent in 1v1 combat and finish them with your fatality move!', console: 'Sega Genesis', price: 19, year: 1994, image: '' }
     ]
     const games = await Promise.all(gamesToCreate.map(createGame));
+
     console.log('games created:');
     console.log(games);
+
     console.log('Finished creating games!');
   } catch (error) {
     console.error('Error creating games!');
     throw error;
   }
 }
+
 async function createInitialOrders() {
   try {
     console.log('starting to create orders...');
+
     const ordersToCreate = [
       {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'PROCESSING'},
       {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'SHIPPED'},
@@ -129,11 +147,13 @@ async function createInitialOrders() {
     throw error;
   }
 }
+
 async function createInitialOrderGames() {
   try {
     console.log('starting to create order_games...');
     const [ firstOrder, secondOrder, thirdOrder, fourthOrder ] = await getOrdersWithoutGames();
     const [ game1, game2, game3, game4, game5, game6, game7 ] = await getAllGames();
+
     const orderGamesToCreate = [
       {
         orderId: firstOrder.id,
@@ -188,6 +208,54 @@ async function createInitialOrderGames() {
     throw error;
   }
 }
+
+async function testDB() {
+  try {
+      console.log("Starting to test database...");
+
+      // console.log("Calling getAllUsers");
+      // const users = await getAllUsers();
+      // console.log("Result:", users);
+
+      console.log("Calling updateUser on users[0]");
+      const updateUserResult = await updateUser(users[0].id, {
+          name: "Newname Sogood",
+          location: "Lesterville, KY"
+      });
+      console.log("Result:", updateUserResult);
+
+      // console.log("Calling getAllPosts");
+      // const posts = await getAllPosts();
+      // console.log("Result:", posts);
+
+      // console.log("Calling updatePost on posts[0]");
+      // const updatePostResult = await updatePost(posts[0].id, {
+      //     title: "New Title",
+      //     content: "Updated Content"
+      // });
+      // console.log("Result:", updatePostResult);
+
+      // console.log("Calling getUserById with 1");
+      // const albert = await getUserById(1);
+      // console.log("Result:", albert);
+
+      // console.log("Calling updatePost on posts[1], only updating tags");
+      // const updatePostTagsResult = await updatePost(posts[1].id, {
+      //     tags: ["#youcandoanything", "#redfish", "#bluefish"]
+      // });
+      // console.log("Result:", updatePostTagsResult);
+
+      // console.log("Calling getPostsByTagName with #happy");
+      // const postsWithHappy = await getPostsByTagName("#happy");
+      // console.log("Result:", postsWithHappy);
+
+      console.log("Finished database tests!");
+  } catch (error) {
+      console.log("Error during testDB");
+      throw error;
+  }
+}
+
 async function rebuildDB() {
   try {
     client.connect()
@@ -197,12 +265,12 @@ async function rebuildDB() {
     await createInitialGames()
     await createInitialOrders()
     await createInitialOrderGames()
-    // create other data
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error
   }
 }
+
 module.exports = {
   rebuildDB,
 }
