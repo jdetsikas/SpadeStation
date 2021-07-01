@@ -16,7 +16,17 @@ function createValueString(fields) {
     return valueString;
 };
 
+function createSetString(fields){
+    const setString = Object.keys(fields).map(
+        (key, index) => `"${key}" = $${index + 1}`
+    ).join(', ')
+
+
+    return setString
+}
+
 module.exports = {
     createInsertString,
-    createValueString
+    createValueString,
+    createSetString
 };

@@ -8,6 +8,8 @@ const client = require('./client')
 const bcrypt = require('bcrypt')
 const SALT_COUNT = 10
 
+const {createInsertString, createValueString, createSetString} = require('./utils')
+
 /*
 ////////////////
 // Functions //
@@ -96,6 +98,49 @@ async function getUserByUsername(userName) {
   }
 }
 
+async function updateUser(id, fields){
+
+
+  try{
+    const setString = createSetString(fields)
+
+    if (setString.length === 0){
+      return
+    }
+
+    const { rows: [user] } = await client.query(
+      `UPDATE users
+      SET ${setString}
+      WHERE id = ${id}
+      RETURNING *;
+      `
+      , Object.values(fields))
+
+      return user
+
+
+  }catch (error){
+    console.error(error)
+  }
+}
+
+async function deleteUser(id){
+
+  try{
+
+    const {rows: [deletedUser]} = await client.query(`
+      DELETE FROM users
+      WHERE id = ${id}
+      RETURNING *;
+    `)
+
+    return deletedUser
+
+  }catch(error){
+    console.error(error)
+  }
+}
+
 /*
 //////////////
 // Exports //
@@ -107,4 +152,6 @@ module.exports = {
   getUser,
   getUserById,
   getUserByUsername,
+  updateUser,
+  deleteUser
 }
