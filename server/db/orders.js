@@ -43,6 +43,9 @@ async function getOrdersWithoutGames() {
 async function updateOrder(id, fields) {
     try {
         const setString = createSetString(fields)
+        if (setString.length === 0){
+            return
+        }
 
         const {
             rows: [updated]

@@ -106,7 +106,7 @@ async function getUserByUsername(userName) {
     // delete user.password;
     return user
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
@@ -133,7 +133,7 @@ async function updateUser(id, fields) {
 
 
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
@@ -152,7 +152,7 @@ async function deleteUser(id) {
     return deletedUser
 
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 

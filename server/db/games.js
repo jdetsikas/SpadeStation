@@ -77,7 +77,7 @@ async function updateGame(id, fields){
   
   
     }catch (error){
-      console.error(error)
+      throw error
     }
   }
   
@@ -94,7 +94,7 @@ async function updateGame(id, fields){
       return deletedGame
   
     }catch(error){
-      console.error(error)
+      throw error
     }
   }
 
