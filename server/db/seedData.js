@@ -1,7 +1,15 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
-const { createUser } = require('./');
-const { createGame } = require('./')
 const client = require('./client');
+const { 
+  // user functions
+  createUser, 
+  // Game functions
+  createGame, getAllGames,
+  // Order functions
+  createOrder, getOrdersWithoutGames,
+  // Game Order functions
+  addGameToOrder
+} = require('./');
 
 async function dropTables() {
   console.log('Dropping All Tables...');
@@ -25,37 +33,37 @@ async function createTables() {
     
     await client.query(`
       CREATE TABLE users(
-        id  SERIAL PRIMARY KEY, 
-        username VARCHAR(255) UNIQUE NOT NULL, 
-        password VARCHAR(255) NOT NULL
+        "id"  SERIAL PRIMARY KEY, 
+        "username" VARCHAR(255) UNIQUE NOT NULL, 
+        "password" VARCHAR(255) NOT NULL
       );
 
       CREATE TABLE games(
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        description TEXT NOT NULL,
-        price DECIMAL(2) NOT NULL,
-        console VARCHAR(255) NOT NULL,
-        year INTEGER NOT NULL,
-        image TEXT
+        "id" SERIAL PRIMARY KEY,
+        "title" VARCHAR(255) NOT NULL,
+        "description" TEXT NOT NULL,
+        "price" DECIMAL(2) NOT NULL,
+        "console" VARCHAR(255) NOT NULL,
+        "year" INTEGER NOT NULL,
+        "image" TEXT
       );
       
-      CREATE TYPE status AS ENUM ('processing', 'shipped', 'delivered', 'canceled');
+      CREATE TYPE status AS ENUM ('PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
 
       CREATE TABLE orders(
-        id SERIAL PRIMARY KEY,
-        buyerId INTEGER REFERENCES users(id),
-        payment VARCHAR(255),
-        shippingLoc TEXT,
-        orderStatus status
+        "id" SERIAL PRIMARY KEY,
+        "buyerId" INTEGER REFERENCES users(id),
+        "payment" VARCHAR(255),
+        "shippingLoc" TEXT,
+        "orderStatus" status
       );
 
       CREATE TABLE order_games(
-        id SERIAL PRIMARY KEY,
-        orderId INTEGER REFERENCES orders(id),
-        gameId INTEGER REFERENCES games(id),
-        quantity INTEGER NOT NULL,
-        purchCost DECIMAL(2) NOT NULL
+        "id" SERIAL PRIMARY KEY,
+        "orderId" INTEGER REFERENCES orders(id),
+        "gameId" INTEGER REFERENCES games(id),
+        "quantity" INTEGER NOT NULL,
+        "purchCost" DECIMAL(2) NOT NULL
       );
     `);
 
@@ -127,12 +135,12 @@ async function createInitialOrders() {
     console.log('starting to create orders...');
 
     const ordersToCreate = [
-      {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'processing'},
-      {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'Shipped'},
-      {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'canceled'},
-      {buyerId: 2, payment: 'Check is its way', shippingLoc: 'Chicago, IL', orderStatus: 'delivered'},
+      {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'PROCESSING'},
+      {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'SHIPPED'},
+      {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'CANCELED'},
+      {buyerId: 2, payment: 'Check is its way', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
     ]
-    const orders = await Promise.all(ordersToCreate.map(order => createOrder(order)));
+    const orders = await Promise.all(ordersToCreate.map(createOrder));
     console.log('Orders Created: ', orders)
     console.log('Finished creating orders.')
   } catch (error) {
@@ -143,8 +151,8 @@ async function createInitialOrders() {
 async function createInitialOrderGames() {
   try {
     console.log('starting to create order_games...');
-    const [firstOrder, secondOrder, thirdOrder, fourthOrder] = await getOrdersWithoutGames();
-    const [game1, game2, game3, game4, game5, game6, game7] = await getAllGames();
+    const [ firstOrder, secondOrder, thirdOrder, fourthOrder ] = await getOrdersWithoutGames();
+    const [ game1, game2, game3, game4, game5, game6, game7 ] = await getAllGames();
 
     const orderGamesToCreate = [
       {
@@ -193,7 +201,7 @@ async function createInitialOrderGames() {
         quantity: 2, 
       },
     ]
-    const orderGames = await Promise.all(orderGamesToCreate.map(addGameToOrder));
+    const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord)));
     console.log('order_games created: ', orderGames)
     console.log('Finished creating order_games!')
   } catch (error) {
