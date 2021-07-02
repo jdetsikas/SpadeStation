@@ -57,6 +57,19 @@ async function getAllUsers() {
   }
 }
 
+async function getAllActiveUsers() {
+  try {
+    const { rows: activeUsers } = await client.query(`
+      SELECT * FROM users
+      WHERE "isActive"=true
+    `)
+
+    return activeUsers
+  } catch (error) {
+    throw error
+  }
+}
+
 async function getUser({
   username,
   password
@@ -147,17 +160,16 @@ async function updateUser(id, fields) {
   }
 }
 
-async function deleteUser(id) {
-
-  try {
-
-    const { rows: [deletedUser] } = await client.query(`
-      DELETE FROM users
+async function deactivateUser(id) {
+  try { 
+    const { rows: [deactivatedUser] } = await client.query(`
+      UPDATE users
+      SET "isActive"=false
       WHERE id=${id}
       RETURNING *;
     `)
 
-    return deletedUser
+    return deactivatedUser
   } catch (error) {
     throw error
   }
@@ -172,9 +184,10 @@ async function deleteUser(id) {
 module.exports = {
   createUser,
   getAllUsers,
+  getAllActiveUsers,
   getUser,
   getUserById,
   getUserByUsername,
   updateUser,
-  deleteUser
+  deactivateUser
 }

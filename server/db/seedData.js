@@ -1,8 +1,9 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
 const client = require('./client');
+const testDB = require('./dbTest')
 const { 
   // user functions
-  createUser, getUser, getAllUsers, getUserById, getUserByUsername, deleteUser, updateUser, 
+  createUser, getUser, getAllUsers, getAllActiveUsers, getUserById, getUserByUsername, deactivateUser, updateUser, 
   // Game functions
   createGame, getAllGames, getGameById, updateGame, deleteGame,
   // Order functions
@@ -35,7 +36,8 @@ async function createTables() {
       CREATE TABLE users(
         "id"  SERIAL PRIMARY KEY, 
         "username" VARCHAR(255) UNIQUE NOT NULL, 
-        "password" VARCHAR(255) NOT NULL
+        "password" VARCHAR(255) NOT NULL,
+        "isActive" BOOLEAN default true
       );
 
       CREATE TABLE games(
@@ -209,96 +211,7 @@ async function createInitialOrderGames() {
   }
 }
 
-async function testDB() {
-  try {
-      console.log("Starting to test database...");
 
-
-
-      console.log("------Testing Users Functions-------")
-
-      console.log("Calling getAllUsers");
-      const users = await getAllUsers();
-      console.log("Result:", users);
-
-      console.log("Calling updateUser on users[0]");
-      const updateUserResult = await updateUser(users[0].id, {
-          username: "Madiq Sozmall"
-      });
-      console.log("Result:", updateUserResult);
-
-      // console.log("Deleteing user[1]");
-      // const deletedUser = await deleteUser(users[1].id)
-      // console.log("We deleted:", deletedUser)
-
-      console.log("Calling getAllUsers with changes");
-      const newUsers = await getAllUsers();
-      console.log("Result:", newUsers);
-
-
-
-      console.log("------Testing Games Functions-------")
-
-      console.log("Calling getAllGames");
-      const games = await getAllGames();
-      console.log("Result:", games);
-
-      console.log("Calling updateGames on games[0]");
-      const updateGameResult = await updateGame(games[0].id, {
-          title: "I love Ms. Pac-man",
-          description: "It's like Pac-man but with tits"
-      });
-      console.log("Result:", updateGameResult);
-
-      console.log("Calling getAllGames with changes");
-      const newGames = await getAllGames();
-      console.log("Result:", newGames);
-
-      
-
-      console.log("------Testing Order Functions-------")
-
-      console.log("Calling getOrdersWithoutGames");
-      const orders = await getOrdersWithoutGames();
-      console.log("Result:", orders);
-
-      console.log("Calling updateOrder on orders[0]");
-      const updateOrderResult = await updateOrder(orders[0].id, {
-          orderStatus: "DELIVERED"
-      });
-      console.log("Result:", updateOrderResult);
-
-      console.log("Calling getOrders... with changes");
-      const newOrders = await getOrdersWithoutGames();
-      console.log("Result:", newOrders);
-
-
-
-      console.log("------Testing Order Game Functions-------")
-
-      console.log("Calling getAllOrderGames");
-      const orderGames = await getAllOrderGames();
-      console.log("Result:", orderGames);
-
-      console.log("Calling updateOrderGame on orderGame[0]");
-      const updateOrderGameResult = await updateOrderGame(orderGames[0].id, {
-          quantity: "100"
-      });
-      console.log("Result:", updateOrderGameResult);
-
-      console.log("Calling getAllOrderGames with changes");
-      const newOrderGames = await getAllOrderGames();
-      console.log("Result:", newOrderGames);
-
-      console.log("Calling removeGameFromOrder on orderGame[1]");
-      // code goes here
-
-      console.log("Finished database tests!");
-  } catch (error) {
-      console.log("Error during testDB");
-      throw error;
-  }
-}
 
 async function rebuildDB() {
   try {
@@ -309,7 +222,7 @@ async function rebuildDB() {
     await createInitialGames()
     await createInitialOrders()
     await createInitialOrderGames()
-    await testDB()
+    // await testDB()
   } catch (error) {
     console.log('Error during rebuildDB')
     throw error
