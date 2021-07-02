@@ -14,6 +14,18 @@ const { getGameById } = require('./games')
 //////////////
 */
 
+async function getAllOrderGames(fields) {
+    try {
+        const { rows: orderGames } = await client.query(`
+            SELECT * FROM order_games
+        `)
+
+        return orderGames
+    } catch (error) {
+        throw error
+    }
+}
+
 async function addGameToOrder(fields) {
     try {
         const gameToAdd = await getGameById(fields.gameId)
@@ -60,11 +72,10 @@ async function updateOrderGame(id, fields){
 async function removeOrderGame(gameId, orderId){
     try{
         const {rows: [removed]} = await client.query(`
-        DELETE FROM order_games
-        WHERE "gameId"= $1 AND "orderId" = $2
-        RETURNING *;
-        `
-        ,[gameId, orderId])
+            DELETE FROM order_games
+            WHERE "gameId"= $1 AND "orderId" = $2
+            RETURNING *;
+        `, [gameId, orderId] )
 
         return removed
 
@@ -81,6 +92,7 @@ async function removeOrderGame(gameId, orderId){
 
 module.exports = {
     addGameToOrder,
+    getAllOrderGames,
     updateOrderGame,
     removeOrderGame
 }

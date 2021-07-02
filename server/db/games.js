@@ -5,7 +5,7 @@
 */
 
 const client = require('./client');
-const { createInsertString, createValueString } = require('./utils');
+const { createInsertString, createValueString, createSetString } = require('./utils');
 
 /*
 ////////////////
