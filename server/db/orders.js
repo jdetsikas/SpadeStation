@@ -1,18 +1,24 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 const client = require('./client');
-const {
-    createInsertString,
-    createValueString,
-    createSetString
-} = require('./utils');
+const { createInsertString, createValueString, createSetString } = require('./utils');
+
+/*
+////////////////
+// Functions //
+//////////////
+*/
 
 async function createOrder(fields) {
-    const insert = createInsertString(fields)
-    const values = createValueString(fields)
-
     try {
-        const {
-            rows: [newOrder]
-        } = await client.query(`
+        const insert = createInsertString(fields)
+        const values = createValueString(fields)
+
+        const { rows: [newOrder] } = await client.query(`
             INSERT INTO orders(${insert})
             VALUES (${values})
             RETURNING *
@@ -26,9 +32,7 @@ async function createOrder(fields) {
 
 async function getOrdersWithoutGames() {
     try {
-        const {
-            rows
-        } = await client.query(`
+        const { rows } = await client.query(`
             SELECT * FROM orders
         `)
 
@@ -43,21 +47,16 @@ async function getOrdersWithoutGames() {
 async function updateOrder(id, fields) {
     try {
         const setString = createSetString(fields)
-        if (setString.length === 0){
-            return
-        }
+        if (setString.length === 0) { return }
 
-        const {
-            rows: [updated]
-        } = await client.query(`
-    UPDATE orders
-    SET ${ setString }
-    WHERE id= ${id}
-    RETURNING *;
+        const { rows: [updated] } = await client.query(`
+            UPDATE orders
+            SET ${ setString }
+            WHERE id= ${id}
+            RETURNING *
+        `, Object.values(fields))
 
-`, Object.values(fields))
         return updated
-
     } catch (error) {
         throw error
     }
@@ -66,26 +65,24 @@ async function updateOrder(id, fields) {
 
 
 async function deleteOrder(id) {
-
     try {
-        const {
-            rows: [deleting]
-        } = await client.query(`
-
-DELETE FROM orders
-WHERE id= ${id}
-RETURNING *;
-
-`)
+        const { rows: [deleting] } = await client.query(`
+            DELETE FROM orders
+            WHERE id= ${id}
+            RETURNING *;
+        `)
 
         return deleting
-
-
     } catch (error) {
         throw error
     }
-
 }
+
+/*
+//////////////
+// Exports //
+////////////
+*/
 
 module.exports = {
     createOrder,
