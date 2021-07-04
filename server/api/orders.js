@@ -1,5 +1,10 @@
 const express = require('express')
 const ordersRouter = express.Router()
+const {createOrder,
+    updateOrder,
+    deleteOrder} = require('../db')
+const{requireUser} = require('./utils')
+
 
 /* Create an order*/
 /* 
@@ -12,20 +17,26 @@ ordersRouter.post('/', requireUser, async(req, res, next) => {
 })
 */
 
-/* Get orders without games? */
-//For admin use only
 
 
 
 /* Update an order */
-//
+/* 
+ordersRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+    try{
+
+    } catch(error){
+        next(error)
+    }
+})
+*/
 
 
 
 /* Destroy an order*/
 /* 
 //For admin use only
-ordersRouter.delete('/:id;, requireUser, async(req, res, next) => {
+ordersRouter.delete('/:orderId;, requireUser, async(req, res, next) => {
     try{
 
     }catch(error){
