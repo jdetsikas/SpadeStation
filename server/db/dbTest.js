@@ -1,19 +1,31 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 const { 
     // user functions
-    createUser, getUser, getAllUsers, getAllActiveUsers, getUserById, getUserByUsername, deactivateUser, updateUser, 
+    getAllUsers, getAllActiveUsers, deactivateUser, updateUser, 
     // Game functions
-    createGame, getAllGames, getGameById, updateGame, deleteGame,
+    getAllGames, updateGame,
     // Order functions
-    createOrder, getOrdersWithoutGames, updateOrder, deleteOrder,
+    getOrdersWithoutGames, updateOrder,
     // Game Order functions
-    addGameToOrder, getAllOrderGames, updateOrderGame, removeOrderGame
+    getAllOrderGames, updateOrderGame, removeOrderGame
   } = require('./');
+
+/*
+////////////////
+// Functions //
+//////////////
+*/
 
 async function testDB() {
     try {
         console.log("Starting to test database...");
   
-  
+        // Tests for users table
   
         console.log("------Testing Users Functions-------")
   
@@ -35,7 +47,7 @@ async function testDB() {
         const newUsers = await getAllActiveUsers();
         console.log("Result:", newUsers);
   
-  
+        // Tests for games table
   
         console.log("------Testing Games Functions-------")
   
@@ -54,7 +66,7 @@ async function testDB() {
         const newGames = await getAllGames();
         console.log("Result:", newGames);
   
-        
+        // Tests for orders table
   
         console.log("------Testing Order Functions-------")
   
@@ -72,7 +84,7 @@ async function testDB() {
         const newOrders = await getOrdersWithoutGames();
         console.log("Result:", newOrders);
   
-  
+        // Tests for order_games table
   
         console.log("------Testing Order Game Functions-------")
   
@@ -86,23 +98,19 @@ async function testDB() {
         });
         console.log("Result:", updateOrderGameResult);
   
-        console.log("Calling getAllOrderGames with changes");
-        const newOrderGames = await getAllOrderGames();
-        console.log("Result:", newOrderGames);
-  
         console.log("Calling removeGameFromOrder on orderGame[1] from order[1]");
         const removeGameResult = await removeOrderGame(1, 1)
         console.log("Remove Game From Order Result:", removeGameResult)
   
         console.log("Calling getAllOrderGames with changes");
-        const newestOrderGames = await getAllOrderGames();
-        console.log("Result:", newestOrderGames);
+        const newOrderGames = await getAllOrderGames();
+        console.log("Result:", newOrderGames);
   
         console.log("Finished database tests!");
     } catch (error) {
         console.log("Error during testDB");
         throw error;
     }
-  }
+}
 
 module.exports = testDB

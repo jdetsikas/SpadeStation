@@ -14,7 +14,7 @@ const { getGameById } = require('./games')
 //////////////
 */
 
-async function getAllOrderGames(fields) {
+async function getAllOrderGames() {
     try {
         const { rows: orderGames } = await client.query(`
             SELECT * FROM order_games
@@ -33,6 +33,7 @@ async function addGameToOrder(fields) {
 
         const insert = createInsertString(fields)
         const values = createValueString(fields)
+        if (insert.length === 0 || values.length === 0) { return }
 
         const {rows: [addedGame] } = await client.query(`
             INSERT INTO order_games(${insert})
@@ -49,21 +50,16 @@ async function addGameToOrder(fields) {
 async function updateOrderGame(id, fields){
     try{
         const setString = createSetString(fields)
-        if (setString.length === 0){
-            return
-        }
+        if (setString.length === 0){ return }
 
-        const{
-            rows : [updatedOrderGame]
-        } = await client.query(`
-        UPDATE order_games
-        SET ${setString}
-        WHERE id = ${id}
-        RETURNING *;
-        `
-        , Object.values(fields))
+        const{ rows : [updatedOrderGame] } = await client.query(`
+            UPDATE order_games
+            SET ${setString}
+            WHERE id = ${id}
+            RETURNING *;
+        `, Object.values(fields))
+
         return updatedOrderGame
-
     }catch (error){
         throw error
     }
@@ -71,14 +67,13 @@ async function updateOrderGame(id, fields){
 
 async function removeOrderGame(gameId, orderId){
     try{
-        const {rows: [removed]} = await client.query(`
+        const { rows: [removed] } = await client.query(`
             DELETE FROM order_games
             WHERE "gameId"= $1 AND "orderId" = $2
             RETURNING *;
         `, [gameId, orderId] )
 
         return removed
-
     }catch (error){
         throw error
     }
