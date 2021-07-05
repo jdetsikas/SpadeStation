@@ -7,6 +7,19 @@ const {addGameToOrder,
 
 const {requireUser} = require('./utils')
 
+
+/*
+orderGamesRouter.post('/', requireUser, async(req, res, next) => {
+    
+    try{
+
+    }catch(error){
+        next(error)
+    }
+})
+*/
+
+
 /* 
 orderGamesRouter.patch('/:orderGameId', requireUser, async(req, res, next) => {
 

@@ -8,6 +8,8 @@ function requireUser(req, res, next) {
   
     next();
   }
+
+  //Should we include a check for params being sent? Like requiredParams?
   
   module.exports = {
     requireUser
