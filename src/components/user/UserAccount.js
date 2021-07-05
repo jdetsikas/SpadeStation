@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { checkLogin, setUserData } from '../../utils';
+import { setUserData } from '../../utils';
 
-const UserAccount = ({ user, setUser }) => {
+
+
+const UserAccount = (props) => {
+    const { user, setUser } = props
+
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+    const [loc, setLoc] = useState('')
+    const [bill, setBill] = useState('')
+
     useEffect(() => {
-        setUserData(setUser) //invoke
-      }, [])
+        setUserData(props, setUser)
+        setName(user.username)
+    }, [])
     
     return (
-        <div>
-            <h1>Account Management</h1>
-            <h2>{user.username}</h2>
-        </div> );
+        <>
+        { user ?
+            <div>
+                <h1>Account Management</h1>
+                <h2>Username: {name}</h2>
+            </div> 
+         :  <div>
+                <h1>Please log-in</h1>
+            </div>
+        }
+        </>
+        );
 }
 
 export default UserAccount;

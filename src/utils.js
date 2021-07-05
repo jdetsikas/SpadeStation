@@ -34,7 +34,7 @@ export async function checkLogin() {
 }
 
 // sets the user data if logged in
-export async function setUserData(setUser) {
+export async function setUserData(props, setUser) {
   let data = await checkLogin()
   console.log(data)
   if (!data.id) {

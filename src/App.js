@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from './components/Navbar'
 import Routes from './Routes'
+
+import { Navbar } from './components/site_layout'
 import { checkLogin } from './utils'
 
 function App() {
@@ -13,7 +14,6 @@ function App() {
         setUser(data)
       }
     }
-
     setLogIn()
   }, [])
 
