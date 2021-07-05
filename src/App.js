@@ -13,14 +13,15 @@ function App() {
         setUser(data)
       }
     }
+
     setLogIn()
   }, [])
+
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} />
       <Routes user={user} setUser={setUser} />
-    </div>
-  )
+    </div> )
 }
 
 export default App

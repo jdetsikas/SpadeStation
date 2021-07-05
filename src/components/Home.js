@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { checkLogin } from '../utils'
+import { checkLogin, setUserData } from '../utils'
 
 function Home(props) {
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    async function setUserData() {
-      let data = await checkLogin()
-      console.log(data)
-      if (!data.id) {
-        // no user, return to login
-        props.history.push('/login')
-      } else {
-        setUser(data)
-      }
-    }
-    setUserData() //invoke
+    setUserData(setUser) //invoke
   }, [])
 
   return (
