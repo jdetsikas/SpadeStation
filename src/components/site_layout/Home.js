@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { setUserData } from '../../utils'
 
-function Home() {
+function Home(props) {
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    setUserData(setUser) //invoke
+    setUserData(props, setUser) //invoke
   }, [])
 
   return (
