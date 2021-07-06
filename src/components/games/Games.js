@@ -19,7 +19,7 @@ const Games = () => {
             fetchGames(setGamesList)
         }
         prefetchGames()
-    })
+    }, [])
 
     const gameInventory = gamesList.map( (game, idx) => <GameTemplate key={idx} game={game}/> )
 
