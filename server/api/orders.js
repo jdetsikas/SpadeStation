@@ -32,7 +32,9 @@ ordersRouter.get('/', async(req, res, next) => {
 
 /* Create an order*/
 
-ordersRouter.post('/', requireUser, async(req, res, next) => {
+ordersRouter.post('/', 
+// requireUser, 
+async(req, res, next) => {
     
     const {id} = req.user;
     const {buyerId, payment, shippingLoc, orderStatus} = req.body;
