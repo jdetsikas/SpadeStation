@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { createUser, getUser, getUserByUsername, getUserById, deactivateUser } = require('../db')
+const { requireUser } = require('./utils') 
 const SALT_COUNT = 10
 const { JWT_SECRET = 'neverTell' } = process.env
 
@@ -99,7 +100,7 @@ router.get('/me', (req, res, next) => {
 
 //usersRouter.patch(‘:userId/deactivate’)
 router.patch('/:userId/deactivate',requireUser, (req,res,next) => {
-  
+  console.log(req.user)
   
 
 // const ontherUpdate = deactivateUser

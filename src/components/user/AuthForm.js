@@ -23,7 +23,7 @@ function AuthForm(props) {
           await setUsername('')
           await setPassword('')
           await setUser(data.user)
-          props.history.push('/home') // send it home
+          props.history.push('/landing') // send it home
         }
       } catch (error) {
         console.log(error)
