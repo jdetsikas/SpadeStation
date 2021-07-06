@@ -110,21 +110,21 @@ async function createInitialGames() {
         console.log('Starting to create games...');
 
         const gamesToCreate = [
-            { title: 'Pac-Man', description: 'Move the wheel of cheese around and eat them ghosts!', console: 'Atari 2600', price: 99, year: 1982, image: '' },
-            { title: 'Space Invaders', description: 'Pew pew!', console: 'Atari 2600', price: 89, year: 1980, image: '' },
-            { title: 'Donkey Kong', description: 'Avoid the barrels!', console: 'Atari 2600', price: 79, year: 1982, image: '' },
-            { title: 'Ms. Pac-Man', description: 'Move the wheel of cheese with the bow on it and eat them ghosts!', console: 'Atari 2600', price: 69, year: 1983, image: '' },
-            { title: 'Asteroids', description: 'Blast the asteroids before they crush you!', console: 'Atari 2600', price: 59, year: 1981, image: '' },
-            { title: 'Frogger', description: 'Look both ways before you cross the street!', console: 'Atari', price: 49, year: 1982, image: '' },
-            { title: 'Super Mario Bros.', description: 'Jump, squish, eat, repeat!', console: 'NES', price: 39, year: 1985, image: '' },
-            { title: 'Duck Hunt', description: 'Move the wheel of cheese around and ear them ghosts!', console: 'NES', price: 39, year: 1984, image: '' },
-            { title: 'Tetris', description: 'Make this puzzle, while it moves!', console: 'NES', price: 35, year: 1989, image: '' },
-            { title: 'The Legend of Zelda', description: 'Move the wheel of cheese around and ear them ghosts!', console: 'NES', price: 35, year: 1986, image: '' },
-            { title: 'Metroid', description: 'Stop the space pirates and retrieve the Metroid parasites!', console: 'NES', price: 29, year: 1971, image: '' },
-            { title: 'Pokemon Red', description: 'Capture pocket monsters and battle against other trainers!', console: 'Gameboy', price: 25, year: 1996, image: '' },
-            { title: 'Pokemon Yellow', description: 'Battle against other trainers with your best friend Pikachu!', console: 'Gameboy', price: 25, year: 1998, image: '' },
-            { title: 'Sonic the Hedgehog', description: 'Run at supersonic speeds on your quest to defeat Dr. Robotnik!', console: 'Sega Genesis', price: 19, year: 1991, image: '' },
-            { title: 'Mortal Kombat II', description: 'Defeat your oppponent in 1v1 combat and finish them with your fatality move!', console: 'Sega Genesis', price: 19, year: 1994, image: '' }
+            { title: 'Pac-Man', description: 'Move the wheel of cheese around and eat them ghosts!', console: 'Atari 2600', price: 99, year: 1982, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_pacmanvcs_thumb.jpg' },
+            { title: 'Space Invaders', description: 'Pew pew!', console: 'Atari 2600', price: 89, year: 1980, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_spaceinvaders_au_thumb.jpg' },
+            { title: 'Donkey Kong', description: 'Avoid the barrels!', console: 'Atari 2600', price: 79, year: 1982, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_donkeykong_thumb.jpg' },
+            { title: 'Ms. Pac-Man', description: 'Move the wheel of cheese with the bow on it and eat them ghosts!', console: 'Atari 2600', price: 69, year: 1983, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_mspacman_thumb.jpg' },
+            { title: 'Asteroids', description: 'Blast the asteroids before they crush you!', console: 'Atari 2600', price: 59, year: 1981, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_asteroids_au_thumb.jpg' },
+            { title: 'Frogger', description: 'Look both ways before you cross the street!', console: 'Atari 2600', price: 49, year: 1982, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/atari_2600/a2600_frogger_thumb.jpg' },
+            { title: 'Super Mario Bros.', description: 'Jump, squish, eat, repeat!', console: 'NES', price: 39, year: 1985, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/nes/nes_supermariobros_thumb.jpg' },
+            { title: 'Duck Hunt', description: 'Move the wheel of cheese around and ear them ghosts!', console: 'NES', price: 39, year: 1984, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/nes/nes_duckhunt_thumb.jpg' },
+            { title: 'Tetris', description: 'Make this puzzle, while it moves!', console: 'NES', price: 35, year: 1989, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/nes/nes_tetris_thumb.jpg' },
+            { title: 'The Legend of Zelda', description: 'Move the wheel of cheese around and ear them ghosts!', console: 'NES', price: 35, year: 1986, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/nes/nes_legendofzelda_thumb.jpg' },
+            { title: 'Metroid', description: 'Stop the space pirates and retrieve the Metroid parasites!', console: 'NES', price: 29, year: 1971, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/nes/nes_metroid_thumb.jpg' },
+            { title: 'Pokemon Red', description: 'Capture pocket monsters and battle against other trainers!', console: 'Gameboy', price: 25, year: 1996, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/gameboy/gb_pokemonred_thumb.jpg' },
+            { title: 'Pokemon Yellow', description: 'Battle against other trainers with your best friend Pikachu!', console: 'Gameboy', price: 25, year: 1998, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/gameboy/gb_pokemonyellow_au_thumb.jpg' },
+            { title: 'Sonic the Hedgehog', description: 'Run at supersonic speeds on your quest to defeat Dr. Robotnik!', console: 'Sega Genesis', price: 19, year: 1991, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/genesis/genesis_sonic_thumb.jpg' },
+            { title: 'Mortal Kombat', description: 'Defeat your oppponent in 1v1 combat and finish them with your fatality move!', console: 'Sega Genesis', price: 19, year: 1994, image: 'https://coverproject.sfo2.cdn.digitaloceanspaces.com/genesis/genesis_mortalkombat_pal_thumb.jpg' }
         ]
         const games = await Promise.all(gamesToCreate.map(createGame));
 
