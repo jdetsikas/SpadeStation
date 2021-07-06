@@ -3,7 +3,8 @@ const ordersRouter = express.Router()
 const {createOrder,
     updateOrder,
     deleteOrder,
-    getOrdersWithoutGames} = require('../db')
+    getOrdersWithoutGames,
+    getOrderById} = require('../db')
 
     const{requireUser, requireAdmin} = require('./utils')
 
@@ -50,8 +51,9 @@ async(req, res, next) => {
     try{
 
         const buyerId = id;
-        const newOrder = await createOrder({ buyerId,payment, shippingLoc, orderStatus});
+        const newOrder = await createOrder({ buyerId, payment, shippingLoc, orderStatus});
         console.log('------------',newOrder)
+        newOrder.games = []
         res.send(newOrder) 
 
     } catch(error){
@@ -65,29 +67,43 @@ async(req, res, next) => {
 
 /* Update an order */
 
-// ordersRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+ordersRouter.patch('/:orderId', requireUser, async(req, res, next) => {
     
-//     const {} = req.params;
-//     const {isPublic, name, goal} = req.body;
+    const {id} = req.user;
+    console.log('WHat is the user id?',id)
+    
+    const {orderId} = req.params
+    console.log('the order id:----',orderId)
 
-//     try{
-//         const {creatorId} = await getRoutineById(routineId);
+    // const {payment, shippingLoc, orderStatus} = req.body;
 
-//         if (creatorId === req.user.id){
+    console.log('the req.body------', req.body)
+
+    // res.send('hello')
+
+    try{
+        const {buyerId} = await getOrderById(orderId);
+
+        // console.log('yoooo----', buyerId)
+
+        if (buyerId === id){
             
-//         const id = routineId;
+        // const id = routineId;
 
-//         const updatedOrder = await updateOrder(id, fields);
-//         res.send(updatedOrder)
-//         }else{
-//             next({message: 'Invalid'})
-//         }
+        const updatedOrder = await updateOrder(orderId, req.body);
+        console.log('the updated order ------', updateOrder)
 
-//     }catch (error){
-//         next(error)
-//     }
+        // res.send('HEllo2')
+        res.send(updatedOrder)
+        }else{
+            next({message: 'Invalid'})
+        }
 
-// })
+    }catch (error){
+        next(error)
+    }
+
+})
 
 
 

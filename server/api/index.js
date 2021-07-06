@@ -18,18 +18,18 @@ router.use(async (req, res, next) => {
     const token = auth.slice(prefix.length)
     // console.log('token----', token)
     try {
-      // console.log('------before pt-------')
-      // console.log('secret:', JWT_SECRET)
-      // console.log( 'verify----',jwt.verify(token, JWT_SECRET))
-      // let parsedToken 
-      //  jwt.verify(token, JWT_SECRET, function(err, decoded) {
-      //   if(err){
-      //       console.log(err)
-      //   }else{
-      //       console.log(decoded)
-      //       parsedToken = decoded
-      //   }
-      //  })
+    //   console.log('------before pt-------')
+    //   console.log('secret:', JWT_SECRET)
+    //   console.log( 'verify----',jwt.verify(token, JWT_SECRET))
+    //   let parsedToken 
+    //    jwt.verify(token, JWT_SECRET, function(err, decoded) {
+    //     if(err){
+    //         console.log(err)
+    //     }else{
+    //         console.log(decoded)
+    //         parsedToken = decoded
+    //     }
+    //    })
 
        const parsedToken = jwt.verify(token, JWT_SECRET)
 
