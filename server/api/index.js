@@ -47,7 +47,8 @@ const usersRouter = require('./users')
 router.use('/users', usersRouter)
 
 // ROUTER: /api/games
-
+const gamesRouter = require('./games')
+router.use('/games', gamesRouter)
 
 // ------ ADD MORE ROUTES BELOW ------
 

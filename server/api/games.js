@@ -1,22 +1,27 @@
 const express = require('express');
-const router = express.Router()
+const gameRouter = express.Router()
 const{ createGame,
     getAllGames,
     getGameById,
     updateGame,
     deleteGame } = require('../db')
-const{ requiredUser } = require('./utils')
 
 
 ///////////////////////
 //get/ api/ getGame//
 //////////////////////
 
-gameRouter.get('/api/games/:gameId', async (req, res, next) => {
+gameRouter.get('/:gameId', async (req, res, next) => {
     try {
-        const{id} = req.body;
-        const gettingGame = await getGameById(id);
-        if(gettingGame) {
+        const {gameId} = req.params;
+        const gettingGame = await getGameById(gameId);
+        
+        if (!gettingGame) {
+            next({
+              name: 'NotFound',
+              message: `No Game by ID ${gameId}`
+            })
+        } else {
             res.send(gettingGame);
         }
 
@@ -30,7 +35,7 @@ gameRouter.get('/api/games/:gameId', async (req, res, next) => {
 //get/ api/ getAllGames//
 //////////////////////////
 
-gameRouter.get('/api/games', async (req, res, next) => {
+gameRouter.get('/', async (req, res, next) => {
     try {
         const gettingAllGames = await getAllGames();
         if(gettingAllGames) {
@@ -46,10 +51,10 @@ gameRouter.get('/api/games', async (req, res, next) => {
 //POST/ api/ games//
 ////////////////////
 
-gameRouter.post('/', requiredUser, async (req, res, next) =>{
+gameRouter.post('/', async (req, res, next) =>{
     try{
-        const{image, price, name, console} = req.body;
-        const createdGames = await createGame({creatorId: req.user.id, image, price, name, console});
+        const {image, price, name, console, year, description} = req.body;
+        const createdGames = await createGame({ image, price, name, console, year, description });
         if(createdGames) {
             res.send(createdGames);
         }else{
@@ -67,7 +72,7 @@ gameRouter.post('/', requiredUser, async (req, res, next) =>{
 //PATCH/ api/ games//
 ////////////////////
 
-gameRouter.patch('/:gameId', requiredUser, async (req, res, next) =>{
+gameRouter.patch('/:gameId', async (req, res, next) =>{
     try{
         const {image, price, name, console} = req.body;
         const {gameId} = req.params;
@@ -78,7 +83,7 @@ gameRouter.patch('/:gameId', requiredUser, async (req, res, next) =>{
                 message: 'No game by ID of ${gameId} was found'
             })
         }else{
-            const updatedGame= await updateGame ({id: gameId, image, price, name, console});
+            const updatedGame= await updateGame (gameId, {image, price, name, console});
             if(updatedGame){
                 res.send(updatedGame);
             }else{
@@ -98,14 +103,14 @@ gameRouter.patch('/:gameId', requiredUser, async (req, res, next) =>{
 //DELETE/ api/ games//
 ////////////////////
 
-gameRouter.delete('/:gameId', requiredUser, async (req, res, next)=>{
+gameRouter.delete('/:gameId', async (req, res, next)=>{
     try{
         const {gameId} = req.params;
         const updateToGame = await getGameById(gameId);
         if(!updateToGame){
             next({
                 name: 'Not Found',
-                message: 'No game by ID of ${gameId} was found'
+                message: `No game by ID of ${gameId} was found`
             })
         }else{
             const deletedGame = await deleteGame(gameId)
