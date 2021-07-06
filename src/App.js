@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from './components/Navbar'
 import Routes from './Routes'
+
+import { Navbar } from './components/site_layout'
 import { checkLogin } from './utils'
 
 function App() {
@@ -15,12 +16,12 @@ function App() {
     }
     setLogIn()
   }, [])
+
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} />
       <Routes user={user} setUser={setUser} />
-    </div>
-  )
+    </div> )
 }
 
 export default App

@@ -2,13 +2,11 @@ import axios from 'axios'
 
 function setHeaders() {
   let token = localStorage.getItem('token')
-  let config = token
-    ? {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    : {}
+  let config = token ? {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    } : {}
   return config
 }
 
@@ -32,6 +30,18 @@ export async function checkLogin() {
   } catch (err) {
     console.log('checkLogin(): User is not logged on.\n', err)
     return err
+  }
+}
+
+// sets the user data if logged in
+export async function setUserData(props, setUser) {
+  let data = await checkLogin()
+  console.log(data)
+  if (!data.id) {
+    // no user, return to login
+    props.history.push('/login')
+  } else {
+    setUser(data)
   }
 }
 

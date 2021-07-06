@@ -7,18 +7,32 @@ const {addGameToOrder,
 
 const {requireUser} = require('./utils')
 
+orderGamesRouter.get('/', async(req, res, next) => {
+    // console.log(req.params)
+    try{
 
+        const orderGames = await getAllOrderGames();
+
+        res.send(orderGames)
+
+    }catch(error){
+        next(error)
+    }
+})
 
 orderGamesRouter.post('/', requireUser, async(req, res, next) => {
         
-        const {id} = req.user;
-        const {orderId, gameId, quantity, purchCost} = req.body
+        console.log('--zap---', req.body)
+        const {id} = req.order;
+        const {gameId, quantity, purchCost} = req.body
+        console.log('What is the order id?', id)
     
     try{
 
-        const addedGame = await addGameToOrder({orderId, gameId, quantity, purchCost});
-        console.log('------------', addedGame)
-        res.send(addedGame) 
+        const orderId = id;
+        const gameaAddedToOrder = await addGameToOrder({orderId, gameId, quantity, purchCost});
+        console.log('------------', gameaAddedToOrder)
+        res.send(gameaAddedToOrder) 
 
     }catch(error){
         next(error)
@@ -26,15 +40,13 @@ orderGamesRouter.post('/', requireUser, async(req, res, next) => {
 })
 
 
-
-
-
 orderGamesRouter.patch('/:orderGameId', requireUser, async(req, res, next) => {
 
-    const {id} = req.user;
-    const {orderId, gameId, quantity, purchCost} = req.body
+    const {id} = req.order;
+    const {gameId, quantity, purchCost} = req.body
 
     try{
+        const orderId = id;
         const updatedOrderGame = await updateOrderGame({orderId, gameId, quantity, purchCost})
         console.log('------------', updatedOrderGame)
         res.send(updatedOrderGame) 
@@ -45,13 +57,13 @@ orderGamesRouter.patch('/:orderGameId', requireUser, async(req, res, next) => {
 })
 
 
-
 orderGamesRouter.delete('/:orderGameId', requireUser, async(req, res, next) => {
 
-    const {id} = req.user;
-    const {orderId, gameId, quantity, purchCost} = req.body
+    const {id} = req.order;
+    const {gameId, quantity, purchCost} = req.body
 
     try{
+        const orderId = id;
         const removedOrderGame = await removeOrderGame({orderId, gameId, quantity, purchCost})
         console.log('------------', removedOrderGame)
         res.send(removedOrderGame) 
