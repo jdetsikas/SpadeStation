@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 const GameTemplate = ({ game }) => {
     const [preview, setPreview] = useState(false);
     const { id, title, description, price, console, year, image } = game;
-
     
     async function gameClick() {
         event.preventDefault();
@@ -18,7 +17,7 @@ const GameTemplate = ({ game }) => {
             <h2>{`$${price}.99`}</h2>
             {preview ? 
                 <div className='game-prev'>
-                    <Link to={`/games/details/${id}`}>Details!</Link>
+                    <Link to={`/games/${id}`}>Details!</Link>
                 </div>
             : null}
         </div> );

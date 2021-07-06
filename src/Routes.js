@@ -14,7 +14,7 @@ function Routes(props) {
       <Route path='/signup' render={ (props) => <AuthForm type='register' {...props} setUser={setUser}/> }/>
       <Route path='/account' render={ (props) => <UserAccount {...props} user={user} setUser={setUser}/> }/>
 
-      <Route path='/games/details/:gameId' component={GameDetails}/>
+      <Route path='/games/:gameId' component={GameDetails}/>
       <Route path='/games' component={Games}/>
       
       <Route path='/home' component={Home}/>

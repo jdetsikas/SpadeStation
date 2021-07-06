@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+async function fetchGame(gameId, setGame) {
+    try {
+        const { data: game } = await axios.get(`/api/games/${gameId}`)
+        setGame(game)
+    } catch (error) {
+        throw error
+    }
+}
+
 const GameDetails = () => {
     const [game, setGame] = useState({})
     let { gameId } = useParams()
-
+    
     useEffect(() => {
-        // Fetches the game data for game with ID equal to location params
-        async function fetchGameData() {
-            const { data } = await axios.get(`api/games/${gameId}`)
-            setGame(data)
+        async function prefetchData() {
+            fetchGame(gameId, setGame)
         }
-        fetchGameData()
+        prefetchData()
     }, [])
 
     const { title, description, console, year, price, image } = game
