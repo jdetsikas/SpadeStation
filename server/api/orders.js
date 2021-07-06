@@ -5,7 +5,7 @@ const {createOrder,
     deleteOrder,
     getOrdersWithoutGames} = require('../db')
 
-    const{requireUser} = require('./utils')
+    const{requireUser, requireAdmin} = require('./utils')
 
 
 
@@ -33,18 +33,24 @@ ordersRouter.get('/', async(req, res, next) => {
 /* Create an order*/
 
 ordersRouter.post('/', 
-// requireUser, 
+requireUser, 
+// requireAdmin, //Would we need a require admin check?
 async(req, res, next) => {
+
+    console.log('--zap---', req.body)
+    // console.log('--req.user---', req.user)
+
+    // res.send('Hello')
     
     const {id} = req.user;
-    const {buyerId, payment, shippingLoc, orderStatus} = req.body;
+    const {payment, shippingLoc, orderStatus} = req.body;
 
-    // console.log(req)
+    console.log('WHat is the user id?',id)
 
     try{
 
         const buyerId = id;
-        const newOrder = await createOrder({buyerId, payment, shippingLoc, orderStatus});
+        const newOrder = await createOrder({ buyerId,payment, shippingLoc, orderStatus});
         console.log('------------',newOrder)
         res.send(newOrder) 
 
