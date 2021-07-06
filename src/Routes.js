@@ -17,8 +17,8 @@ function Routes(props) {
       <Route path='/games/:gameId' component={GameDetails}/>
       <Route path='/games' component={Games}/>
       
-      <Route path='/home' component={Home}/>
-      <Route path='/' component={Landing}/>
+      <Route path='/landing' component={Landing}/>
+      <Route path='/' component={Home}/>
     </Switch> )
 }
 

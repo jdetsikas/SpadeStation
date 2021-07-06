@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { setUserData } from '../../utils'
 
 function Home(props) {
-  const [user, setUser] = useState({})
-
-  useEffect(() => {
-    setUserData(props, setUser) //invoke
-  }, [])
-
   return (
     <div className='Home'>
-      <h1>Welcome home, {user.username}</h1>
-    </div>
-  )
+      <h1>Welcome to Spades Shopper!</h1>
+      <h2>We've got games on deck!</h2>
+    </div> );
 }
 
 export default Home
