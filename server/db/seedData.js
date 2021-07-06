@@ -146,7 +146,7 @@ async function createInitialOrders() {
         {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'PROCESSING'},
         {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'SHIPPED'},
         {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'CANCELED'},
-        {buyerId: 2, payment: 'Check is its way', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
+        {buyerId: 2, payment: 'Check is on its way', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
         ]
         const orders = await Promise.all(ordersToCreate.map(createOrder));
 
