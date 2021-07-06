@@ -28,7 +28,7 @@ server.use(express.json())
 server.use(morgan('tiny'))
 
 // express static for build files
-server.use('/', express.static(path.join(__dirname, 'build')))
+// server.use('/', express.static(path.join(__dirname, 'build')))
 
 server.use('/api', apiRouter)
 
