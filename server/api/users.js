@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const { createUser, getUser, getUserByUsername, getUserById } = require('../db')
+const { createUser, getUser, getUserByUsername, getUserById, deactivateUser } = require('../db')
 const SALT_COUNT = 10
 const { JWT_SECRET = 'neverTell' } = process.env
+
 
 // POST /api/users/login
 router.post('/login', async (req, res, next) => {
@@ -82,6 +83,36 @@ router.get('/me', (req, res, next) => {
     next(error)
   }
 })
+
+//usersRouter.patch(‘/:userId’)
+// router.post('/', (req,res,next) =>{
+  
+//   try{
+//     res.send("Hello ")
+
+//   }catch(error){
+//     next(error) 
+
+//   }
+// })
+
+
+//usersRouter.patch(‘:userId/deactivate’)
+router.patch('/:userId/deactivate',requireUser, (req,res,next) => {
+  
+  
+
+// const ontherUpdate = deactivateUser
+// console.log()
+//   try{
+//     res.send()
+
+//   }catch(error){
+//     next(error) 
+//   }
+})
+
+
 
 // --------- ADD ADDITONAL USER ROUTES AS NEEDED ---------
 module.exports = router
