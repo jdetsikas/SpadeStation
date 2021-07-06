@@ -167,6 +167,22 @@ async function deactivateUser(id) {
     }
 }
 
+//activate users
+async function activateUser(id) {
+    try { 
+        const { rows: [activatedUser] } = await client.query(`
+            UPDATE users
+            SET "isActive"=true
+            WHERE id=${id}
+            RETURNING *;
+        `)
+
+        return activatedUser
+    } catch (error) {
+        throw error
+    }
+}
+
 
 /*
 //////////////
@@ -182,5 +198,6 @@ module.exports = {
     getUserById,
     getUserByUsername,
     updateUser,
-    deactivateUser
+    deactivateUser,
+    activateUser
 }
