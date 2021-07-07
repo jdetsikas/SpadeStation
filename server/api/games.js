@@ -9,6 +9,8 @@ const{ createGame,
     const {requireAdmin} = require('./utils')
 
 
+//-------------------Require Admin is used for these routes--------------//
+
 ///////////////////////
 //get/ api/ getGame//
 //////////////////////

@@ -5,7 +5,10 @@ const {addGameToOrder,
     updateOrderGame,
     removeOrderGame} = require('../db')
 
-const {requireUser} = require('./utils')
+const {requireUser, requireAdmin} = require('./utils')
+
+//-------------------Require Admin is used for these routes--------------//
+
 
 orderGamesRouter.get('/', async(req, res, next) => {
     // console.log(req.params)
@@ -46,7 +49,7 @@ orderGamesRouter.get('/', async(req, res, next) => {
 // })
 
 
-orderGamesRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+orderGamesRouter.patch('/:orderId', requireUser, requireAdmin, async(req, res, next) => {
 
     console.log('requser', req.user)
     console.log('reqbody', req.body)
@@ -66,7 +69,7 @@ orderGamesRouter.patch('/:orderId', requireUser, async(req, res, next) => {
 })
 
 
-orderGamesRouter.delete('/:orderId', requireUser, async(req, res, next) => {
+orderGamesRouter.delete('/:orderId', requireUser, requireAdmin, async(req, res, next) => {
 
     console.log('requser', req.user)
     console.log('reqbody', req.body)
