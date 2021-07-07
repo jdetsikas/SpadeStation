@@ -4,8 +4,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 
 
 
-function Navbar({ user, setUser, history }) {
-  const [cartView, setCartView] = useState(false)
+function Navbar({ user, setUser, history, cartView, setCartView }) {
 
   function handleLogout() {
     localStorage.removeItem('token')
@@ -21,8 +20,6 @@ function Navbar({ user, setUser, history }) {
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/games'>Games</NavLink>
         <input type='image' src='https://www.freeiconspng.com/uploads/basket-cart-icon-27.png' onClick={(e) => {e.preventDefault(); setCartView(!cartView)}} height='30' width='30'/>
-        {cartView ? <Cart/> : null}
-
         {user.id ? ( 
           <div>
             <NavLink to='/account'>{user.username}</NavLink>
