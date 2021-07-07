@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Routes from './Routes'
 
+import Routes from './Routes'
 import { Navbar } from './components/site_layout'
-import { Cart } from './components/games'
+import { Cart } from './components/cart'
 import { checkLogin } from './utils'
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} cartGames={cartGames} setCartGames={setCartGames} cartView={cartView} setCartView={setCartView}/>
-      {cartView ? <Cart/> : null}
+      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} /> : null}
       <Routes user={user} setUser={setUser} cartGames={cartGames} setCartGames={setCartGames} />
     </div> )
 }

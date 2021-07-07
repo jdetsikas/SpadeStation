@@ -1,8 +1,5 @@
-import React, {useState} from 'react'
-import { Cart } from '../games';
+import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
-
-
 
 function Navbar({ user, setUser, history, cartView, setCartView }) {
 
@@ -15,7 +12,7 @@ function Navbar({ user, setUser, history, cartView, setCartView }) {
   return (
     <div>
 
-      <h1 className='logo'><img src ="/icons/logo.png" alt="logo"/></h1>
+      <h1 className='logo'><img src='/icons/logo.png' alt="logo"/></h1>
       <nav className='navbar'>
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/games'>Games</NavLink>
