@@ -29,13 +29,11 @@ async function filterCompletedOrders(userId, ordersArr) {
 
     // Create a games array to populate with games
     newOrder.games = []
-
     return newOrder
   }
 
   // If 'CART' order already exists, fetch its games and populate games array for the front-end
   filteredOrders[0].games = []
-
   return filteredOrders[0]
 }
 
