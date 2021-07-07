@@ -47,15 +47,21 @@ async function addGameToOrder(fields) {
     };
 };
 
-async function updateOrderGame(id, fields){
+async function updateOrderGame(orderId, fields){
     try{
+        
+        const gameId = fields.gameId
+        delete fields.gameId
+
         const setString = createSetString(fields)
+
         if (setString.length === 0){ return }
 
         const{ rows : [updatedOrderGame] } = await client.query(`
             UPDATE order_games
             SET ${setString}
-            WHERE id = ${id}
+            WHERE "orderId" = ${orderId}
+            AND "gameId" = ${gameId}
             RETURNING *;
         `, Object.values(fields))
 
@@ -65,13 +71,13 @@ async function updateOrderGame(id, fields){
     }
 }
 
-async function removeOrderGame(gameId, orderId){
+async function removeOrderGame(orderId, gameId){
     try{
         const { rows: [removed] } = await client.query(`
             DELETE FROM order_games
-            WHERE "gameId"= $1 AND "orderId" = $2
+            WHERE "orderId"= $1 AND "gameId" = $2
             RETURNING *;
-        `, [gameId, orderId] )
+        `, [orderId, gameId] )
 
         return removed
     }catch (error){

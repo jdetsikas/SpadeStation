@@ -11,7 +11,7 @@ async function fetchGames(setGamesList) {
     };
 };
 
-const Games = () => {
+const Games = (props) => {
     const [gamesList, setGamesList] = useState([])
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const Games = () => {
         prefetchGames()
     }, [])
 
-    const gameInventory = gamesList.map( (game, idx) => <GameTemplate key={idx} game={game}/> )
+    const gameInventory = gamesList.map( (game, idx) => <GameTemplate {...props} key={idx} game={game}/> )
 
     return (
         <div className="games">

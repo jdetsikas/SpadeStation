@@ -78,6 +78,23 @@ async function deleteOrder(id) {
     }
 }
 
+async function getOrderById(id){
+    //return the order
+
+    try{
+
+        const {rows: [order]} = await client.query(`
+        SELECT * FROM orders
+        WHERE id =${id};
+        `);
+
+        return order
+
+    }catch(error){
+        throw error
+    }
+}
+
 /*
 //////////////
 // Exports //
@@ -88,5 +105,6 @@ module.exports = {
     createOrder,
     getOrdersWithoutGames,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    getOrderById
 }

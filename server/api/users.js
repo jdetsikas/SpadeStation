@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const { createUser, getUser, getUserByUsername, getUserById } = require('../db')
+const { createUser, getUser, getUserByUsername, getUserById, deactivateUser, activateUser } = require('../db')
+const { requireUser } = require('./utils') 
 const SALT_COUNT = 10
 const { JWT_SECRET = 'neverTell' } = process.env
+
 
 // POST /api/users/login
 router.post('/login', async (req, res, next) => {
@@ -82,6 +84,54 @@ router.get('/me', (req, res, next) => {
     next(error)
   }
 })
+
+//usersRouter.patch(‘/:userId’)
+// router.post('/', (req,res,next) =>{
+  
+//   try{
+//     res.send("Hello ")
+
+//   }catch(error){
+//     next(error) 
+
+//   }
+// })
+
+
+//usersRouter.patch(‘:userId/deactivate’)
+router.patch('/:userId/deactivate', async (req,res,next) => {
+  // console.log('LOGING REQUIRE USER  ',req.user)
+
+  console.log('PARAMS', req.params)
+  
+const { userId } = req.params
+  try{
+
+    const deactivatingdUser = await deactivateUser(userId)
+    // console.log(deactivatedUser)
+    res.send(deactivatingdUser)
+  }catch(error){
+    next(error) 
+  }
+})
+
+//usersRouter.patch(‘:userId/deactivate’)
+router.patch('/:userId/activate', async (req,res,next) => {
+  // console.log('LOGING REQUIRE USER  ',req.user)
+
+  console.log('PARAMS', req.params)
+  
+const { userId } = req.params
+  try{
+
+    const activatingUser = await activateUser(userId)
+    // console.log(activatingUser)
+    res.send(activatingUser)
+  }catch(error){
+    next(error) 
+  }
+})
+
 
 // --------- ADD ADDITONAL USER ROUTES AS NEEDED ---------
 module.exports = router

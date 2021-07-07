@@ -50,6 +50,15 @@ router.use('/users', usersRouter)
 const gamesRouter = require('./games')
 router.use('/games', gamesRouter)
 
+// ROUTER: /api/orders
+const ordersRouter = require('./orders')
+router.use('/orders', ordersRouter)
+
+// ROUTER: /api/orderGames
+const orderGamesRouter = require('./order_games')
+router.use('/order_games', orderGamesRouter)
+
+
 // ------ ADD MORE ROUTES BELOW ------
 
 module.exports = router

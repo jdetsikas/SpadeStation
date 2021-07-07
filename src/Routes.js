@@ -6,7 +6,7 @@ import { AuthForm, UserAccount } from './components/user'
 import { Games, GameDetails } from './components/games'
 
 function Routes(props) {
-  const { user, setUser } = props
+  const { user, setUser, cartGames, setCartGames } = props
   
   return (
     <Switch>
@@ -14,11 +14,11 @@ function Routes(props) {
       <Route path='/signup' render={ (props) => <AuthForm type='register' {...props} setUser={setUser}/> }/>
       <Route path='/account' render={ (props) => <UserAccount {...props} user={user} setUser={setUser}/> }/>
 
-      <Route path='/games/:gameId' component={GameDetails}/>
-      <Route path='/games' component={Games}/>
+      <Route path='/games/:gameId' render={ (props) => <GameDetails {...props} setCartGames={setCartGames}/> }/>
+      <Route path='/games' render={ (props) => <Games {...props} /> }/>
       
-      <Route path='/home' component={Home}/>
-      <Route path='/' component={Landing}/>
+      <Route path='/landing' component={Landing}/>
+      <Route path='/' component={Home}/>
     </Switch> )
 }
 
