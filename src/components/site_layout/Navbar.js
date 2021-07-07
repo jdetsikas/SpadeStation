@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Cart } from '../cart';
+import { Cart } from '../games';
 import { NavLink, withRouter } from 'react-router-dom'
 
 function Navbar({ user, setUser, history }) {
