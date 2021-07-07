@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 
+
+
 function Navbar({ user, setUser, history }) {
   function handleLogout() {
     localStorage.removeItem('token')
@@ -10,8 +12,8 @@ function Navbar({ user, setUser, history }) {
 
   return (
     <div>
-      <h1>App Template</h1>
-      <nav>
+      <h1 className='logo'><img src ="/icons/logo.png" alt="logo"/></h1>
+      <nav className='navbar'>
         {user.id ? ( 
           <div>
             <NavLink to='/Home'>Home</NavLink>
