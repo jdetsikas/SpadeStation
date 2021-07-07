@@ -1,7 +1,7 @@
 import React from 'react';
 import CartGameTemplate from './CartGameTemplate'
 
-const Cart = (cartGames, setCartGames) => {
+const Cart = ({cartGames, setCartGames}) => {
 
     // const cartList = cartGames.map( (game, idx) => <CartGameTemplate key={idx} game={game}/> )
 

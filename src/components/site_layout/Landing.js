@@ -6,6 +6,7 @@ function Landing(props) {
 
   useEffect(() => {
     setUserData(props, setUser) //invoke
+    window.console.log(props.user)
   }, [])
 
   return (
