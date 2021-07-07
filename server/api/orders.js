@@ -4,6 +4,7 @@ const {createOrder,
     updateOrder,
     deleteOrder,
     getOrdersWithoutGames,
+    getUsersOrders,
     getOrderById} = require('../db')
 
     const{requireUser, requireAdmin} = require('./utils')
@@ -25,14 +26,19 @@ ordersRouter.get('/', async(req, res, next) => {
     }
 })
 
-
-
-
-
-
+ordersRouter.get('/:userId', async(req, res, next) => {
+    try{
+        const {userId} = req.params
+        const userOrders = await getUsersOrders(userId);
+        res.send(userOrders)
+    }catch(error){
+        next(error)
+    }
+})
 
 /* Create an order*/
 
+<<<<<<< HEAD
 ordersRouter.post('/', requireUser, requireAdmin, async(req, res, next) => {
 
     console.log('--zap---', req.body)
@@ -45,14 +51,15 @@ ordersRouter.post('/', requireUser, requireAdmin, async(req, res, next) => {
 
     console.log('WHat is the user id?',id)
 
+=======
+ordersRouter.post('/', requireUser, async (req, res, next) => {
+>>>>>>> f4a502a2f021cd28a495de5e4718c46b01273d9c
     try{
-
-        const buyerId = id;
-        const newOrder = await createOrder({ buyerId, payment, shippingLoc, orderStatus});
-        console.log('------------',newOrder)
-        newOrder.games = []
+        const {id} = req.user;
+        const fields = {"buyerId": id}
+        
+        const newOrder = await createOrder(fields);
         res.send(newOrder) 
-
     } catch(error){
         next(error)
     }

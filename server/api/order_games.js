@@ -11,13 +11,9 @@ const {requireUser, requireAdmin} = require('./utils')
 
 
 orderGamesRouter.get('/', async(req, res, next) => {
-    // console.log(req.params)
     try{
-
         const orderGames = await getAllOrderGames();
-
         res.send(orderGames)
-
     }catch(error){
         next(error)
     }
