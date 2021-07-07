@@ -24,9 +24,11 @@ const Games = (props) => {
     const gameInventory = gamesList.map( (game, idx) => <GameTemplate {...props} key={idx} game={game}/> )
 
     return (
-        <div>
-            <h1>List of Games</h1>
+        <div className="games">
+            <h1 className="gamesheader">List of Games</h1>
+            <div className="gamegrid">
             { gameInventory /* each should be clickable, sends you to that game's details page */ }
+            </div>
         </div> );
 }
 

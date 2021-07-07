@@ -12,8 +12,8 @@ const GameTemplate = (props) => {
 
     return (
         <div className='game-icon'>
-            <h2>{title}</h2>
-            <input type='image' src={image} alt={title} onClick={gameClick} width='225' height='150'/>
+            <input type='image' src={image} alt={'space invaders'} onClick={gameClick} width='300' height='400'/>
+            <h1>{title}</h1>
             <h2>{`$${price}.99`}</h2>
         </div> );
 };
