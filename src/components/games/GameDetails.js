@@ -27,13 +27,12 @@ const GameDetails = () => {
     return (
         <div id='game-info'>
             <div id='game-details'>
-                <h1>TESTING: ID IS {gameId} </h1>
                 <h2 id='game-title'>Title: {title}</h2>
                 <h3 id='game-release'>Released: {console, year}</h3>
                 <h3 id='game-desc'>About: {description}</h3>
                 <h3 id='game-price'>Price: {price}</h3>
             </div>
-            <img id='game-box' src={image} width='500' height='500'/>
+            <img id='game-box' src={image} width='500' height='300'/>
             <button>Add to Cart</button>
         </div> );
 };

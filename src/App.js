@@ -6,6 +6,7 @@ import { checkLogin } from './utils'
 
 function App() {
   const [user, setUser] = useState({})
+  const [cartGames, setCartGames] = useState([])
 
   useEffect(() => {
     const setLogIn = async () => {
@@ -19,8 +20,8 @@ function App() {
 
   return (
     <div className='App'>
-      <Navbar user={user} setUser={setUser} />
-      <Routes user={user} setUser={setUser} />
+      <Navbar user={user} setUser={setUser} cartGames={cartGames} setCartGames={setCartGames} />
+      <Routes user={user} setUser={setUser} cartGames={cartGames} setCartGames={setCartGames} />
     </div> )
 }
 
