@@ -38,22 +38,7 @@ ordersRouter.get('/:userId', async(req, res, next) => {
 
 /* Create an order*/
 
-<<<<<<< HEAD
-ordersRouter.post('/', requireUser, requireAdmin, async(req, res, next) => {
-
-    console.log('--zap---', req.body)
-    // console.log('--req.user---', req.user)
-
-    // res.send('Hello')
-    
-    const {id} = req.user;
-    const {payment, shippingLoc, orderStatus} = req.body;
-
-    console.log('WHat is the user id?',id)
-
-=======
 ordersRouter.post('/', requireUser, async (req, res, next) => {
->>>>>>> f4a502a2f021cd28a495de5e4718c46b01273d9c
     try{
         const {id} = req.user;
         const fields = {"buyerId": id}
