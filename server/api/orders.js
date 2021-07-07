@@ -9,7 +9,7 @@ const {createOrder,
 
     const{requireUser, requireAdmin} = require('./utils')
 
-
+//-------------------Require Admin is used for these routes--------------//
 
 /* Get orders */
 
@@ -56,7 +56,7 @@ ordersRouter.post('/', requireUser, async (req, res, next) => {
 
 /* Update an order */
 
-ordersRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+ordersRouter.patch('/:orderId', requireUser, requireAdmin, async(req, res, next) => {
     
     const {id} = req.user;
     console.log('WHat is the user id?',id)

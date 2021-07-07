@@ -16,13 +16,13 @@ function requireUser(req, res, next) {
   function requireAdmin(req, res, next) {
     if (req.user.username === 'admin') {
       next();
-    }
+    }else{
     res.status(401).send({
-      error: 'This action requires Admin privelges'
+      error: 'This action requires Admin privileges'
     })
+    }
 
-
-    
+    //why did it not work previously without the else?
   }
 
   //Should we include a check for params being sent? Like requiredParams?

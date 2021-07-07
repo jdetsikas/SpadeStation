@@ -1,11 +1,14 @@
 const express = require('express')
 const orderGamesRouter = express.Router()
-const {addGameToOrder,
+const {getOrderById,addGameToOrder,
     getAllOrderGames,
     updateOrderGame,
-    removeOrderGame} = require('../db')
+    removeOrderGame, getUsersCartById, clearCart} = require('../db')
 
-const {requireUser} = require('./utils')
+const {requireUser, requireAdmin} = require('./utils')
+
+//-------------------Require Admin is used for these routes--------------//
+
 
 orderGamesRouter.get('/', async(req, res, next) => {
     try{
@@ -16,33 +19,40 @@ orderGamesRouter.get('/', async(req, res, next) => {
     }
 })
 
-// orderGamesRouter.post('/', requireUser, async(req, res, next) => {
+orderGamesRouter.post('/', requireUser, async(req, res, next) => {
         
-//         console.log('--zap---', req.body)
-//         console.log('Heres the user', req.user)
+        console.log('--zap---', req.body)
+        console.log('Heres the user', req.user)
 
 
         
-//         // const {id} = req.order;
-//         // const {gameId, quantity, purchCost} = req.body
-//         // console.log('What is the order id?', id)
+        const {id} = req.user;
+        const {gameId} = req.body
+        // console.log('What is the order id?', id)
 
-//         res.send('Testing order_games post route')
+        // res.send('Testing order_games post route')
     
-//     // try{
+    try{
 
-//     //     const orderId = id;
-//     //     const gameAddedToOrder = await addGameToOrder({orderId, gameId, quantity, purchCost});
-//     //     console.log('------------', gameAddedToOrder)
-//     //     res.send(gameAddedToOrder) 
+        const cart = await getUsersCartById(id);
+        const cartId = cart.id;
+        
+        const gameAddedToOrder = await addGameToOrder(cartId, gameId);
 
-//     // }catch(error){
-//     //     next(error)
-//     // }
-// })
+        console.log('------------', gameAddedToOrder)
+
+        res.send(gameAddedToOrder) 
+
+    }catch(error){
+        next(error)
+    }
+})
 
 
-orderGamesRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+orderGamesRouter.patch('/:orderId', 
+requireUser, 
+// requireAdmin, 
+async(req, res, next) => {
 
     console.log('requser', req.user)
     console.log('reqbody', req.body)
@@ -51,27 +61,60 @@ orderGamesRouter.patch('/:orderId', requireUser, async(req, res, next) => {
     const {orderId} = req.params
     console.log('params', req.params)
 
+    const {gameId, quantity} = req.body;
+
     try{
-        const updatedOrderGame = await updateOrderGame(orderId, req.body)
+        const updatedOrderGame = await updateOrderGame(orderId, {gameId, quantity})
         console.log('------------', updatedOrderGame)
         res.send(updatedOrderGame) 
     }catch (error){
         next(error)
     }
 
+    
+    
+    // const {id} = req.user;
+    // const {gameId} = req.body
+    //     // console.log('What is the order id?', id)
+
+    //     // res.send('Testing order_games post route')
+    
+    // try{
+
+    //     const cart = await getUsersCartById(id);
+    //     const cartId = cart.id;
+        
+    //     const gameAddedToOrder = await addGameToOrder(cartId, gameId);
+
+    //     console.log('------------', gameAddedToOrder)
+
+    //     res.send(gameAddedToOrder) 
+
+    // }catch(error){
+    //     next(error)
+    // }
+
+
 })
 
 
-orderGamesRouter.delete('/:orderId', requireUser, async(req, res, next) => {
+orderGamesRouter.delete('/:orderId', 
+requireUser, 
+//requireAdmin, //do we need?
+async(req, res, next) => {
 
-    console.log('requser', req.user)
-    console.log('reqbody', req.body)
+    // console.log('requser', req.user)
+    // console.log('reqbody', req.body) 
 
+    const {id} = req.user;
     const {gameId} = req.body
     const {orderId} = req.params
     console.log('params', req.params)
 
     try{
+        // const cart = await getUsersCartById(id);
+        // const cartId = cart.id;
+
         const deletedOrderGame = await removeOrderGame(orderId, gameId)
         console.log('------------', deletedOrderGame)
         res.send(deletedOrderGame) 
@@ -79,6 +122,35 @@ orderGamesRouter.delete('/:orderId', requireUser, async(req, res, next) => {
         next(error)
     }
 
+})
+
+
+
+//clear out cart route//
+
+orderGamesRouter.delete('/:orderId/all', requireUser, async(req, res, next) => {
+    const {id} = req.user;
+    const {orderId} = req.params;
+    // const {gameId} = req.body
+
+    try{
+
+        // const cart = await getUsersCartById(id);
+        // const cartId = cart.id;
+
+        const order = await getOrderById(id)
+
+        if(id !== order.buyerId){
+            res.status(401).send( {error: "User Id and Targeted Cart don't match"})
+        }else{
+        
+        const clearedCart= await clearCart(orderId);
+
+        res.send(clearedCart) 
+        }
+    }catch(error){
+        next(error)
+    }
 })
 
 
