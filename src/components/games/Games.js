@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameTemplate from './GameTemplate'
+import NewGame from '../admin/NewGame'
 
 async function fetchGames(setGamesList) {
     try {
@@ -12,6 +13,7 @@ async function fetchGames(setGamesList) {
 };
 
 const Games = (props) => {
+    const {user} = props
     const [gamesList, setGamesList] = useState([])
 
     useEffect(() => {
@@ -21,11 +23,18 @@ const Games = (props) => {
         prefetchGames()
     }, [])
 
-    const gameInventory = gamesList.map( (game, idx) => <GameTemplate {...props} key={idx} game={game}/> )
+    const gameInventory = gamesList.map( (game, idx) => { 
+        if (game.available) {
+            return <GameTemplate {...props} key={idx} game={game}/>
+        } 
+        return
+    })
 
     return (
+        
         <div className="games">
             <h1 className="gamesheader">List of Games</h1>
+            { user.username === 'admin' ? <NewGame /> : null }
             <div className="gamegrid">
             { gameInventory /* each should be clickable, sends you to that game's details page */ }
             </div>

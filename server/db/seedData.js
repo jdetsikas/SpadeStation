@@ -49,7 +49,8 @@ async function createTables() {
                 "price" DECIMAL(2) NOT NULL,
                 "console" VARCHAR(255) NOT NULL,
                 "year" INTEGER NOT NULL,
-                "image" TEXT
+                "image" TEXT,
+                "available" BOOLEAN default true
             );
             
             CREATE TYPE status AS ENUM ('CART', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');

@@ -1,13 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const { createUser, getUser, getUserByUsername, getUserById, deactivateUser, activateUser } = require('../db')
-const { requireUser, requireAdmin } = require('./utils') 
+const { createUser, getUser, getUserByUsername, getUserById, deactivateUser, activateUser, getAllUsers } = require('../db')
+const {requireAdmin} = require('./utils')
 const SALT_COUNT = 10
 const { JWT_SECRET = 'neverTell' } = process.env
 
 //-------------------Require Admin is used for these routes--------------//
 
+
+// GET /api/users
+router.get('/all', requireAdmin, async (req, res, next) => {
+  
+      try {
+        const gettingAllUsers = await getAllUsers();
+        if (gettingAllUsers) {
+            res.send(gettingAllUsers);
+        }
+
+    } catch (error) {
+        throw error
+    };
+    
+}); 
 
 // POST /api/users/login
 router.post('/login', async (req, res, next) => {
