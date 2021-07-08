@@ -12,9 +12,9 @@ orderCheckoutRouter.patch('/:orderId', requireUser, async(req, res, next) => {
     const { payment, shippingLoc} = req.body;
     const orderStatus = "PROCESSING";
 
-    console.log('what order?', orderId)
-    console.log('WHat payment?', payment)
-    console.log('what location?', shippingLoc)
+    // console.log('what order?', orderId)
+    // console.log('WHat payment?', payment)
+    // console.log('what location?', shippingLoc)
 
     // res.send('working on the checkout')
 
