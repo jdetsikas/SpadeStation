@@ -2,6 +2,7 @@ const express = require('express')
 const orderGamesRouter = express.Router()
 const {getOrderById,addGameToOrder,
     getAllOrderGames,
+    getAllOrderGamesById,
     updateOrderGame,
     removeOrderGame, getUsersCartById, clearCart} = require('../db')
 
@@ -14,6 +15,16 @@ orderGamesRouter.get('/', async(req, res, next) => {
     try{
         const orderGames = await getAllOrderGames();
         res.send(orderGames)
+    }catch(error){
+        next(error)
+    }
+})
+
+orderGamesRouter.get('/:orderId', requireUser, async(req, res, next) => {
+    try{
+        const {orderId} = req.params
+        const ordersGames = await getAllOrderGamesById(orderId);
+        res.send(ordersGames)
     }catch(error){
         next(error)
     }

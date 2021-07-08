@@ -26,10 +26,39 @@ async function getAllOrderGames() {
     }
 }
 
-async function addGameToOrder(cartId, gameId) {
+async function getAllOrderGamesById(orderId) {
+    try {
+        const { rows: ordersGames } = await client.query(`
+            SELECT * FROM order_games
+            WHERE "orderId"=${orderId}
+        `)
+
+        console.log("DB OrdersGames:", ordersGames)
+
+        const cartOrderGames = await Promise.all(ordersGames.map( (game) => {
+            const gameWithInfo = getGameById(game.gameId)
+            // const newGame = gameWithInfo
+            // newGame.quantity = game.quantity
+            
+            // return newGame
+            return gameWithInfo
+        }  ))
+        
+        cartOrderGames.forEach((game, idx) => {
+            game.quantity = ordersGames[idx].quantity
+        })
+
+        console.log("CartOrderGames:", cartOrderGames)
+
+        return cartOrderGames
+    } catch (error) {
+        throw error
+    }
+}
+
+async function addGameToOrder(cartId, gameId, quantity) {
     try {
         const gameToAdd = await getGameById(gameId)
-        console.log('game called', gameToAdd)
         const purchCost = gameToAdd.price;
         // let quantity = 1;
 
@@ -41,10 +70,10 @@ async function addGameToOrder(cartId, gameId) {
         // if (insert.length === 0 || values.length === 0) { return }
 
         const {rows: [addedGame] } = await client.query(`
-            INSERT INTO order_games ("orderId", "gameId", "purchCost")
-            VALUES ($1, $2, $3)
+            INSERT INTO order_games ("orderId", "gameId", "purchCost", "quantity")
+            VALUES ($1, $2, $3, $4)
             RETURNING *;
-        `, [cartId, gameId, purchCost]);
+        `, [cartId, gameId, purchCost, quantity]);
 
         return addedGame;
 
@@ -133,6 +162,7 @@ async function clearCart(cartId){
 module.exports = {
     addGameToOrder,
     getAllOrderGames,
+    getAllOrderGamesById,
     updateOrderGame,
     removeOrderGame,
     getUsersCartById,

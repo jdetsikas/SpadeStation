@@ -167,7 +167,7 @@ async function createInitialOrderGames() {
     try {
         console.log('starting to create order_games...');
 
-        const [ firstOrder, secondOrder, thirdOrder, fourthOrder ] = await getOrdersWithoutGames();
+        const [ firstOrder, secondOrder, thirdOrder, fourthOrder, fifthOrder ] = await getOrdersWithoutGames();
         const [ game1, game2, game3, game4, game5, game6, game7 ] = await getAllGames();
 
         const orderGamesToCreate = [
@@ -184,8 +184,11 @@ async function createInitialOrderGames() {
             // Fourth order
             { orderId: fourthOrder.id, gameId: game6.id, quantity: 1 },
             { orderId: fourthOrder.id, gameId: game7.id, quantity: 2 },
+            // Fifth order
+            { orderId: fifthOrder.id, gameId: game6.id, quantity: 1 },
+            { orderId: fifthOrder.id, gameId: game7.id, quantity: 2 }
         ]
-        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord.orderId, ord.gameId)));
+        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord.orderId, ord.gameId, ord.quantity)));
 
         console.log('order_games created: ', orderGames)
         
