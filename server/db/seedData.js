@@ -52,14 +52,14 @@ async function createTables() {
                 "image" TEXT
             );
             
-            CREATE TYPE status AS ENUM ('PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
+            CREATE TYPE status AS ENUM ('CART', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
 
             CREATE TABLE orders(
                 "id" SERIAL PRIMARY KEY,
                 "buyerId" INTEGER REFERENCES users(id),
                 "payment" VARCHAR(255),
                 "shippingLoc" TEXT,
-                "orderStatus" status
+                "orderStatus" status DEFAULT 'CART'
             );
 
             CREATE TABLE order_games(
@@ -144,10 +144,10 @@ async function createInitialOrders() {
         console.log('starting to create orders...');
 
         const ordersToCreate = [
-        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'PROCESSING'},
-        {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'SHIPPED'},
+        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
+        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'SHIPPED'},
         {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'CANCELED'},
-        {buyerId: 2, payment: 'Check is on its way', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
+        {buyerId: 4, payment: 'Check is on its way', shippingLoc: 'Portland, OR', orderStatus: 'DELIVERED'},
         ]
         const orders = await Promise.all(ordersToCreate.map(createOrder));
 
