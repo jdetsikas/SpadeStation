@@ -15,7 +15,7 @@ function Routes(props) {
       <Route path='/account' render={ (props) => <UserAccount {...props} user={user} setUser={setUser}/> }/>
 
       <Route path='/games/:gameId' render={ (props) => <GameDetails {...props} setCartGames={setCartGames}/> }/>
-      <Route path='/games' render={ (props) => <Games {...props} /> }/>
+      <Route path='/games' render={ (props) => <Games {...props} user={user}/> }/>
       
       <Route path='/landing' component={Landing}/>
       <Route path='/' component={Home}/>

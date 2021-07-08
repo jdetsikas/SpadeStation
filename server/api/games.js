@@ -53,8 +53,8 @@ gameRouter.get('/', async (req, res, next) => {
 
 gameRouter.post('/', async (req, res, next) =>{
     try{
-        const {image, price, name, console, year, description} = req.body;
-        const createdGames = await createGame({ image, price, name, console, year, description });
+        const {image, price, title, console, year, description} = req.body;
+        const createdGames = await createGame({ image, price, title, console, year, description });
         if(createdGames) {
             res.send(createdGames);
         }else{
