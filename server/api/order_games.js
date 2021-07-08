@@ -28,6 +28,7 @@ orderGamesRouter.post('/', requireUser, async(req, res, next) => {
         
         const {id} = req.user;
         const {gameId} = req.body
+        console.log('the gameId----',gameId)
         // console.log('What is the order id?', id)
 
         // res.send('Testing order_games post route')
@@ -36,10 +37,13 @@ orderGamesRouter.post('/', requireUser, async(req, res, next) => {
 
         const cart = await getUsersCartById(id);
         const cartId = cart.id;
+
+        console.log('the cartId---',cartId)
         
         const gameAddedToOrder = await addGameToOrder(cartId, gameId);
 
-        console.log('------------', gameAddedToOrder)
+        // console.log('added game-----',gameAddedToOrder)
+
 
         res.send(gameAddedToOrder) 
 
@@ -65,34 +69,11 @@ async(req, res, next) => {
 
     try{
         const updatedOrderGame = await updateOrderGame(orderId, {gameId, quantity})
-        console.log('------------', updatedOrderGame)
+        // console.log('------------', updatedOrderGame)
         res.send(updatedOrderGame) 
     }catch (error){
         next(error)
     }
-
-    
-    
-    // const {id} = req.user;
-    // const {gameId} = req.body
-    //     // console.log('What is the order id?', id)
-
-    //     // res.send('Testing order_games post route')
-    
-    // try{
-
-    //     const cart = await getUsersCartById(id);
-    //     const cartId = cart.id;
-        
-    //     const gameAddedToOrder = await addGameToOrder(cartId, gameId);
-
-    //     console.log('------------', gameAddedToOrder)
-
-    //     res.send(gameAddedToOrder) 
-
-    // }catch(error){
-    //     next(error)
-    // }
 
 
 })

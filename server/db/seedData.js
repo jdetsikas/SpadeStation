@@ -66,7 +66,7 @@ async function createTables() {
                 "id" SERIAL PRIMARY KEY,
                 "orderId" INTEGER REFERENCES orders(id),
                 "gameId" INTEGER REFERENCES games(id),
-                "quantity" INTEGER NOT NULL,
+                "quantity" INTEGER DEFAULT 1,
                 "purchCost" DECIMAL(2) NOT NULL
             );
         `);
@@ -93,6 +93,7 @@ async function createInitialUsers() {
             { username: 'albert', password: 'bertie99' },
             { username: 'sandra', password: 'sandra123' },
             { username: 'glamgal', password: 'glamgal123' },
+            {username: 'test1', password: 'chickendinner1' },
         ]
         const users = await Promise.all(usersToCreate.map(createUser))
 
@@ -148,6 +149,7 @@ async function createInitialOrders() {
         {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'SHIPPED'},
         {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'CANCELED'},
         {buyerId: 4, payment: 'Check is on its way', shippingLoc: 'Portland, OR', orderStatus: 'DELIVERED'},
+        {buyerId: 5, payment: null, shippingLoc: null, orderStatus: 'CART'}
         ]
         const orders = await Promise.all(ordersToCreate.map(createOrder));
 
@@ -182,7 +184,7 @@ async function createInitialOrderGames() {
             { orderId: fourthOrder.id, gameId: game6.id, quantity: 1 },
             { orderId: fourthOrder.id, gameId: game7.id, quantity: 2 },
         ]
-        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord)));
+        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord.orderId, ord.gameId)));
 
         console.log('order_games created: ', orderGames)
         

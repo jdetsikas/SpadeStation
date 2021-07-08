@@ -29,7 +29,9 @@ async function getAllOrderGames() {
 async function addGameToOrder(cartId, gameId) {
     try {
         const gameToAdd = await getGameById(gameId)
+        console.log('game called', gameToAdd)
         const purchCost = gameToAdd.price;
+        // let quantity = 1;
 
         // fields.purchCost = gameToAdd.price
 
@@ -39,9 +41,9 @@ async function addGameToOrder(cartId, gameId) {
         // if (insert.length === 0 || values.length === 0) { return }
 
         const {rows: [addedGame] } = await client.query(`
-            INSERT INTO order_games ('orderId', 'gameId', 'purchCost')
+            INSERT INTO order_games ("orderId", "gameId", "purchCost")
             VALUES ($1, $2, $3)
-            RETURNING *
+            RETURNING *;
         `, [cartId, gameId, purchCost]);
 
         return addedGame;
@@ -55,6 +57,7 @@ async function updateOrderGame(orderId, fields){
     try{
         
         const gameId = fields.gameId
+    
         delete fields.gameId
 
         const setString = createSetString(fields)
@@ -112,7 +115,7 @@ async function clearCart(cartId){
         const {rows: cart} = await client.query(`
             DELETE FROM order_games
             WHERE "orderId" = ${cartId}
-            RETURN *;
+            RETURNING *;
         `)
 
         return cart

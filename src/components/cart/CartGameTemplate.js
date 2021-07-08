@@ -1,6 +1,9 @@
 import React from 'react'
 
 const CartGameTemplate = ({game}) => {
+
+
+    
     return (
         <div className='cart-item'>
             <img src={game.image} width='30' height='30'/>
