@@ -55,7 +55,7 @@ gameRouter.get('/', async (req, res, next) => {
 //POST/ api/ games//
 ////////////////////
 
-gameRouter.post('/', requireAdmin,async (req, res, next) =>{
+gameRouter.post('/', requireAdmin, async (req, res, next) =>{
     try{
         const {image, price, title, console, year, description} = req.body;
         const createdGames = await createGame({ image, price, title, console, year, description });
@@ -78,7 +78,7 @@ gameRouter.post('/', requireAdmin,async (req, res, next) =>{
 
 gameRouter.patch('/:gameId', requireAdmin, async (req, res, next) =>{
     try{
-        const {image, price, name, console} = req.body;
+        const {image, price, title, description, year, console} = req.body;
         const {gameId} = req.params;
         const updateToGame = await getGameById(gameId);
         if(!updateToGame){
@@ -87,7 +87,7 @@ gameRouter.patch('/:gameId', requireAdmin, async (req, res, next) =>{
                 message: 'No game by ID of ${gameId} was found'
             })
         }else{
-            const updatedGame= await updateGame (gameId, {image, price, name, console});
+            const updatedGame= await updateGame (gameId, req.body);
             if(updatedGame){
                 res.send(updatedGame);
             }else{

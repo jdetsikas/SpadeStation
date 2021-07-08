@@ -23,7 +23,12 @@ const Games = (props) => {
         prefetchGames()
     }, [])
 
-    const gameInventory = gamesList.map( (game, idx) => <GameTemplate {...props} key={idx} game={game}/> )
+    const gameInventory = gamesList.map( (game, idx) => { 
+        if (game.available) {
+            return <GameTemplate {...props} key={idx} game={game}/>
+        } 
+        return
+    })
 
     return (
         

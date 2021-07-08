@@ -199,5 +199,5 @@ module.exports = {
     getUserByUsername,
     updateUser,
     deactivateUser,
-    activateUser
+    activateUser,
 }

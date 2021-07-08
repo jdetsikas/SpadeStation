@@ -19,6 +19,7 @@ function Navbar({ user, setUser, history }) {
       <h1 className='logo'><img src ="/icons/logo.png" alt="logo"/></h1>
       <nav className='navbar'>
         <NavLink to='/'>Home</NavLink>
+        {user.username === 'admin' ? <NavLink to='/users'>User List</NavLink> : null}
         <NavLink to='/games'>Games</NavLink>
         <input type='image' src='https://www.freeiconspng.com/uploads/basket-cart-icon-27.png' onClick={(e) => {e.preventDefault(); setCartView(!cartView)}} height='30' width='30'/>
         {cartView ? <Cart/> : null}
