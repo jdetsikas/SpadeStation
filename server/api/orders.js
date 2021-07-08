@@ -4,11 +4,12 @@ const {createOrder,
     updateOrder,
     deleteOrder,
     getOrdersWithoutGames,
+    getUsersOrders,
     getOrderById} = require('../db')
 
     const{requireUser, requireAdmin} = require('./utils')
 
-
+//-------------------Require Admin is used for these routes--------------//
 
 /* Get orders */
 
@@ -25,37 +26,25 @@ ordersRouter.get('/', async(req, res, next) => {
     }
 })
 
-
-
-
-
-
+ordersRouter.get('/:userId', async(req, res, next) => {
+    try{
+        const {userId} = req.params
+        const userOrders = await getUsersOrders(userId);
+        res.send(userOrders)
+    }catch(error){
+        next(error)
+    }
+})
 
 /* Create an order*/
 
-ordersRouter.post('/', 
-requireUser, 
-// requireAdmin, //Would we need a require admin check?
-async(req, res, next) => {
-
-    console.log('--zap---', req.body)
-    // console.log('--req.user---', req.user)
-
-    // res.send('Hello')
-    
-    const {id} = req.user;
-    const {payment, shippingLoc, orderStatus} = req.body;
-
-    console.log('WHat is the user id?',id)
-
+ordersRouter.post('/', requireUser, async (req, res, next) => {
     try{
-
-        const buyerId = id;
-        const newOrder = await createOrder({ buyerId, payment, shippingLoc, orderStatus});
-        console.log('------------',newOrder)
-        newOrder.games = []
+        const {id} = req.user;
+        const fields = {"buyerId": id}
+        
+        const newOrder = await createOrder(fields);
         res.send(newOrder) 
-
     } catch(error){
         next(error)
     }
@@ -67,7 +56,7 @@ async(req, res, next) => {
 
 /* Update an order */
 
-ordersRouter.patch('/:orderId', requireUser, async(req, res, next) => {
+ordersRouter.patch('/:orderId', requireUser, requireAdmin, async(req, res, next) => {
     
     const {id} = req.user;
     console.log('WHat is the user id?',id)

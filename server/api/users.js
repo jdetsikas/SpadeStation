@@ -2,9 +2,11 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { createUser, getUser, getUserByUsername, getUserById, deactivateUser, activateUser } = require('../db')
-const { requireUser } = require('./utils') 
+const { requireUser, requireAdmin } = require('./utils') 
 const SALT_COUNT = 10
 const { JWT_SECRET = 'neverTell' } = process.env
+
+//-------------------Require Admin is used for these routes--------------//
 
 
 // POST /api/users/login
@@ -99,7 +101,7 @@ router.get('/me', (req, res, next) => {
 
 
 //usersRouter.patch(‘:userId/deactivate’)
-router.patch('/:userId/deactivate', async (req,res,next) => {
+router.patch('/:userId/deactivate', requireAdmin, async (req,res,next) => {
   // console.log('LOGING REQUIRE USER  ',req.user)
 
   console.log('PARAMS', req.params)
@@ -115,8 +117,8 @@ const { userId } = req.params
   }
 })
 
-//usersRouter.patch(‘:userId/deactivate’)
-router.patch('/:userId/activate', async (req,res,next) => {
+//usersRouter.patch(‘:userId/activate’)
+router.patch('/:userId/activate', requireAdmin, async (req,res,next) => {
   // console.log('LOGING REQUIRE USER  ',req.user)
 
   console.log('PARAMS', req.params)

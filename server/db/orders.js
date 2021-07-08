@@ -42,7 +42,18 @@ async function getOrdersWithoutGames() {
     };
 };
 
+async function getUsersOrders(userId) {
+    try {
+        const { rows: orders } = await client.query(`
+            SELECT * FROM orders
+            WHERE "buyerId"=${userId}
+        `)
 
+        return orders
+    } catch (error) {
+        throw error;
+    }
+}
 
 async function updateOrder(id, fields) {
     try {
@@ -104,6 +115,7 @@ async function getOrderById(id){
 module.exports = {
     createOrder,
     getOrdersWithoutGames,
+    getUsersOrders,
     updateOrder,
     deleteOrder,
     getOrderById

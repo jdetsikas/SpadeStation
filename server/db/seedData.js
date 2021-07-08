@@ -52,21 +52,21 @@ async function createTables() {
                 "image" TEXT
             );
             
-            CREATE TYPE status AS ENUM ('PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
+            CREATE TYPE status AS ENUM ('CART', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELED');
 
             CREATE TABLE orders(
                 "id" SERIAL PRIMARY KEY,
                 "buyerId" INTEGER REFERENCES users(id),
                 "payment" VARCHAR(255),
                 "shippingLoc" TEXT,
-                "orderStatus" status
+                "orderStatus" status DEFAULT 'CART'
             );
 
             CREATE TABLE order_games(
                 "id" SERIAL PRIMARY KEY,
                 "orderId" INTEGER REFERENCES orders(id),
                 "gameId" INTEGER REFERENCES games(id),
-                "quantity" INTEGER NOT NULL,
+                "quantity" INTEGER DEFAULT 1,
                 "purchCost" DECIMAL(2) NOT NULL
             );
         `);
@@ -93,6 +93,7 @@ async function createInitialUsers() {
             { username: 'albert', password: 'bertie99' },
             { username: 'sandra', password: 'sandra123' },
             { username: 'glamgal', password: 'glamgal123' },
+            {username: 'test1', password: 'chickendinner1' },
         ]
         const users = await Promise.all(usersToCreate.map(createUser))
 
@@ -144,10 +145,11 @@ async function createInitialOrders() {
         console.log('starting to create orders...');
 
         const ordersToCreate = [
-        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'PROCESSING'},
-        {buyerId: 1, payment: 'Mastercard', shippingLoc: 'Portland, OR', orderStatus: 'SHIPPED'},
+        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
+        {buyerId: 2, payment: 'Visa', shippingLoc: 'Chicago, IL', orderStatus: 'SHIPPED'},
         {buyerId: 3, payment: 'Paypal', shippingLoc: 'Cleveland, OH', orderStatus: 'CANCELED'},
-        {buyerId: 2, payment: 'Check is on its way', shippingLoc: 'Chicago, IL', orderStatus: 'DELIVERED'},
+        {buyerId: 4, payment: 'Check is on its way', shippingLoc: 'Portland, OR', orderStatus: 'DELIVERED'},
+        {buyerId: 5, payment: null, shippingLoc: null, orderStatus: 'CART'}
         ]
         const orders = await Promise.all(ordersToCreate.map(createOrder));
 
@@ -182,7 +184,7 @@ async function createInitialOrderGames() {
             { orderId: fourthOrder.id, gameId: game6.id, quantity: 1 },
             { orderId: fourthOrder.id, gameId: game7.id, quantity: 2 },
         ]
-        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord)));
+        const orderGames = await Promise.all(orderGamesToCreate.map( ord => addGameToOrder(ord.orderId, ord.gameId)));
 
         console.log('order_games created: ', orderGames)
         

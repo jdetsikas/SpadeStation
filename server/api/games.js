@@ -6,6 +6,10 @@ const{ createGame,
     updateGame,
     deleteGame } = require('../db')
 
+    const {requireAdmin} = require('./utils')
+
+
+//-------------------Require Admin is used for these routes--------------//
 
 ///////////////////////
 //get/ api/ getGame//
@@ -51,10 +55,10 @@ gameRouter.get('/', async (req, res, next) => {
 //POST/ api/ games//
 ////////////////////
 
-gameRouter.post('/', async (req, res, next) =>{
+gameRouter.post('/', requireAdmin,async (req, res, next) =>{
     try{
-        const {image, price, name, console, year, description} = req.body;
-        const createdGames = await createGame({ image, price, name, console, year, description });
+        const {image, price, title, console, year, description} = req.body;
+        const createdGames = await createGame({ image, price, title, console, year, description });
         if(createdGames) {
             res.send(createdGames);
         }else{
@@ -72,7 +76,7 @@ gameRouter.post('/', async (req, res, next) =>{
 //PATCH/ api/ games//
 ////////////////////
 
-gameRouter.patch('/:gameId', async (req, res, next) =>{
+gameRouter.patch('/:gameId', requireAdmin, async (req, res, next) =>{
     try{
         const {image, price, name, console} = req.body;
         const {gameId} = req.params;
@@ -103,7 +107,7 @@ gameRouter.patch('/:gameId', async (req, res, next) =>{
 //DELETE/ api/ games//
 ////////////////////
 
-gameRouter.delete('/:gameId', async (req, res, next)=>{
+gameRouter.delete('/:gameId', requireAdmin, async (req, res, next)=>{
     try{
         const {gameId} = req.params;
         const updateToGame = await getGameById(gameId);

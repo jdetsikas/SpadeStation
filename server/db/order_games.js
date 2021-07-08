@@ -26,22 +26,28 @@ async function getAllOrderGames() {
     }
 }
 
-async function addGameToOrder(fields) {
+async function addGameToOrder(cartId, gameId) {
     try {
-        const gameToAdd = await getGameById(fields.gameId)
-        fields.purchCost = gameToAdd.price
+        const gameToAdd = await getGameById(gameId)
+        console.log('game called', gameToAdd)
+        const purchCost = gameToAdd.price;
+        // let quantity = 1;
 
-        const insert = createInsertString(fields)
-        const values = createValueString(fields)
-        if (insert.length === 0 || values.length === 0) { return }
+        // fields.purchCost = gameToAdd.price
+
+        // const insert = createInsertString(fields)
+        // const values = createValueString(fields)
+
+        // if (insert.length === 0 || values.length === 0) { return }
 
         const {rows: [addedGame] } = await client.query(`
-            INSERT INTO order_games(${insert})
-            VALUES (${values})
-            RETURNING *
-        `, Object.values(fields));
+            INSERT INTO order_games ("orderId", "gameId", "purchCost")
+            VALUES ($1, $2, $3)
+            RETURNING *;
+        `, [cartId, gameId, purchCost]);
 
         return addedGame;
+
     } catch (error) {
         throw error;
     };
@@ -51,6 +57,7 @@ async function updateOrderGame(orderId, fields){
     try{
         
         const gameId = fields.gameId
+    
         delete fields.gameId
 
         const setString = createSetString(fields)
@@ -85,6 +92,38 @@ async function removeOrderGame(orderId, gameId){
     }
 }
 
+async function getUsersCartById(userId){
+    try{
+
+        const {rows: orders} = await client.query(`
+            SELECT * FROM orders
+            WHERE "buyerId" = ${userId}
+        `)
+
+       const [cart] = orders.filter(order => order.orderStatus === "CART")
+
+        return cart        
+
+    }catch(error){
+        throw error
+    }
+}
+
+async function clearCart(cartId){
+    try{
+
+        const {rows: cart} = await client.query(`
+            DELETE FROM order_games
+            WHERE "orderId" = ${cartId}
+            RETURNING *;
+        `)
+
+        return cart
+    }catch(error){
+        throw error
+    }
+}
+
 /*
 //////////////
 // Exports //
@@ -95,5 +134,7 @@ module.exports = {
     addGameToOrder,
     getAllOrderGames,
     updateOrderGame,
-    removeOrderGame
+    removeOrderGame,
+    getUsersCartById,
+    clearCart
 }
