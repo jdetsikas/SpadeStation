@@ -1,11 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import CartGameTemplate from './CartGameTemplate'
 
-const Cart = () => {
+const Cart = ({cartGames, setCartGames}) => {
+
+    useEffect(() => {
+        window.console.log("CartGames:", cartGames)
+    })
+
+    const cartList = cartGames.map((game, idx) => <CartGameTemplate game={game} key={idx} /> )
+
     return (
         <div id='cart'>
             <h2>Cart</h2>
-            <h3>List goes here</h3>
+            {cartList.length ? cartList : <a>Cart Is Empty</a>}
             <button>Checkout</button>
         </div> );
 }

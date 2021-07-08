@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
+
 const GameTemplate = (props) => {
     const { game } = props
     const { id, title, description, price, console, year, image } = game;

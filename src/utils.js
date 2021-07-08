@@ -110,3 +110,40 @@ export async function register(username, password) {
 function setToken(token) {
   localStorage.setItem('token', token)
 }
+
+export async function initializeCart(userId, ordersArr) {
+  // There should only ever by 1 order per user with status of 'CART'
+  const filteredOrders = ordersArr.filter( (order) => order.orderStatus === 'CART')
+  const token = localStorage.getItem('token')
+
+  // If that order doesn't exist, create it
+  if (!filteredOrders.length) {
+    const { data: newOrder} = await axios({
+      method: 'post',
+      url: '/api/orders',
+      data: {
+        'buyerId': userId
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+
+    // Create a games array to populate with games
+    newOrder.games = []
+    return newOrder
+  }
+
+  // If 'CART' order already exists, fetch its games and populate games array for the front-end
+  const { data: games } = await axios.get(`/api/order_games/${filteredOrders[0].id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  filteredOrders[0].games = games
+  
+  return filteredOrders[0]
+}
