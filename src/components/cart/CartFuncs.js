@@ -1,10 +1,20 @@
-import React, { useState } from 'react'
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 import axios from 'axios'
+let token = localStorage.getItem('token')
 
+/*
+////////////////
+// Functions //
+//////////////
+*/
 
-export async function addToCart(e, item, cartGames, setCartGames) {
-  e.preventDefault()
-  let token = localStorage.getItem('token')
+export async function addToCart(item, cartGames, setCartGames) {
+  event.preventDefault()
 
   const found = cartGames.filter((game) => game.id === item.id)
 
@@ -30,47 +40,117 @@ export async function addToCart(e, item, cartGames, setCartGames) {
   }
 }
 
-export async function removeFromCart(item, setCart) {
-    let cart2 = cart.filter((i) => i.id != item.id)
-    products.map((i) => {
-      if (i.id == item.id) {
-        i.cart = false
+/*
+// Removal //
+*/
+
+export async function removeFromCart(item, cartGames, setCartGames, cart) {
+  const newCart = cartGames.filter((game) => game.id !== item.id)
+
+  if (token){
+    await axios({
+      method: 'DELETE',
+      url: `/api/order_games/${cart.id}`,
+      data: {
+        'gameId': item.id
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     })
-    setCart(cart2)
-
+    
+    setCartGames(newCart)
+  } else {
+    setCartGames(newCart)
+  }
 }
 
-export async function increaseQuant(item, setCart) {
-    let x = cart.map((i) => {
-
-      if (item.id == i.id) {
-        console.log('hola')
-        i.quantity += 1
-      }
-      return i
-    })
-    setCart(x)
-
+export async function clearCart(setCartGames, cart) {
+  if (token) {
+    try {
+      await axios({
+        method: 'DELETE',
+        url: `/api/order_games/${cart.id}/all`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+  
+  setCartGames([])
 }
 
-export async function decreaseQuant(item, setCart) {
-    let x = cart.map((i) => {
+/*
+// Quantitites //
+*/
 
-      if (item.id == i.id && i.quantity > 1) {
-        console.log('hola')
-        i.quantity -= 1
-      }
-      return i
-    })
-    setCart(x)
+export async function increaseQuant(item, cart, quant, setQuant) {
+  if (token) {
+    try {
+      await axios({
+          method: 'PATCH',
+          url: `/api/order_games/${cart.id}`,
+          data: {
+            'gameId': item.id,
+            'quantity': quant + 1,
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+  setQuant(quant + 1)
 }
 
-export async function calcTotal() {
-    let x = 0
-    cart.map((i) => {
-      x += i.price * i.quantity
+export async function decreaseQuant(item, cartGames, setCartGames, cart, quant, setQuant) {
+  if (quant === 1) {
+    return removeFromCart(item, cartGames, setCartGames, cart)
+  }
 
-    })
-    return x
+  if (token) {
+    try {
+      await axios({
+        method: 'PATCH',
+        url: `/api/order_games/${cart.id}`,
+        data: {
+          'gameId': item.id,
+          'quantity': quant -1,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  setQuant(quant - 1)
+}
+
+/*
+// Total //
+*/
+
+export async function calcTotal(cartGames) {
+  const cartQuants = cartGames.map(game => parseFloat(game.quantity))
+  const cartPrices = cartGames.map(game => parseFloat(game.price))
+
+  let runningTotal = 0
+
+  for (let i = 0; i < cartPrices.length; i++) {
+    runningTotal = runningTotal + (cartPrices[i] * cartQuants[i])
+  }
+
+  return runningTotal
 }

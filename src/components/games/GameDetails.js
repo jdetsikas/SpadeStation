@@ -72,14 +72,17 @@ const GameDetails = (props) => {
 
     return (
         <div id='game-info'>
-            { editing ? <PatchGame game={game}/> : <><div id='game-details'>
-                <h2 id='game-title' >Title: {title}</h2>
-                <h3 id='game-release'>Released: {console, year}</h3>
-                <h3 id='game-desc'>About: {description}</h3>
-                <h3 id='game-price'>Price: {price}</h3> 
-            </div> 
-            <img id='game-box' src={image} width='500' height='300'/></> }
-            <button onClick={(e) => addToCart(e, game, cartGames, setCartGames)}>Add to Cart</button>
+            { editing ? <PatchGame game={game}/> 
+            : <>
+                <div id='game-details'>
+                    <h2 id='game-title' >Title: {title}</h2>
+                    <h3 id='game-release'>Released: {console, year}</h3>
+                    <h3 id='game-desc'>About: {description}</h3>
+                    <h3 id='game-price'>Price: {price}</h3> 
+                </div> 
+                <img id='game-box' src={image} width='500' height='300'/>
+            </> }
+            <button onClick={() => addToCart(game, cartGames, setCartGames)}>Add to Cart</button>
             { user.username === 'admin' ? <button onClick={e => {e.preventDefault(); setEditing(true)}}>Edit</button> : null }
             { user.username === 'admin' ? <button onClick={e => changeAvailability(e, gameId)}>Sold Out</button> : null }
         </div> );

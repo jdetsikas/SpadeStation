@@ -12,7 +12,11 @@ function App() {
   const [cartView, setCartView] = useState(false)
   const [cart, setCart] = useState({})
   const [cartGames, setCartGames] = useState([])
+<<<<<<< HEAD
   // const [oderId, setOrderId] = useState('')
+=======
+  const [total, setTotal] = useState(0)
+>>>>>>> 2c471ac65dfb0af200959db337749035c841e35a
 
   useEffect(() => {
     const setLogIn = async () => {
@@ -33,6 +37,7 @@ function App() {
       async function getCart(userId) {
         const { data } = await axios.get(`/api/orders/${userId}`)
         const usersCart = await initializeCart(userId, data)
+        window.console.log("Cart:", usersCart)
         setCart(usersCart)
         setCartGames(usersCart.games)
         
@@ -50,7 +55,7 @@ function App() {
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} setCartGames={setCartGames} cartView={cartView} setCartView={setCartView} setCart={setCart}/>
-      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} /> : null}
+      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} cart={cart} total={total} setTotal={setTotal}/> : null}
       <Routes user={user} setUser={setUser} cartGames={cartGames}  setCartGames={setCartGames} cart={cart}/>
       <Checkout orderId = {cart.id} cartGames = {cartGames} />
     </div> )
