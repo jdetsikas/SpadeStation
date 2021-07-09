@@ -1,7 +1,21 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import PatchGame from '../admin/PatchGame';
+
+import { addToCart } from '../cart/'
+
+/*
+////////////////
+// Functions //
+//////////////
+*/
 
 async function fetchGame(gameId, setGame) {
     try {
@@ -13,9 +27,7 @@ async function fetchGame(gameId, setGame) {
 }
 
 async function changeAvailability(e, gameId) {
-    
     e.preventDefault()
-
     const token = localStorage.getItem('token')
 
     try {
@@ -28,9 +40,7 @@ async function changeAvailability(e, gameId) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-
             }
-
         })
         window.console.log('Updated game:', revisedGame)
     } catch (error) {
@@ -38,14 +48,18 @@ async function changeAvailability(e, gameId) {
     }
 }
 
+/*
+/////////////////
+// Components //
+///////////////
+*/
 
 const GameDetails = (props) => {
-
-    const user = props.user
+    const {user, cartGames, setCartGames, cart} = props
+    let { gameId } = useParams()
 
     const [game, setGame] = useState({})
     const [editing, setEditing] = useState(false)
-    let { gameId } = useParams()
     
     useEffect(() => {
         async function prefetchData() {
@@ -54,7 +68,7 @@ const GameDetails = (props) => {
         prefetchData()
     }, [])
 
-    const { title, description, console, year, price, image } = game
+    const {id, title, description, console, year, price, image } = game
 
     return (
         <div id='game-info'>
@@ -65,9 +79,8 @@ const GameDetails = (props) => {
                 <h3 id='game-price'>Price: {price}</h3> 
             </div> 
             <img id='game-box' src={image} width='500' height='300'/></> }
-            <button>Add to Cart</button>
-            { user.username === 'admin' ? <button onClick={e => {e.preventDefault();
-                                                                    setEditing(true)}}>Edit</button> : null }
+            <button onClick={(e) => addToCart(e, game, cartGames, setCartGames)}>Add to Cart</button>
+            { user.username === 'admin' ? <button onClick={e => {e.preventDefault(); setEditing(true)}}>Edit</button> : null }
             { user.username === 'admin' ? <button onClick={e => changeAvailability(e, gameId)}>Sold Out</button> : null }
         </div> );
 
