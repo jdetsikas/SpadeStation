@@ -13,7 +13,7 @@ const GameTemplate = (props) => {
 
     return (
         <div className='game-icon'>
-            <input type='image' src={image} alt={'space invaders'} onClick={gameClick} width='300' height='400'/>
+            <input type='image' src={image} alt={'space invaders'} onClick={gameClick} width='190' height='275'/>
             <h1>{title}</h1>
             <h2>{`$${price}.99`}</h2>
             <button>Add to cart</button>
