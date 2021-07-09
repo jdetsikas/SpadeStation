@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const GameTemplate = (props) => {
     const { game } = props
     const { id, title, description, price, console, year, image } = game;

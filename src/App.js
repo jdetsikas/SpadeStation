@@ -11,6 +11,7 @@ function App() {
   const [cartView, setCartView] = useState(false)
   const [cart, setCart] = useState({})
   const [cartGames, setCartGames] = useState([])
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     const setLogIn = async () => {
@@ -31,6 +32,7 @@ function App() {
       async function getCart(userId) {
         const { data } = await axios.get(`/api/orders/${userId}`)
         const usersCart = await initializeCart(userId, data)
+        window.console.log("Cart:", usersCart)
         setCart(usersCart)
         setCartGames(usersCart.games)
       }
@@ -47,7 +49,7 @@ function App() {
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} setCartGames={setCartGames} cartView={cartView} setCartView={setCartView} setCart={setCart}/>
-      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} /> : null}
+      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} cart={cart} total={total} setTotal={setTotal}/> : null}
       <Routes user={user} setUser={setUser} cartGames={cartGames}  setCartGames={setCartGames} cart={cart}/>
     </div> )
 }
