@@ -54,53 +54,53 @@ body {
   background-color: transparent;
 }
 .box div:nth-child(1){
-  top: 60%;
-  left: 20%;
-  animation: animate 7s linear infinite;
-}
-.box div:nth-child(2){
-  top: 70%;
-  left: 50%;
-  animation: animate 7s linear infinite;
-}
-.box div:nth-child(3){
-  top: 90%;
-  left: 60%;
-  animation: animate 7s linear infinite;
-}
-.box div:nth-child(4){
-  top: 90%;
+  top: 80%;
   left: 10%;
   animation: animate 7s linear infinite;
 }
-.box div:nth-child(5){
+.box div:nth-child(2){
   top: 100%;
   left: 30%;
+  animation: animate 7s linear infinite;
+}
+.box div:nth-child(3){
+  top: 120%;
+  left: 50%;
+  animation: animate 7s linear infinite;
+}
+.box div:nth-child(4){
+  top: 130%;
+  left: 15%;
+  animation: animate 7s linear infinite;
+}
+.box div:nth-child(5){
+  top: 150%;
+  left: 35%;
   animation: animate 6s linear infinite;
 }
 .box div:nth-child(6){
-  top: 80%;
-  left: 70%;
+  top: 135%;
+  left: 55%;
   animation: animate 12s linear infinite;
 }
 .box div:nth-child(7){
-  top: 60%;
-  left: 70%;
+  top: 125%;
+  left: 60%;
   animation: animate 15s linear infinite;
 }
 .box div:nth-child(8){
-  top: 39%;
-  left: 25%;
+  top: 85%;
+  left: 65%;
   animation: animate 16s linear infinite;
 }
 .box div:nth-child(9){
-  top: 50%;
-  left: 12%;
+  top: 105%;
+  left: 75%;
   animation: animate 9s linear infinite;
 }
 .box div:nth-child(10){
-  top: 70%;
-  left: 50%;
+  top: 110%;
+  left: 5%;
   animation: animate 7s linear infinite;
 }
 
@@ -138,6 +138,8 @@ nav {
 }
 
 .AuthForm input {
+  font-size: .5em;
+  border:black solid 4px;
   width: 125px;
   margin: 5px 10px;
 }
@@ -152,13 +154,14 @@ nav {
   width:5em;
 }
 .navbar{
-  background-color: red;
+  background: rgb(255,0,0);
+  background: linear-gradient(110deg, rgba(255,0,0,1) 75%, rgba(0,255,255,1) 74%);
   color:white;
-  border-top: black solid 5px;
-  border-bottom: black solid 5px;
+  border-top: black solid 10px;
+  border-bottom: black solid 10px;
   margin-top: 0px;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: .25em;
+  padding-bottom: .25em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -178,8 +181,6 @@ label{
   padding-left: 1em;
 }
 input{
-  font-size: .5em;
-  border:black solid 4px;
   object-fit: cover;
   object-position: 97%;
 }
@@ -197,7 +198,7 @@ button{
   padding-top: 5px;
   padding-bottom: 5px;
 }
-a{
+a>img{
   color:rgb(0, 0, 0);
   -o-transition:.5s;
   -ms-transition:.5s;
@@ -206,8 +207,20 @@ a{
   transition:.5s;
   text-decoration: none;
 }
-a:hover{
-  color:white;
+a:hover > img{
+  filter: invert(100%) !important;
+}
+nav>input{
+  color:rgb(0, 0, 0);
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+  text-decoration: none;
+}
+nav> input:hover{
+  filter: invert(100%) !important;
 }
 form>div {
 padding-top: 1em;
@@ -238,4 +251,76 @@ padding-top: 1em;
 }
 .game-icon>h2{
   font-size: 1em;
+}
+#game-title{
+  color:magenta;
+}
+.home{
+  width:100%;
+
+}
+#slideshow {
+  overflow: hidden;
+  height:300px;
+  width: 1000px;
+  margin: 0 auto;
+  border: black solid 10px;
+  border-radius: 50px;
+  box-shadow: 5px 10px;
+  
+}
+
+.slide-wrapper {
+  width: 4000px;
+  animation: slide 30s ease infinite;
+}
+
+.slide {
+  float: left;
+  height:300px;
+  width: 1000px;
+}
+
+.slide:nth-child(1) {
+  background: black;
+}
+
+.slide:nth-child(2) {
+  background: black;
+}
+
+.slide:nth-child(3) {
+  background: black;
+}
+
+.slide:nth-child(4) {
+  background: black;
+}
+
+.slide-number{
+  color: #000;
+}
+
+@keyframes slide {
+  20% {margin-left: 0px;}
+  30% {margin-left: -1000px;}
+  50% {margin-left: -1000px;}
+  60% {margin-left: -2000px;}
+  70% {margin-left: -2000px;}
+  80% {margin-left: -3000px;}
+  90% {margin-left: -3000px;}
+}
+.line1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 100px;
+  padding-bottom: 600px;
+}
+.line1 > img {
+  width:30%;
+  max-width: 150px;
+  margin-right: 50px;
+  border-radius: 100%;
+  border: black solid 7px;
 }
