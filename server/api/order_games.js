@@ -2,6 +2,7 @@ const express = require('express')
 const orderGamesRouter = express.Router()
 const {getOrderById,addGameToOrder,
     getAllOrderGames,
+    getAllOrderGamesById,
     updateOrderGame,
     removeOrderGame, getUsersCartById, clearCart} = require('../db')
 
@@ -14,6 +15,16 @@ orderGamesRouter.get('/', async(req, res, next) => {
     try{
         const orderGames = await getAllOrderGames();
         res.send(orderGames)
+    }catch(error){
+        next(error)
+    }
+})
+
+orderGamesRouter.get('/:orderId', requireUser, async(req, res, next) => {
+    try{
+        const {orderId} = req.params
+        const ordersGames = await getAllOrderGamesById(orderId);
+        res.send(ordersGames)
     }catch(error){
         next(error)
     }
@@ -53,56 +64,30 @@ orderGamesRouter.post('/', requireUser, async(req, res, next) => {
 })
 
 
-orderGamesRouter.patch('/:orderId', 
-requireUser, 
-// requireAdmin, 
-async(req, res, next) => {
-
-    console.log('requser', req.user)
-    console.log('reqbody', req.body)
-
-
+orderGamesRouter.patch('/:orderId', requireUser, async(req, res, next) => {
     const {orderId} = req.params
-    console.log('params', req.params)
-
     const {gameId, quantity} = req.body;
 
     try{
         const updatedOrderGame = await updateOrderGame(orderId, {gameId, quantity})
-        // console.log('------------', updatedOrderGame)
         res.send(updatedOrderGame) 
     }catch (error){
         next(error)
     }
-
-
 })
 
 
-orderGamesRouter.delete('/:orderId', 
-requireUser, 
-//requireAdmin, //do we need?
-async(req, res, next) => {
-
-    // console.log('requser', req.user)
-    // console.log('reqbody', req.body) 
-
+orderGamesRouter.delete('/:orderId', requireUser, async(req, res, next) => {
     const {id} = req.user;
     const {gameId} = req.body
     const {orderId} = req.params
-    console.log('params', req.params)
 
     try{
-        // const cart = await getUsersCartById(id);
-        // const cartId = cart.id;
-
         const deletedOrderGame = await removeOrderGame(orderId, gameId)
-        console.log('------------', deletedOrderGame)
         res.send(deletedOrderGame) 
     }catch (error){
         next(error)
     }
-
 })
 
 
@@ -112,22 +97,15 @@ async(req, res, next) => {
 orderGamesRouter.delete('/:orderId/all', requireUser, async(req, res, next) => {
     const {id} = req.user;
     const {orderId} = req.params;
-    // const {gameId} = req.body
 
     try{
-
-        // const cart = await getUsersCartById(id);
-        // const cartId = cart.id;
-
         const order = await getOrderById(id)
 
-        if(id !== order.buyerId){
+        if (id !== order.buyerId) {
             res.status(401).send( {error: "User Id and Targeted Cart don't match"})
-        }else{
-        
-        const clearedCart= await clearCart(orderId);
-
-        res.send(clearedCart) 
+        } else {
+            const clearedCart= await clearCart(orderId);
+            res.send(clearedCart) 
         }
     }catch(error){
         next(error)
