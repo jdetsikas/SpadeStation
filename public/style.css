@@ -123,7 +123,7 @@ nav {
 }
 .landing,
 .Home {
-  font-size: 24px;
+  font-size: 12px;
   font-weight: bold;
   margin: 10px 40px;
 }
@@ -138,7 +138,7 @@ nav {
 }
 
 .AuthForm input {
-  width: 250px;
+  width: 125px;
   margin: 5px 10px;
 }
 .logo{
@@ -149,13 +149,13 @@ nav {
   background: linear-gradient(180deg, rgb(0, 225, 255) 15%, rgba(255,255,255,1) 80%);
 }
 .logo>img{
-  width:10em;
+  width:5em;
 }
 .navbar{
   background-color: red;
   color:white;
-  border-top: black solid 10px;
-  border-bottom: black solid 10px;
+  border-top: black solid 5px;
+  border-bottom: black solid 5px;
   margin-top: 0px;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -163,7 +163,7 @@ nav {
   flex-direction: row;
   justify-content: center;
   justify-content: space-around;
-  font-size: 3em;
+  font-size: 1.5em;
 }
 form{
   background-color: red;
@@ -173,20 +173,20 @@ form{
   float: right;
 }
 label{
-  font-size: 1.3em;
+  font-size: .7em;
   color: rgb(0, 0, 0);
   padding-left: 1em;
 }
 input{
-  font-size: 1em;
-  border:black solid 7px;
+  font-size: .5em;
+  border:black solid 4px;
   object-fit: cover;
   object-position: 97%;
 }
 button{
   background-color: black;
   color:white;
-  font-size: 25px;
+  font-size: 12.5px;
   border: white solid 5px;
   border-radius: 40px;
   margin-top: 1em;
@@ -221,21 +221,21 @@ padding-top: 1em;
 }
 .gamesheader{
   
-  font-size: 5em;
+  font-size: 2.5em;
 }
 
 .gamegrid {
-  width: 2000px;
+  width: 1000px;
   display: flex;
   flex-wrap: wrap;
 }
 .gamegrid>* {
-  flex: 1 1 350px;
+  flex: 1 1 250px;
   
 }
 .game-icon>h1{
-  font-size: 3em;
+  font-size: 1.5em;
 }
 .game-icon>h2{
-  font-size: 2em;
+  font-size: 1em;
 }
