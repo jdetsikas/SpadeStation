@@ -60,14 +60,10 @@ async function addGameToOrder(cartId, gameId, quantity) {
     try {
         const gameToAdd = await getGameById(gameId)
         const purchCost = gameToAdd.price;
-        // let quantity = 1;
 
-        // fields.purchCost = gameToAdd.price
-
-        // const insert = createInsertString(fields)
-        // const values = createValueString(fields)
-
-        // if (insert.length === 0 || values.length === 0) { return }
+        if (!quantity || quantity < 0) {
+            quantity = 1
+        }
 
         const {rows: [addedGame] } = await client.query(`
             INSERT INTO order_games ("orderId", "gameId", "purchCost", "quantity")

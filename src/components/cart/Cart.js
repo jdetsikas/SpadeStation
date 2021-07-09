@@ -3,11 +3,7 @@ import CartGameTemplate from './CartGameTemplate'
 
 const Cart = ({cartGames, setCartGames}) => {
 
-    useEffect(() => {
-        window.console.log("CartGames:", cartGames)
-    })
-
-    const cartList = cartGames.map((game, idx) => <CartGameTemplate game={game} key={idx} /> )
+    let cartList = cartGames.map((game, idx) => <CartGameTemplate game={game} key={idx} /> )
 
     return (
         <div id='cart'>
