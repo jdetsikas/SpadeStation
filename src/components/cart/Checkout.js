@@ -4,7 +4,7 @@ import CartGameTemplate from './CartGameTemplate'
 
 
 const Checkout = (props) =>{
-    const {orderId, cartGames} = props;
+    const {orderId, cartGames, setCartGames, cart} = props;
 
     const [pay, setPay] = useState(null)
     const [shipping, setShipping] = useState('')
@@ -40,17 +40,21 @@ const Checkout = (props) =>{
        }
    }
 
-   const cartList = cartGames.map((game,index) => <CartGameTemplate game = {game} key = {index} />)
+   const cartList = cartGames.map((game,index) => <CartGameTemplate game = {game} key = {index} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/>)
 
 
 
     return(
 
         <>
+      
 
-        <div className = 'thecartlist'>
+        <div className = 'checkout'>
+
+            <h1>Checkout</h1>
+        {/* <div className = 'thecartlist'>
             {cartList}
-        </div>
+        </div> */}
 
         <div className = 'chform'>
 
@@ -95,7 +99,7 @@ const Checkout = (props) =>{
 
         </div>
             
-
+        </div>
 
 
         </>

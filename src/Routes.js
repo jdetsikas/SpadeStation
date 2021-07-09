@@ -8,7 +8,7 @@ import { default as Users } from './components/admin/Users.js'
 import { default as Checkout} from './components/cart/Checkout'
 
 function Routes(props) {
-  const { user, setUser, cartGames, setCartGames, cart } = props
+  const { user, setUser, cartGames, setCartGames, cart} = props
   
   return (
     <Switch>
@@ -21,7 +21,7 @@ function Routes(props) {
         return <GameDetails {...props} user={user} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/>} }/>
       <Route path='/games' render={ (props) => <Games {...props} user={user}/> }/>
       
-      {/* <Route path='/checkout/:orderId' render={ () => <Checkout user={user} /> }/> */}
+      <Route path='/checkout' render = { () => <Checkout orderId = {cart.id} cartGames = {cartGames} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/> } />
       
       <Route path='/landing' component={Landing}/>
       <Route path='/' component={Home}/>
