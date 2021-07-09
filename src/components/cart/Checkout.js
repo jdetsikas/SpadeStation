@@ -1,27 +1,15 @@
 import React, {useState} from 'react'
-// import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import CartGameTemplate from './CartGameTemplate'
 
 
 const Checkout = (props) =>{
     const {orderId, cartGames} = props;
-    // console.log('the order id', orderId)
+
     const [pay, setPay] = useState(null)
     const [shipping, setShipping] = useState('')
 
-    
-
-    // const [billing, setBilling] = useState('')
-
-    {/* 'VISA', 'MasterCard', 'Discover', 'AmEx', 'Apple Pay', 'GPay', 'PayPal', 'Venmo' */}
     const payments = ['VISA', 'MasterCard', 'Discover', 'AmEx', 'Apple Pay', 'GPay', 'PayPal', 'Venmo' ];
-
-    // console.log(typeof shipping, 'the shipping:', shipping)
-
-    // console.log(typeof billing, 'the billing:', billing)
-
-    // console.log(typeof pay,'selected pay -------', pay)
 
     let token = localStorage.getItem('token')
 
@@ -59,17 +47,11 @@ const Checkout = (props) =>{
     return(
 
         <>
-        {/* ------------------Cart GAMes-------------------- */}
-
 
         <div className = 'thecartlist'>
             {cartList}
         </div>
 
-
-
-
-        {/* ------------------Payment form-------------------- */}
         <div className = 'chform'>
 
         <form className = 'formpay' onSubmit = {handleSubmit} >
