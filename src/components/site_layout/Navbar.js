@@ -17,19 +17,19 @@ function Navbar({ user, setUser, setCartGames, history, cartView, setCartView, s
 
       <h1 className='logo'><img src='/icons/logo.png' alt="logo"/></h1>
       <nav className='navbar'>
-        <NavLink to='/'>Home</NavLink>
-        {user.username === 'admin' ? <NavLink to='/users'>User List</NavLink> : null}
-        <NavLink to='/games'>Games</NavLink>
-        <input type='image' src='https://www.freeiconspng.com/uploads/basket-cart-icon-27.png' onClick={(e) => {e.preventDefault(); setCartView(!cartView)}} height='30' width='30'/>
+        <NavLink to='/'><img src ="/icons/home.png" alt="home"/></NavLink>
+        <NavLink to='/games'><img src ="/icons/games.png" alt="games"/></NavLink>
+        <input type='image' src='/icons/cart.png' onClick={(e) => {e.preventDefault(); setCartView(!cartView)}}/>
+
         {user.id ? ( 
           <div>
-            <NavLink to='/account'>{user.username}</NavLink>
-            <a href='#' onClick={handleLogout}>Log Out</a>
+            <NavLink to='/account'><img src ="/icons/profile.png" alt="profile"/></NavLink>
+            <a href='#' onClick={handleLogout}><img src ="/icons/signout.png" alt="signout"/></a>
           </div>
           ) : (
           <div>
-            <NavLink to='/login'>Login</NavLink>
-            <NavLink to='/signup'>Sign Up</NavLink>
+            <NavLink to='/login'><img src ="/icons/login.png" alt="login"/></NavLink>
+            <NavLink to='/signup'><img src ="/icons/register.png" alt="register"/></NavLink>
           </div>
         )}
       </nav>
