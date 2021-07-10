@@ -1,0 +1,28 @@
+.hide {
+    display: none;
+}
+
+#confirmation {
+    position: fixed;
+    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    backdrop-filter: blur(3px);
+    background: 0,0,0,0.4;
+}
+
+#confirmation form {
+    min-width: 480px;
+    padding: 3rem;
+  
+    box-shadow: 0 2px 8px black;
+    background: white;
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

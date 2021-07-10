@@ -1,114 +1,111 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import CartGameTemplate from './CartGameTemplate'
+import GameListTemplate from './GameListTemplate'
+import './Cart.css'
 
 
 const Checkout = (props) =>{
-    const {orderId, cartGames, setCartGames, cart} = props;
+    const {orderId, cartGames, setCartGames, cart, user} = props;
 
     const [pay, setPay] = useState(null)
     const [shipping, setShipping] = useState('')
+    const [subOrder, setSubOrder] = useState({})
+    const [subbed, setSubbed] = useState(false)
+
+    useEffect(() => {
+        if (!user.id) {
+            location.assign('/login')
+        }
+    }, [])
 
     const payments = ['VISA', 'MasterCard', 'Discover', 'AmEx', 'Apple Pay', 'GPay', 'PayPal', 'Venmo' ];
 
     let token = localStorage.getItem('token')
 
-   const handleSubmit =  async (event) =>{
-       event.preventDefault();
+    const handleSubmit =  async () =>{
+        event.preventDefault()
 
-       try{
+        try{
+            const {data: newAlias} = await axios({
+                method: 'PATCH',
+                url: `/api/checkout/${orderId}`,
+                data: {
 
-        const {data: newAlias} = await axios({
-            method: 'PATCH',
-            url: `/api/checkout/${orderId}`,
-            data: {
+                    'payment': pay,
+                    'shippingLoc': shipping
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
 
-                'payment': pay,
-                'shippingLoc': shipping
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-
-            }
-
-        })
-        
-        window.console.log('Check out:', newAlias)
-       }catch(error){
+                }
+            })
+    
+            setSubOrder(newAlias)
+            setSubbed(true)
+        }catch(error){
             window.console.error(error);
-       }
-   }
+        }
+    }
 
-   const cartList = cartGames.map((game,index) => <CartGameTemplate game = {game} key = {index} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/>)
-
-
+    const cartList = cartGames.map((game, index) => <CartGameTemplate game = {game} key = {index} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/>)
+    const confGames = cartGames.map((game, index) => <GameListTemplate game={game} key={index}/>)
 
     return(
+        <div className='checkout'>
 
-        <>
-      
+        
 
-        <div className = 'checkout'>
+            <div className = 'chform'>
+            <form className = 'formpay' onSubmit={() => handleSubmit()} >
 
-            <h1>Checkout</h1>
-        {/* <div className = 'thecartlist'>
-            {cartList}
-        </div> */}
+                <h1>Checkout</h1>
 
-        <div className = 'chform'>
-
-        <form className = 'formpay' onSubmit = {handleSubmit} >
-
-
-            <label className = 'loc1'> Shipping Address: </label>
-                <div className = 'toship'>
-                    <input type ='text' className = 'location1' onChange = {(event) => setShipping(event.target.value)} />
-
+                <div className = 'thecartlist'>
+                    {cartList}
                 </div>
 
+                <label className = 'loc1'> Shipping Address: </label>
+                <div className = 'toship'>
+                    <input type ='text' className='location1' value={shipping} onChange={(event) => setShipping(event.target.value)} />
+                </div>
+               
 
-            {/* 
-            <label className = 'loc2'>Billing Address: </label>
-                    <div className = 'tobill'>
-                        <input type = 'text' className = 'location2' onChange = {(event) => setBilling(event.target.value)}/>
-                    </div> 
-            */}
+                <select className = 'dropdown' onChange = { (event) => setPay(event.target.value) }>
+                        <option 
+                        // value ='null'
+                        >Select Payment</option>
+                        {
+                            payments.map((payment, index) => {
+                                return(
+                                    <option key = {index} value = {payment} >
+                                        {payment}
+                                    </option>
+                                )
+                            })
+                        }
+                        
 
-            <select className = 'dropdown' onChange = { (event) => setPay(event.target.value) }>
-                    <option 
-                    // value ='null'
-                    >Select Payment</option>
-                    {
-                        payments.map((payment, index) => {
-                            return(
-                                <option key = {index} value = {payment} >
-                                    {payment}
-                                </option>
-                            )
-                        })
-                    }
-                     
+                </select>
 
-            </select>
+                    <button type ='submit' className = 'ordersubmit'> Submit </button>
+                    <button type='button' onClick={() => {
+                        location.assign('/')
+                    }}>Cancel</button>
+                </form>
+            </div>
 
-                <button type ='submit' className = 'ordersubmit'> Submit </button>
-
-            </form>
-
-
-        </div>
-            
-        </div>
-
-
-        </>
-
-
-    )
-
-
-
+            <div id='confirmation' className={subbed ? 'show' : 'hide'}>
+                <form>
+                    <h2>Order Id: {subOrder.id} </h2>
+                    <h2>Payment: {subOrder.payment}</h2>
+                    <h2>Shipping To: {subOrder.shippingLoc}</h2>
+                    <h2>Order Contents: </h2>
+                    {confGames}
+                </form>
+            </div>
+        </div> )
 }
 
 export default Checkout;

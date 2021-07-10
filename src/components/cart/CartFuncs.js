@@ -13,8 +13,12 @@ let token = localStorage.getItem('token')
 //////////////
 */
 
-export async function addToCart(item, cartGames, setCartGames) {
+export async function addToCart(item, cartGames, setCartGames, cartView, setCartView) {
   event.preventDefault()
+  
+  if (!cartView) {
+    setCartView(true)
+  }
 
   const found = cartGames.filter((game) => game.id === item.id)
 

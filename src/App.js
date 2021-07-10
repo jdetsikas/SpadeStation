@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import Routes from './Routes'
 import { Navbar } from './components/site_layout'
-import { Cart} from './components/cart'
+import { Cart, Checkout } from './components/cart'
 // import Checkout from './components/cart/Checkout'
 import { checkLogin, initializeCart } from './utils'
 
@@ -13,7 +13,7 @@ function App() {
   const [cart, setCart] = useState({})
   const [cartGames, setCartGames] = useState([])
   const [total, setTotal] = useState(0)
-  // const [showCheckout, setShowCheckout] = useState(false)
+  const [showCheckout, setShowCheckout] = useState(false)
 
   useEffect(() => {
     const setLogIn = async () => {
@@ -55,11 +55,12 @@ function App() {
   return (
     <div className='App'>
       <Navbar user={user} setUser={setUser} setCartGames={setCartGames} cartView={cartView} setCartView={setCartView} setCart={setCart}/>
-      {cartView ? <Cart cartGames={cartGames} setCartGames={setCartGames} cart={cart} total={total} setTotal={setTotal} setCartView = {setCartView}
-      // showCheckout = {showCheckout} setShowCheckout = {setShowCheckout} 
-      /> : null}
-      <Routes user={user} setUser={setUser} cartGames={cartGames}  setCartGames={setCartGames} cart={cart}/>
-      {/* <Checkout orderId = {cart.id} cartGames = {cartGames} /> */}
+      <Cart 
+        cartGames={cartGames} setCartGames={setCartGames} 
+        cart={cart} total={total} setTotal={setTotal} 
+        cartView={cartView} setCartView={setCartView}
+        setShowCheckout={setShowCheckout}/>
+      <Routes user={user} setUser={setUser} cartGames={cartGames}  setCartGames={setCartGames} cart={cart} cartView={cartView} setCartView={setCartView}/>
     </div> )
 }
 
