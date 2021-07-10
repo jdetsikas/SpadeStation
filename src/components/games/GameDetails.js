@@ -55,7 +55,7 @@ async function changeAvailability(e, gameId) {
 */
 
 const GameDetails = (props) => {
-    const {user, cartGames, setCartGames, cart} = props
+    const {user, cartGames, setCartGames, cart, cartView, setCartView} = props
     let { gameId } = useParams()
 
     const [game, setGame] = useState({})
@@ -82,7 +82,7 @@ const GameDetails = (props) => {
                 </div> 
                 <img id='game-box' src={image} width='500' height='300'/>
             </> }
-            <button onClick={() => addToCart(game, cartGames, setCartGames)}>Add to Cart</button>
+            <button onClick={() => addToCart(game, cartGames, setCartGames, cartView, setCartView)}>Add to Cart</button>
             { user.username === 'admin' ? <button onClick={e => {e.preventDefault(); setEditing(true)}}>Edit</button> : null }
             { user.username === 'admin' ? <button onClick={e => changeAvailability(e, gameId)}>Sold Out</button> : null }
         </div> );

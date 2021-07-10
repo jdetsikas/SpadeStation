@@ -25,9 +25,9 @@ const CartGameTemplate = (props) => {
             <a>{title}</a>
             <a>${price}</a>
             <a>Copies: {quant}</a>
-            <button onClick={() => decreaseQuant(game, cartGames, setCartGames, cart, quant, setQuant)}>-</button>
-            <button onClick={() => increaseQuant(game, cart, quant, setQuant)}>+</button>
-            <button onClick={() => removeFromCart(game, cartGames, setCartGames, cart)}>Remove</button>
+            <button type='button' onClick={() => decreaseQuant(game, cartGames, setCartGames, cart, quant, setQuant)}>-</button>
+            <button type='button' onClick={() => increaseQuant(game, cart, quant, setQuant)}>+</button>
+            <button type='button' onClick={() => removeFromCart(game, cartGames, setCartGames, cart)}>Remove</button>
         </div> );
 }
 

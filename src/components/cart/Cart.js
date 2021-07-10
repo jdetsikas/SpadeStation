@@ -7,6 +7,12 @@
 import React from 'react'
 import CartGameTemplate from './CartGameTemplate'
 import { clearCart } from './CartFuncs'
+import './Cart.css'
+
+async function beginCheckout(setCartView) {
+    setCartView(false)
+    location.assign('/checkout')
+}
 
 /*
 /////////////////
@@ -14,17 +20,17 @@ import { clearCart } from './CartFuncs'
 ///////////////
 */
 
-const Cart = ({ cartGames, setCartGames, cart }) => {
+const Cart = ({ cartGames, setCartGames, cart, total, setTotal, cartView, setCartView }) => {
     let cartList = cartGames.map((game, idx) => {
         return <CartGameTemplate key={idx} game={game} cartGames={cartGames} setCartGames={setCartGames} cart={cart}/>
     })
 
     return (
-        <div id='cart'>
+        <div id='cart' className={cartView ? 'show' : 'hide'}>
             <h2>Cart</h2>
             {cartList.length ? cartList : <a>Cart Is Empty</a>}
-            <button onClick={() => clearCart(setCartGames, cart)}>Clear Cart</button>
-            <button>Checkout</button>
+            <button type='button' onClick={() => clearCart(setCartGames, cart)}>Clear Cart</button>
+            <button type='button' onClick={() => beginCheckout(setCartView)}>Checkout</button>
         </div> );
 }
 
