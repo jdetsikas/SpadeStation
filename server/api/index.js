@@ -58,6 +58,10 @@ router.use('/orders', ordersRouter)
 const orderGamesRouter = require('./order_games')
 router.use('/order_games', orderGamesRouter)
 
+// ROUTER: /api/checkout
+const orderCheckoutRouter = require('./checkout')
+router.use('/checkout', orderCheckoutRouter)
+
 
 // ------ ADD MORE ROUTES BELOW ------
 
