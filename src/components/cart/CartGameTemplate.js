@@ -15,9 +15,19 @@ import { removeFromCart, increaseQuant, decreaseQuant } from './CartFuncs'
 
 const CartGameTemplate = (props) => {
     const {game, cartGames, setCartGames, cart} = props
+    
     const { id, title, description, console, year, price, image, quantity } = game
 
     const [quant, setQuant] = useState(quantity)
+    
+    const gameQuant = cartGames.quantity;
+
+    // const handleIncrease = async () =>{ 
+
+    //     gameQuant += 1
+    // }
+    //}}
+
 
     return (
         <div className='cart-item'>
