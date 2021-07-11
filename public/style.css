@@ -306,6 +306,7 @@ transform: scale(1.5);
 .welcoming2{
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
 }
 #slideshow {
   overflow: hidden;
@@ -314,7 +315,10 @@ transform: scale(1.5);
   margin: 0 auto;
   border: black solid 10px;
   border-radius: 50px;
-  box-shadow: 5px 10px;
+  box-shadow:
+  inset 0 -5em 5em rgba(0,0,0,0.1),
+        0 0  0 5px rgb(0, 0, 0),
+        2em 2em 5em rgba(0,0,0,0.9);
   
 }
 
