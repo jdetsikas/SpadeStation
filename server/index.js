@@ -24,9 +24,9 @@ client.connect()
 server.use(cors());
 
 // body-parser & logging middleware
+server.use(morgan('tiny'))
 server.use(express.json())
 server.use(express.urlencoded({extended: true}))
-server.use(morgan('tiny'))
 
 // express static for build files
 
@@ -35,6 +35,11 @@ server.use('/', express.static(path.join(__dirname, 'build')))
 
 const apiRouter = require('./api')
 server.use('/api', apiRouter)
+
+// For any get routes that are not in /api, rely on ReactRouter to handle
+server.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 // Error Handler
 server.use((err, req, res, next) => {
@@ -45,14 +50,9 @@ server.use((err, req, res, next) => {
     })
 })
 
-// For any get routes that are not in /api, rely on ReactRouter to handle
-server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
-
 // 404 Handler
-server.use('*', (req, res) => {
-    res.status(404).send('Invalid Request.  Try again.')
-})
+// server.use('*', (req, res) => {
+//     res.status(404).send('Invalid Request.  Try again.')
+// })
 
 server.listen(PORT, () => console.log(`Starting server on port: ${PORT}`))
