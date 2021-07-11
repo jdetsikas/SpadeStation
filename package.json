@@ -4,6 +4,7 @@
   "engines": {
     "node": "16.x"
   },
+  "homepage": ".",
   "description": "Second-hand games retailer",
   "main": "server/index.js",
   "proxy": "http://localhost:4000",
