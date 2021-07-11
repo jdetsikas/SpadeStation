@@ -1,6 +1,9 @@
 {
   "name": "spades_shopper",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x"
+  },
   "description": "Second-hand games retailer",
   "main": "server/index.js",
   "proxy": "http://localhost:4000",
