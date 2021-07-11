@@ -11,7 +11,7 @@ const morgan = require('morgan')
 const cors = require('cors');
 const {PORT = 4000} = process.env // server port
 
-const { client } = require('./db')
+const { client } = require('./server/db')
 
 
 /*

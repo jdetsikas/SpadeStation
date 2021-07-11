@@ -2,7 +2,7 @@
   "name": "spades_shopper",
   "version": "1.0.0",
   "description": "Second-hand games retailer",
-  "main": "server/index.js",
+  "main": "index.js",
   "proxy": "http://localhost:4000",
   "scripts": {
     "start:react": "react-scripts start",
