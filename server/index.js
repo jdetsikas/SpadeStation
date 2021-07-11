@@ -5,18 +5,14 @@
 */
 
 require('dotenv').config()
-
 const express = require('express')
 const server = express()
-
 const morgan = require('morgan')
-const path = require('path')
-
 const cors = require('cors');
-const apiRouter = require('./api')
+const {PORT = 4000} = process.env // server port
 
 const { client } = require('./db')
-const PORT = 4000 // server port
+
 
 /*
 //////////////////////
@@ -33,8 +29,11 @@ server.use(express.urlencoded({extended: true}))
 server.use(morgan('tiny'))
 
 // express static for build files
+
+const path = require('path')
 server.use('/', express.static(path.join(__dirname, 'build')))
 
+const apiRouter = require('./api')
 server.use('/api', apiRouter)
 
 // Error Handler
