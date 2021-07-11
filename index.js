@@ -10,9 +10,9 @@ const server = express()
 const morgan = require('morgan')
 const path = require('path')
 
-const apiRouter = require('./api')
+const apiRouter = require('./server/api')
 
-const { client } = require('./db')
+const { client } = require('./server/db')
 const PORT = 4000 // server port
 
 /*
@@ -25,10 +25,11 @@ client.connect()
 
 // body-parser & logging middleware
 server.use(express.json())
+server.use(express.urlencoded({extended: true}))
 server.use(morgan('tiny'))
 
 // express static for build files
-// server.use('/', express.static(path.join(__dirname, 'build')))
+server.use('/', express.static(path.join(__dirname, 'build')))
 
 server.use('/api', apiRouter)
 
@@ -42,9 +43,9 @@ server.use((err, req, res, next) => {
 })
 
 // For any get routes that are not in /api, rely on ReactRouter to handle
-// server.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.js'))
-// })
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.js'))
+})
 
 // 404 Handler
 server.use('*', (req, res) => {
