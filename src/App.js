@@ -3,8 +3,7 @@ import axios from 'axios'
 
 import Routes from './Routes'
 import { Navbar } from './components/site_layout'
-import { Cart, Checkout } from './components/cart'
-// import Checkout from './components/cart/Checkout'
+import { Cart } from './components/cart'
 import { checkLogin, initializeCart } from './utils'
 
 function App() {
