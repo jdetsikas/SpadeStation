@@ -13,9 +13,9 @@ const morgan = require('morgan')
 const path = require('path')
 
 const cors = require('cors');
-const apiRouter = require('./server/api')
+const apiRouter = require('./api')
 
-const { client } = require('./server/db')
+const { client } = require('./db')
 const PORT = 4000 // server port
 
 /*
