@@ -10,7 +10,7 @@ function Landing(props) {
   }, [])
 
   return (
-    <div className='Home'>
+    <div className='landing'>
       <h1>Welcome, {user.username}! Thanks for logging in! Buy some games, will ya?</h1>
     </div>
   )

@@ -80,7 +80,7 @@ const GameDetails = (props) => {
                     <h3 id='game-desc'>About: {description}</h3>
                     <h3 id='game-price'>Price: {price}</h3> 
                 </div> 
-                <img id='game-box' src={image} width='500' height='300'/>
+                <img id='game-box' src={image} width='800' height='425'/>
             </> }
             <button onClick={() => addToCart(game, cartGames, setCartGames, cartView, setCartView)}>Add to Cart</button>
             { user.username === 'admin' ? <button onClick={e => {e.preventDefault(); setEditing(true)}}>Edit</button> : null }

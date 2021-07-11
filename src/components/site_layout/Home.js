@@ -3,10 +3,16 @@ import React, { useState, useEffect } from 'react'
 function Home(props) {
   return (
     <div className='Home'>
-      <script src="/konami.js"></script>
-      <h1>Welcome to Spades Shopper!</h1>
-      <h2>We've got games on deck!</h2>
+      <div className='bigwelcome'>
+      <div className='welcoming'>
+      <h1>Welcome to SPADE STATION!</h1>
+      </div>
+      <div className='welcoming2'>
+      <h1>We've Got Games On Deck!</h1>
+      </div>
+      </div>
       <div id="slideshow">
+      
   <div className="slide-wrapper">
     <div className="slide"><div className="slide-img"><img src ="/icons/banner1.jpg" alt="banner1"/></div></div>
     <div className="slide"><div className="slide-img"><img src ="/icons/banner2.jpg" alt="banner2"/></div></div>

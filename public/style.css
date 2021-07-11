@@ -114,6 +114,12 @@ body {
       opacity: 0;
   }
 }
+
+/*
+//////////////
+/////NAV BAR/////
+////////////
+*/
 nav a {
   margin-left: 10px;
 }
@@ -157,8 +163,8 @@ nav {
   background: rgb(255,0,0);
   background: linear-gradient(110deg, rgba(255,0,0,1) 75%, rgba(0,255,255,1) 74%);
   color:white;
-  border-top: black solid 10px;
-  border-bottom: black solid 10px;
+  border-top: black solid 15px;
+  border-bottom: black solid 15px;
   margin-top: 0px;
   padding-top: .25em;
   padding-bottom: .25em;
@@ -225,20 +231,28 @@ nav> input:hover{
 form>div {
 padding-top: 1em;
 }
+
+/*
+///////////
+//GAMES TAB////
+//////////
+*/
 .games{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 5em;
+  padding-left: 20em;
+  padding-bottom: 5em;
   
 }
 .gamesheader{
   
   font-size: 2.5em;
+  text-decoration: black underline 7px;
 }
 
 .gamegrid {
-  width: 1000px;
+  width: 1250px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -252,12 +266,46 @@ padding-top: 1em;
 .game-icon>h2{
   font-size: 1em;
 }
-#game-title{
-  color:magenta;
+.game-icon>input{ 
+transition: all .2s ease-in-out; 
+border: black solid 7px;
+border-radius: 10px;
 }
+  
+.game-icon>input:hover { 
+transform: scale(1.5); 
+}
+.game-icon{
+  padding-bottom: 2em;
+  
+}
+
+
+/*
+///////////
+////HOME PAGE//////
+//////////////
+*/
 .home{
   width:100%;
 
+}
+.bigwelcome{
+  font-size:15px;
+  background-color: black;
+  color: white;
+  margin-bottom: 10px;
+  margin-left: 400px;
+  margin-right: 400px;
+  border-radius: 30px;
+}
+.welcoming{
+  display: flex;
+  justify-content: center;
+}
+.welcoming2{
+  display: flex;
+  justify-content: center;
 }
 #slideshow {
   overflow: hidden;
@@ -272,7 +320,7 @@ padding-top: 1em;
 
 .slide-wrapper {
   width: 4000px;
-  animation: slide 30s ease infinite;
+  animation: slide 25s ease infinite;
 }
 
 .slide {
@@ -324,3 +372,118 @@ padding-top: 1em;
   border-radius: 100%;
   border: black solid 7px;
 }
+
+/*
+//////////////
+////GAME DETAILS/////
+//////////////
+*/
+#game-info{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 580px;
+}
+#game-info > button {
+  background-color: black;
+  color:white;
+  font-size: 20px;
+  border: white solid 5px;
+  border-radius: 40px;
+  max-width: 160px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 300px;
+}
+#game-details{
+  color: white;
+  background-color: black;
+  margin-right:507px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 100px;
+  margin-bottom: 50px;
+  margin-top :50px;
+  border-radius: 40px;
+  padding-right: 100px;
+
+}
+#game-details > h2{
+  padding-bottom:50px;
+  font-size: 50px;
+}
+#game-details >h3{
+  padding-bottom: 10px;
+  font-size: 25px;
+}
+#game-box{
+  border: white solid 10px;
+}
+
+/*
+/////////////////
+///CART/////////
+/////////////////
+*/
+
+#cart{
+  background:red;
+  padding-top: 0px;
+  border-top:black solid 5px;
+  border-bottom: black solid 15px;
+  
+  padding-left: 5em;
+  padding-right: 5em;
+  margin-left: 30em;
+  margin-right: 30em;
+
+  
+}
+#cart > button {
+  background-color: black;
+  color:white;
+  font-size: 15px;
+  border: white solid 5px;
+  border-radius: 40px;
+  max-width: 160px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+}
+
+/*
+/////////////
+///LANDING///
+//////////////
+*/
+.landing{
+  padding-bottom:1300px;
+  display: flex;
+  justify-content:center ;
+  font-size:25px;
+}
+
+
+/*
+///////////
+///PROFILE////
+///////////////
+*/
+.profilepage>img{
+    margin-top: 50px;  
+    border-radius: 100%;
+    border: black solid 20px;
+    margin-left: 18em;
+  
+}
+.profilepage{
+    font-size:15px;
+    padding-bottom: 500px;
+    margin-left: 400px;
+    margin-right: 400px;
+}
+.userinfo{
+  margin-left:28em;
+}
+

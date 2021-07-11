@@ -15,9 +15,12 @@ const UserAccount = (props) => {
     }, [])
     
     return (
-        <div>
-                <h1>Account Management</h1>
+        <div className="profilepage">
+                <img src ="/icons/you.jpg" alt="you"/>
+                <div className="userinfo">
+                <h1>Look At YOU!</h1>
                 <h2>Username: {name}</h2>
+                </div>
         </div> );
 }
 
