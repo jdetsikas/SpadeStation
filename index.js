@@ -4,12 +4,15 @@
 /////////////////
 */
 
+require('dotenv').config()
+
 const express = require('express')
 const server = express()
 
 const morgan = require('morgan')
 const path = require('path')
 
+const cors = require('cors');
 const apiRouter = require('./server/api')
 
 const { client } = require('./server/db')
@@ -22,6 +25,7 @@ const PORT = 4000 // server port
 */
 
 client.connect()
+server.use(cors());
 
 // body-parser & logging middleware
 server.use(express.json())
