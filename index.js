@@ -33,7 +33,7 @@ server.use(express.urlencoded({extended: true}))
 const path = require('path')
 server.use('/', express.static(path.join(__dirname, 'build')))
 
-const apiRouter = require('./api')
+const apiRouter = require('./server/api')
 server.use('/api', apiRouter)
 
 // For any get routes that are not in /api, rely on ReactRouter to handle
