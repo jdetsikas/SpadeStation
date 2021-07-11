@@ -20,7 +20,6 @@ const Checkout = (props) =>{
     const handleSubmit =  async () =>{
         event.preventDefault()
 
-
         if (!user.id) {
             return location.assign('/login')
         }
