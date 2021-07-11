@@ -9,7 +9,10 @@ import CartGameTemplate from './CartGameTemplate'
 import { clearCart } from './CartFuncs'
 import './Cart.css'
 
-async function beginCheckout(setCartView) {
+async function beginCheckout(cartGames, setCartView) {
+    if (!cartGames.length) {
+        return
+    }
     setCartView(false)
     location.assign('/checkout')
 }
@@ -30,7 +33,7 @@ const Cart = ({ cartGames, setCartGames, cart, total, setTotal, cartView, setCar
             <h2>Cart</h2>
             {cartList.length ? cartList : <a>Cart Is Empty</a>}
             <button type='button' onClick={() => clearCart(setCartGames, cart)}>Clear Cart</button>
-            <button type='button' onClick={() => beginCheckout(setCartView)}>Checkout</button>
+            <button type='button' onClick={() => beginCheckout(cartGames, setCartView)}>Checkout</button>
         </div> );
 }
 

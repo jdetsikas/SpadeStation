@@ -13,18 +13,21 @@ const Checkout = (props) =>{
     const [subOrder, setSubOrder] = useState({})
     const [subbed, setSubbed] = useState(false)
 
-    useEffect(() => {
-        if (!user.id) {
-            location.assign('/login')
-        }
-    }, [])
-
     const payments = ['VISA', 'MasterCard', 'Discover', 'AmEx', 'Apple Pay', 'GPay', 'PayPal', 'Venmo' ];
 
     let token = localStorage.getItem('token')
 
     const handleSubmit =  async () =>{
         event.preventDefault()
+
+
+        if (!user.id) {
+            return location.assign('/login')
+        }
+
+        if (!cartGames.length) {
+            return location.assign('/')
+        }
 
         try{
             const {data: newAlias} = await axios({
@@ -58,7 +61,7 @@ const Checkout = (props) =>{
         
 
             <div className = 'chform'>
-            <form className = 'formpay' onSubmit={() => handleSubmit()} >
+            <form className = 'formpay' onSubmit={() => handleSubmit(cartList)} >
 
                 <h1>Checkout</h1>
 
@@ -68,11 +71,11 @@ const Checkout = (props) =>{
 
                 <label className = 'loc1'> Shipping Address: </label>
                 <div className = 'toship'>
-                    <input type ='text' className='location1' value={shipping} onChange={(event) => setShipping(event.target.value)} />
+                    <input type ='text' className='location1' value={shipping} onChange={(event) => setShipping(event.target.value)} required/>
                 </div>
                
 
-                <select className = 'dropdown' onChange = { (event) => setPay(event.target.value) }>
+                <select className = 'dropdown' onChange = { (event) => setPay(event.target.value) } required>
                         <option 
                         // value ='null'
                         >Select Payment</option>
@@ -103,6 +106,7 @@ const Checkout = (props) =>{
                     <h2>Shipping To: {subOrder.shippingLoc}</h2>
                     <h2>Order Contents: </h2>
                     {confGames}
+                    <button type='button' onClick={() => location.assign('/')}>Home</button>
                 </form>
             </div>
         </div> )
