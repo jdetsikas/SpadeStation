@@ -1,3 +1,9 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -5,6 +11,12 @@ import Routes from './Routes'
 import { Navbar } from './components/site_layout'
 import { Cart } from './components/cart'
 import { checkLogin, initializeCart } from './utils'
+
+/*
+////////////////
+// Component //
+//////////////
+*/
 
 function App() {
 	const [user, setUser] = useState({})
