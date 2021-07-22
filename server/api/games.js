@@ -1,49 +1,66 @@
+/*
+///////////////////
+// Requirements //
+/////////////////
+*/
+
 const express = require('express');
 const gameRouter = express.Router()
-const{ createGame,
-    getAllGames,
-    getGameById,
-    updateGame,
-    deleteGame } = require('../db')
 
-    const {requireAdmin} = require('./utils')
+const { createGame, getAllGames,  getGameById, updateGame, deleteGame } = require('../db')
+const {requireAdmin} = require('./utils')
+
+/*
+////////////////
+// Listeners //
+//////////////
+*/
+
+// CREATE //
+gameRouter.post('/', requireAdmin, async (req, res, next) =>{
+    try {
+        const {image, price, title, console, year, description} = req.body;
+        const createdGame = await createGame({ image, price, title, console, year, description });
+
+        if (createdGame) {
+            res.send(createdGame);
+        } else {
+            next({
+                name: 'CreationFailed',
+                message: 'There was an error creating a new game for sale'
+            })
+        }
+    } catch (error) {
+        next(error);
+    }
+})
 
 
-//-------------------Require Admin is used for these routes--------------//
-
-///////////////////////
-//get/ api/ getGame//
-//////////////////////
-
+// READ //
 gameRouter.get('/:gameId', async (req, res, next) => {
     try {
-        const {gameId} = req.params;
-        const gettingGame = await getGameById(gameId);
+        const { gameId } = req.params;
+        const foundGame = await getGameById(gameId);
         
-        if (!gettingGame) {
+        if (!foundGame) {
             next({
               name: 'NotFound',
               message: `No Game by ID ${gameId}`
             })
         } else {
-            res.send(gettingGame);
+            res.send(foundGame);
         }
-
     } catch (error) {
         throw error
     };
 }); 
-
-
-///////////////////////////
-//get/ api/ getAllGames//
-//////////////////////////
 
 gameRouter.get('/', async (req, res, next) => {
     try {
-        const gettingAllGames = await getAllGames();
-        if(gettingAllGames) {
-            res.send(gettingAllGames);
+        const allGames = await getAllGames();
+
+        if (allGames) {
+            res.send(allGames);
         }
     } catch (error) {
         throw error
@@ -51,80 +68,53 @@ gameRouter.get('/', async (req, res, next) => {
 }); 
 
 
-/////////////////////
-//POST/ api/ games//
-////////////////////
-
-gameRouter.post('/', requireAdmin, async (req, res, next) =>{
-    try{
-        const {image, price, title, console, year, description} = req.body;
-        const createdGames = await createGame({ image, price, title, console, year, description });
-        if(createdGames) {
-            res.send(createdGames);
-        }else{
-            next({
-                name: 'Failed to Upload',
-                message: 'There was an  error creating a new game for sale'
-            })
-        }
-    }catch(error){
-        next(error);
-    }
-})
-
-/////////////////////
-//PATCH/ api/ games//
-////////////////////
-
+// UPDATE //
 gameRouter.patch('/:gameId', requireAdmin, async (req, res, next) =>{
-    try{
-        const {image, price, title, description, year, console} = req.body;
+    try {
         const {gameId} = req.params;
-        const updateToGame = await getGameById(gameId);
-        if(!updateToGame){
+        const gameToUpdate = await getGameById(gameId);
+
+        if (!gameToUpdate) {
             next({
-                name: 'Not Found',
-                message: 'No game by ID of ${gameId} was found'
+                name: 'NotFound',
+                message: `No game with ID of ${gameId} was found`
             })
-        }else{
-            const updatedGame= await updateGame (gameId, req.body);
-            if(updatedGame){
+        } else {
+            const updatedGame= await updateGame(gameId, req.body);
+
+            if (updatedGame) {
                 res.send(updatedGame);
-            }else{
+            } else {
                 next({
                     name:'Failed to Update',
                     message: 'There was an error when updating the game'
                 })
             }
         }
-
-    }catch (error){
+    } catch (error) {
         next(error);
     }
 });
 
-/////////////////////
-//DELETE/ api/ games//
-////////////////////
 
+// DELETE //
 gameRouter.delete('/:gameId', requireAdmin, async (req, res, next)=>{
-    try{
+    try {
         const {gameId} = req.params;
-        const updateToGame = await getGameById(gameId);
-        if(!updateToGame){
+        const gameToDelete = await getGameById(gameId);
+
+        if (!gameToDelete) {
             next({
                 name: 'Not Found',
                 message: `No game by ID of ${gameId} was found`
             })
-        }else{
+        } else {
             const deletedGame = await deleteGame(gameId)
             res.send({sucess: true, ...deletedGame});
         }
-
-    }catch(error){
+    } catch (error) {
         next(error);
     }
 });
-
 
 module.exports = gameRouter

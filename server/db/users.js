@@ -5,6 +5,7 @@
 */
 
 const client = require('./client')
+
 const bcrypt = require('bcrypt')
 const SALT_COUNT = 10
 
@@ -16,10 +17,7 @@ const { createSetString } = require('./utils')
 //////////////
 */
 
-/////////////
-// Create //
-///////////
-
+// CREATE //
 async function createUser({ username, password }) {
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
 
@@ -36,10 +34,8 @@ async function createUser({ username, password }) {
     }
 }
 
-///////////
-// Read //
-/////////
 
+// READ //
 async function getAllUsers() {
     try {
         const { rows: users } = await client.query(`
@@ -66,7 +62,7 @@ async function getAllActiveUsers() {
 }
 
 async function getUser({ username, password }) {
-    if (!username || !password) { return }
+    if (!username || !password) return;
 
     try {
         const user = await getUserByUsername(username)
@@ -74,8 +70,8 @@ async function getUser({ username, password }) {
 
         const hashedPassword = user.password
         const passwordsMatch = await bcrypt.compare(password, hashedPassword)
-        if (!passwordsMatch) { return }
 
+        if (!passwordsMatch) return;
         delete user.password
         
         return user
@@ -86,17 +82,13 @@ async function getUser({ username, password }) {
 
 async function getUserById(userId) {
     try {
-        // first get the user
         const { rows: [user] } = await client.query(`
             SELECT *
             FROM users
-            WHERE id = $1;
-        `, [userId])
+            WHERE id=${userId};
+        `)
 
-        // if it doesn't exist, return null
         if (!user) return null
-
-        // if it does: delete the 'password' key from the returned object
         delete user.password
 
         return user
@@ -106,7 +98,6 @@ async function getUserById(userId) {
 }
 
 async function getUserByUsername(userName) {
-    // first get the user
     try {
         const { rows } = await client.query(`
             SELECT *
@@ -114,22 +105,17 @@ async function getUserByUsername(userName) {
             WHERE username = $1;
         `, [userName])
 
-        // if it doesn't exist, return null
         if (!rows || !rows.length) return null
+        const [ user ] = rows
 
-        // if it does: delete the 'password' key from the returned object
-        const [user] = rows
-        // delete user.password;
         return user
     } catch (error) {
         throw error
     }
 }
 
-/////////////
-// Update //
-///////////
 
+// UPDATE //
 async function updateUser(id, fields) {
     try {
         const setString = createSetString(fields)
@@ -148,26 +134,6 @@ async function updateUser(id, fields) {
     }
 }
 
-/////////////
-// Delete //
-///////////
-
-async function deactivateUser(id) {
-    try { 
-        const { rows: [deactivatedUser] } = await client.query(`
-            UPDATE users
-            SET "isActive"=false
-            WHERE id=${id}
-            RETURNING *;
-        `)
-
-        return deactivatedUser
-    } catch (error) {
-        throw error
-    }
-}
-
-//activate users
 async function activateUser(id) {
     try { 
         const { rows: [activatedUser] } = await client.query(`
@@ -183,6 +149,22 @@ async function activateUser(id) {
     }
 }
 
+
+// DELETE //
+async function deactivateUser(id) {
+    try { 
+        const { rows: [deactivatedUser] } = await client.query(`
+            UPDATE users
+            SET "isActive"=false
+            WHERE id=${id}
+            RETURNING *;
+        `)
+
+        return deactivatedUser
+    } catch (error) {
+        throw error
+    }
+}
 
 /*
 //////////////

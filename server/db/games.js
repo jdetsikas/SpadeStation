@@ -44,9 +44,8 @@ async function getAllGames() {
 async function getGameById(id) {
     try {
         const { rows: [foundGame] } = await client.query(`
-            SELECT * FROM games
-            WHERE id=$1
-        `, [id]);
+            SELECT * FROM games WHERE id=${id}
+        `);
         return foundGame;
     } catch (error) {
         throw error;
@@ -54,33 +53,33 @@ async function getGameById(id) {
 };
 
 async function updateGame(id, fields){
-    try{
+    try {
         const setString = createSetString(fields)
-        if (setString.length === 0){ return }
+        if (setString.length === 0) return;
 
         const { rows: [game] } = await client.query(`
-        UPDATE games
-        SET ${setString}
-        WHERE id = ${id}
-        RETURNING *;
+            UPDATE games
+            SET ${setString}
+            WHERE id=${id}
+            RETURNING *;
         `, Object.values(fields))
 
         return game
-    } catch (error){
+    } catch (error) {
         throw error
     }
 }
   
 async function deleteGame(id){
-    try{
-        const {rows: [deletedGame]} = await client.query(`
-        DELETE FROM games
-        WHERE id = ${id}
-        RETURNING *;
-        `)
+    try {
+        const { rows: [deletedGame] } = await client.query(`
+            DELETE FROM games
+            WHERE id=${id}
+            RETURNING *;
+        `);
 
         return deletedGame
-    }catch(error){
+    } catch (error) {
         throw error
     }
 }
