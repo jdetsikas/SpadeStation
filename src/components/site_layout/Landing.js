@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { setUserData } from '../../utils'
+import './Landing.css'
 
 function Landing(props) {
   const [user, setUser] = useState({})

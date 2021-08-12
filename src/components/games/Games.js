@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameTemplate from './GameTemplate'
 import NewGame from '../admin/NewGame'
+import './Games.css'
 
 /*
 ////////////////

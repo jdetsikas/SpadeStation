@@ -1,3 +1,27 @@
+#cart{
+    background:red;
+    padding-top: 0px;
+    border-top:black solid 5px;
+    border-bottom: black solid 15px;
+    
+    padding-left: 5em;
+    padding-right: 5em;
+    margin-left: 30em;
+    margin-right: 30em;
+}
+
+#cart > button {
+    background-color: black;
+    color:white;
+    font-size: 15px;
+    border: white solid 5px;
+    border-radius: 40px;
+    max-width: 160px;
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+  
 .hide {
     display: none;
 }

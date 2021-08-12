@@ -1,0 +1,125 @@
+nav a {
+    margin-left: 10px;
+}
+
+nav {
+  border-bottom: 1px solid gray;
+  padding: 5px;
+}
+
+.landing,
+.Home {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 10px 40px;
+}
+
+.AuthForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  font-size: 24px;
+}
+
+.AuthForm input {
+  font-size: .5em;
+  border:black solid 4px;
+  width: 125px;
+  margin: 5px 10px;
+}
+
+.logo{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgb(0, 225, 255) 15%, rgba(255,255,255,1) 80%);
+}
+
+.logo>img{
+  width:5em;
+}
+
+.navbar{
+  background: rgb(255,0,0);
+  background: linear-gradient(110deg, rgba(255,0,0,1) 75%, rgba(0,255,255,1) 74%);
+  color:white;
+  border-top: black solid 15px;
+  border-bottom: black solid 15px;
+  margin-top: 0px;
+  padding-top: .25em;
+  padding-bottom: .25em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-content: space-around;
+  font-size: 1.5em;
+}
+
+form{
+  background-color: red;
+  border-left: black solid 10px;
+  border-right: black solid 10px;
+  border-bottom: black solid 10px;
+  float: right;
+}
+
+label{
+  font-size: .7em;
+  color: rgb(0, 0, 0);
+  padding-left: 1em;
+}
+
+input{
+  object-fit: cover;
+  object-position: 97%;
+}
+
+button{
+  background-color: black;
+  color:white;
+  font-size: 12.5px;
+  border: white solid 5px;
+  border-radius: 40px;
+  margin-top: 1em;
+  margin-left: 7em;
+  margin-bottom: 1em;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+a>img{
+  color:rgb(0, 0, 0);
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+  text-decoration: none;
+}
+
+a:hover > img{
+  filter: invert(100%) !important;
+}
+
+nav>input{
+  color:rgb(0, 0, 0);
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+  text-decoration: none;
+}
+
+nav> input:hover{
+  filter: invert(100%) !important;
+}
+
+form>div {
+	padding-top: 1em;
+}

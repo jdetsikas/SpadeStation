@@ -1,0 +1,44 @@
+.games{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 20em;
+	padding-bottom: 5em;
+}
+
+.gamesheader{
+	font-size: 2.5em;
+	text-decoration: black underline 7px;
+}
+
+.gamegrid {
+	width: 1250px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.gamegrid>* {
+	flex: 1 1 250px;
+}
+
+.game-icon>h1{
+	font-size: 1.5em;
+}
+
+.game-icon>h2{
+	font-size: 1em;
+}
+
+.game-icon>input{ 
+	transition: all .2s ease-in-out; 
+	border: black solid 7px;
+	border-radius: 10px;
+}
+  
+.game-icon>input:hover { 
+	transform: scale(1.5); 
+}
+
+.game-icon{
+	padding-bottom: 2em;
+}
