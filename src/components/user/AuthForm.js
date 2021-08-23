@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { login, register } from '../../utils';
+import './AuthForm.css'
 
 function AuthForm(props) {
   let { type, setUser } = props // type of auth form (login or signup) and isLoggedIn Function
@@ -30,29 +31,31 @@ function AuthForm(props) {
   }
 
   return (
-    <form className='AuthForm' onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor='username'>Username:</label>
-        <input
-          id='username'
-          value={username}
-          type='text'
-          placeholder='Type your username'
-          onChange={(evt) => setUsername(evt.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor='password'>Password:</label>
-        <input
-          id='password'
-          value={password}
-          type='text'
-          placeholder='Type your password'
-          onChange={(evt) => setPassword(evt.target.value)}
-        />
-      </div>
-      <button type='submit'>{type === 'login' ? 'Login' : 'Register'}</button>
-    </form>
+    <div id='login'>
+      <form className='AuthForm' onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor='username'>Username:</label>
+          <input
+            id='username'
+            value={username}
+            type='text'
+            placeholder='Type your username'
+            onChange={(evt) => setUsername(evt.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor='password'>Password:</label>
+          <input
+            id='password'
+            value={password}
+            type='text'
+            placeholder='Type your password'
+            onChange={(evt) => setPassword(evt.target.value)}
+          />
+        </div>
+        <button type='submit'>{type === 'login' ? 'Login' : 'Register'}</button>
+      </form>
+    </div>
   )
 }
 

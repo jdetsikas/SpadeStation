@@ -1,0 +1,42 @@
+#games {
+	padding-top: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
+
+	max-width: 1600px;
+	width: 85%;
+	min-width: 1300px;
+	align-items: center;background: linear-gradient(0deg, rgb(0, 225, 255) 35%, rgb(255, 255, 255) 100%);
+}
+
+.gamesheader{
+	font-size: 2em;
+}
+
+.gamegrid {
+	width: 75%;
+	padding: 25px 25px;
+
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	grid-gap: 20px;
+}
+
+.game-icon input{
+	width: 100%;
+	height: auto;
+
+	border: black solid 2px;
+	border-radius: 10px;
+}
+
+.game-icon h1{
+	font-size: 1.3em;
+}
+  
+.game-icon > input:hover { 
+	transform: scale(1.2); 
+}

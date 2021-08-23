@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
+import './Nav.css'
 
 function Navbar({ user, setUser, setCartGames, history, cartView, setCartView, setCart}) {
 

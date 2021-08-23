@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { setUserData } from '../../utils';
+import './Profile.css'
 
 const UserAccount = (props) => {
     const { user, setUser } = props

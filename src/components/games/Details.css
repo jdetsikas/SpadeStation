@@ -1,0 +1,48 @@
+#game-info{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-details{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    color: white;
+    background-color: black;
+
+    margin: 25px;
+    border-radius: 40px;
+    padding: 10px 75px;
+}
+
+#game-details > h2{
+    padding-bottom:50px;
+    font-size: 2em;
+}
+
+#game-details > h3{
+    padding-bottom: 10px;
+    font-size: 1.3em;
+}
+
+#game-box{
+    width: 500px;
+    height: auto;
+}
+
+#game-info > button {
+    background-color: black;
+    color:white;
+    
+    border: white solid 5px;
+    border-radius: 40px;
+
+    max-width: 160px;
+    padding: 20px 20px;
+    margin: 25px;
+}

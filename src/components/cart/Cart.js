@@ -30,10 +30,12 @@ const Cart = ({ cartGames, setCartGames, cart, total, setTotal, cartView, setCar
 
     return (
         <div id='cart' className={cartView ? 'show' : 'hide'}>
-            <h2>Cart</h2>
-            {cartList.length ? cartList : <a>Cart Is Empty</a>}
-            <button type='button' onClick={() => clearCart(setCartGames, cart)}>Clear Cart</button>
-            <button type='button' onClick={() => beginCheckout(cartGames, setCartView)}>Checkout</button>
+            <div className='contents'>
+                <h2>Cart</h2>
+                {cartList.length ? cartList : <a>Cart Is Empty</a>}
+                <button type='button' onClick={() => clearCart(setCartGames, cart)}>Clear Cart</button>
+                <button type='button' onClick={() => beginCheckout(cartGames, setCartView)}>Checkout</button>
+            </div>
         </div> );
 }
 

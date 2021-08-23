@@ -1,0 +1,22 @@
+.profilepage {
+	height: 100%;
+
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+
+	font-size: 15px;
+	align-self: center;
+
+	max-width: 1600px;
+	width: 85%;
+	min-width: 1300px;
+	align-items: center;background: linear-gradient(0deg, rgb(0, 225, 255) 35%, rgb(255, 255, 255) 100%);
+}
+
+.profilepage > img {
+	width: 200px;
+	height: auto;
+	border-radius: 100%;
+}

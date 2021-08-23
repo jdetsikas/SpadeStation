@@ -1,0 +1,10 @@
+.landing{
+	height: 100%;
+	display: flex;
+	justify-content:center ;	align-self: center;
+
+	max-width: 1600px;
+	width: 85%;
+	min-width: 1300px;
+	align-items: center;background: linear-gradient(0deg, rgb(0, 225, 255) 35%, rgb(255, 255, 255) 100%);
+}

@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import GameTemplate from './GameTemplate'
 import NewGame from '../admin/NewGame'
+import './Games.css'
 
 /*
 ////////////////
@@ -50,8 +51,8 @@ const Games = (props) => {
 
     return (
         
-        <div className="games">
-            <h1 className="gamesheader">List of Games</h1>
+        <div id="games">
+            <h1 className="gamesheader">Available Games</h1>
             { user.username === 'admin' ? <NewGame /> : null }
             <div className="gamegrid">
             { gameInventory /* each should be clickable, sends you to that game's details page */ }

@@ -1,3 +1,38 @@
+#cart {
+    z-index: 2;
+    float: unset;
+    position: absolute;
+    right: 100px;
+
+    width: 400px;
+    background:white;
+    padding-top: 0px;
+
+    border:black solid 5px;
+    border-top: black solid 0px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+#cart .contents {
+    margin: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.contents > button {
+    color:white;
+    font-size: .8em;
+    
+    border: white solid 2px;
+    border-radius: 40px;
+    
+    background-color: black;
+    padding: 7px;
+    width: 100%;
+}
+  
 .hide {
     display: none;
 }
@@ -25,4 +60,17 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.cart-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 5px;
+}
+
+.cart-item > img {
+    height: 50px;
+    width: auto;
 }

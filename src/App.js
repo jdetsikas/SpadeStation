@@ -60,7 +60,7 @@ function App() {
 	}, [cartGames])
 
   	return (
-		<div className='App'>
+		<div id='App'>
 			<Navbar user={user} setUser={setUser} setCartGames={setCartGames} cartView={cartView} setCartView={setCartView} setCart={setCart}/>
 			<Cart 
 				cartGames={cartGames} setCartGames={setCartGames} 
