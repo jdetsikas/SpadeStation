@@ -8,7 +8,8 @@
 	max-width: 1600px;
 	width: 85%;
 	min-width: 1300px;
-	align-items: center;background: linear-gradient(0deg, rgb(0, 225, 255) 35%, rgb(255, 255, 255) 100%);
+	align-items: center;
+	background: rgb(240, 240, 240);
 }
 
 .gamesheader{

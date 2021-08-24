@@ -1,10 +1,16 @@
-#game-info{
-    width: 100%;
+#game-info {
+	padding-top: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-self: center;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
+	max-width: 1600px;
+	width: 85%;
+	min-width: 1300px;
+	align-items: center;
+	background: white;
 }
 
 #game-details{

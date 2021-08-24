@@ -56,9 +56,7 @@ const Checkout = (props) =>{
 
     return(
         <div className='checkout'>
-
-        
-
+            
             <div className = 'chform'>
             <form className = 'formpay' onSubmit={() => handleSubmit(cartList)} >
 

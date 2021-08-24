@@ -66,7 +66,8 @@ function App() {
 				cartGames={cartGames} setCartGames={setCartGames} 
 				cart={cart} total={total} setTotal={setTotal} 
 				cartView={cartView} setCartView={setCartView}
-				setShowCheckout={setShowCheckout}/>
+				setShowCheckout={setShowCheckout}
+				onClick={(event) => window.console.log("Target:", event.target)}/>
 			<Routes user={user} setUser={setUser} cartGames={cartGames}  setCartGames={setCartGames} cart={cart} cartView={cartView} setCartView={setCartView}/>
 		</div>
 	)

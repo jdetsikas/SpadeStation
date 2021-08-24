@@ -22,12 +22,16 @@ const CartGameTemplate = (props) => {
     return (
         <div className='cart-item'>
             <img src={game.image} width='30' height='30'/>
-            <a>{title}</a>
-            <a>${price}</a>
-            <a>Copies: {quant}</a>
-            <button type='button' onClick={() => decreaseQuant(game, cartGames, setCartGames, cart, quant, setQuant)}>-</button>
-            <button type='button' onClick={() => increaseQuant(game, cart, quant, setQuant)}>+</button>
-            <button type='button' onClick={() => removeFromCart(game, cartGames, setCartGames, cart)}>Remove</button>
+
+                <a>{title}</a>
+                <a>${price}</a>
+
+            <div className='quant'>
+                <a>Copies: {quant}</a>
+                <button type='button' onClick={() => decreaseQuant(game, cartGames, setCartGames, cart, quant, setQuant)}>-</button>
+                <button type='button' onClick={() => increaseQuant(game, cart, quant, setQuant)}>+</button>
+                <button type='button' onClick={() => removeFromCart(game, cartGames, setCartGames, cart)}>x</button>
+            </div>
         </div> );
 }
 

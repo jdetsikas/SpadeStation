@@ -17,6 +17,7 @@ function Navbar({ user, setUser, setCartGames, history, cartView, setCartView, s
     <div>
 
       <h1 className='logo'><img src='/icons/logo.png' alt="logo"/></h1>
+
       <nav className='navbar'>
         <NavLink to='/'><img src ="/icons/home.png" alt="home"/></NavLink>
         <NavLink to='/games'><img src ="/icons/games.png" alt="games"/></NavLink>

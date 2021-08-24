@@ -24,5 +24,5 @@ body {
 	width: 100%;
 	float: unset;
 	height: stretch;
-	background: linear-gradient(180deg, rgb(58, 58, 58) 20%, rgb(20, 20, 20) 100%);
+	background: rgb(235, 235, 235);
 }
